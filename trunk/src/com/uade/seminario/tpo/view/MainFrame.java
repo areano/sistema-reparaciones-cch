@@ -4,6 +4,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JDesktopPane;
 import javax.swing.JFrame;
+import javax.swing.JInternalFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
@@ -12,6 +13,7 @@ import javax.swing.WindowConstants;
 import javax.swing.SwingUtilities;
 
 import com.uade.seminario.tpo.view.clientes.AltaClienteFrame;
+import com.uade.seminario.tpo.view.clientes.ModificarClienteFrame;
 
 
 /**
@@ -78,7 +80,7 @@ public class MainFrame extends javax.swing.JFrame {
 						jmiAltaCliente.addActionListener(new ActionListener() {
 
 							public void actionPerformed(ActionEvent e) {
-								BaseFrame frame = new AltaClienteFrame();
+								JInternalFrame frame = new AltaClienteFrame();
 								frame.setVisible(true);
 								desktop.add(frame);
 							}
@@ -88,6 +90,14 @@ public class MainFrame extends javax.swing.JFrame {
 						jmiModificarCliente = new JMenuItem();
 						jMenu1.add(jmiModificarCliente);
 						jmiModificarCliente.setText("Modificar");
+						jmiModificarCliente.addActionListener(new ActionListener() {
+							
+							public void actionPerformed(ActionEvent arg0) {
+								JInternalFrame frame = new ModificarClienteFrame();
+								frame.setVisible(true);
+								desktop.add(frame);
+							}
+						});
 					}
 					{
 						jmiBajaCliente = new JMenuItem();
@@ -97,7 +107,7 @@ public class MainFrame extends javax.swing.JFrame {
 				}
 			}
 			pack();
-			setSize(400, 300);
+//			setSize(400, 300);
 		} catch (Exception e) {
 		    //add your error handling code here
 			e.printStackTrace();
