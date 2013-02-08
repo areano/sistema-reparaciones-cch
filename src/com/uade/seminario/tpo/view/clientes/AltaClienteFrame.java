@@ -1,39 +1,20 @@
 package com.uade.seminario.tpo.view.clientes;
-import com.jgoodies.forms.layout.CellConstraints;
-import com.jgoodies.forms.layout.FormLayout;
-
-import java.awt.Dimension;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.Insets;
-import java.awt.Rectangle;
-import java.beans.PropertyVetoException;
-
-import javax.swing.GroupLayout;
 import javax.swing.JButton;
-import javax.swing.JComponent;
-import javax.swing.JDesktopPane;
-import javax.swing.JFrame;
-import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
-import javax.swing.LayoutStyle;
-import javax.swing.WindowConstants;
 
+import com.jgoodies.forms.factories.FormFactory;
+import com.jgoodies.forms.layout.CellConstraints;
+import com.jgoodies.forms.layout.ColumnSpec;
+import com.jgoodies.forms.layout.FormLayout;
+import com.jgoodies.forms.layout.RowSpec;
 
-/**
-* This code was edited or generated using CloudGarden's Jigloo
-* SWT/Swing GUI Builder, which is free for non-commercial
-* use. If Jigloo is being used commercially (ie, by a corporation,
-* company or business for any purpose whatever) then you
-* should purchase a license for each developer using Jigloo.
-* Please visit www.cloudgarden.com for details.
-* Use of Jigloo implies acceptance of these licensing terms.
-* A COMMERCIAL LICENSE HAS NOT BEEN PURCHASED FOR
-* THIS MACHINE, SO JIGLOO OR THIS CODE CANNOT BE USED
-* LEGALLY FOR ANY CORPORATE OR COMMERCIAL PURPOSE.
-*/
 public class AltaClienteFrame extends javax.swing.JInternalFrame {
+	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -6666701907455719402L;
 	private JLabel jLabel1;
 	private JLabel jLabel2;
 	private JLabel jLabel3;
@@ -60,9 +41,27 @@ public class AltaClienteFrame extends javax.swing.JInternalFrame {
 		try {
 			
 			this.setPreferredSize(null);
-			FormLayout thisLayout = new FormLayout(
-					"5dlu, 47dlu, 5dlu, max(p;78dlu):grow, max(p;15dlu), 5dlu", 
-					"6dlu, max(p;9dlu), 5dlu, max(p;9dlu), 5dlu, max(p;9dlu), 5dlu, max(p;9dlu), 5dlu, fill:max(p;9dlu), 5dlu, max(p;15dlu),6dlu");
+			FormLayout thisLayout = new FormLayout(new ColumnSpec[] {
+					FormFactory.UNRELATED_GAP_COLSPEC,
+					ColumnSpec.decode("47dlu"),
+					ColumnSpec.decode("5dlu"),
+					ColumnSpec.decode("max(78dlu;pref):grow"),
+					FormFactory.BUTTON_COLSPEC,
+					FormFactory.UNRELATED_GAP_COLSPEC,},
+				new RowSpec[] {
+					FormFactory.UNRELATED_GAP_ROWSPEC,
+					RowSpec.decode("max(9dlu;pref)"),
+					RowSpec.decode("5dlu"),
+					RowSpec.decode("max(9dlu;pref)"),
+					RowSpec.decode("5dlu"),
+					RowSpec.decode("max(9dlu;pref)"),
+					RowSpec.decode("5dlu"),
+					RowSpec.decode("max(9dlu;pref)"),
+					RowSpec.decode("5dlu"),
+					RowSpec.decode("fill:max(9dlu;pref)"),
+					FormFactory.UNRELATED_GAP_ROWSPEC,
+					RowSpec.decode("max(15dlu;pref)"),
+					FormFactory.UNRELATED_GAP_ROWSPEC,});
 			setVisible(true);
 			getContentPane().setLayout(thisLayout);
 			{
@@ -112,8 +111,9 @@ public class AltaClienteFrame extends javax.swing.JInternalFrame {
 			}
 			{
 				jButton1 = new JButton();
+				jButton1.setEnabled(false);
 				getContentPane().add(jButton1, new CellConstraints("5, 12, 1, 1, default, default"));
-				jButton1.setText("Agregar Cliente");
+				jButton1.setText("Crear");
 			}
 			pack();
 
