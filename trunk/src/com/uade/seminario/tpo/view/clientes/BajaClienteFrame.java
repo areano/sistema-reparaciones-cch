@@ -16,7 +16,7 @@ import com.jgoodies.forms.layout.ColumnSpec;
 import com.jgoodies.forms.layout.FormLayout;
 import com.jgoodies.forms.layout.RowSpec;
 
-public class ModificarClienteFrame extends javax.swing.JInternalFrame {
+public class BajaClienteFrame extends javax.swing.JInternalFrame {
 
 	/**
 	 * 
@@ -33,9 +33,9 @@ public class ModificarClienteFrame extends javax.swing.JInternalFrame {
 	* JInternalFrame inside a new JFrame.
 	*/
 		
-	public ModificarClienteFrame() {
+	public BajaClienteFrame() {
 		super();
-		setTitle("Modificar Cliente");
+		setTitle("Baja Cliente");
 		setClosable(true);
 		getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
 		
@@ -132,7 +132,7 @@ public class ModificarClienteFrame extends javax.swing.JInternalFrame {
 		panelEditar.add(textField_4, "4, 8, 3, 1, fill, default");
 		textField_4.setColumns(10);
 		
-		JButton btnNewButton_1 = new JButton("Modificar");
+		JButton btnNewButton_1 = new JButton("Eliminar");
 		btnNewButton_1.setEnabled(false);
 		panelEditar.add(btnNewButton_1, "6, 10");
 		initGUI();
