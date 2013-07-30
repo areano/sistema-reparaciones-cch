@@ -61,4 +61,8 @@ public class Modelo {
 		this.estado="inactivo";
 		
 	}
+	public void addPieza(Pieza pieza) {
+		this.piezas.add(pieza);
+		
+	}
 }

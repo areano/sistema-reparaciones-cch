@@ -4,6 +4,7 @@ import java.util.Vector;
 
 import com.uade.seminario.tpo.view.ClienteView;
 import com.uade.seminario.tpo.view.OrdenReparacionView;
+import com.uade.seminario.tpo.view.PiezaView;
 import com.uade.seminario.tpo.view.TareaReparacionView;
 
 import com.uade.seminario.tpo.exceptions.ExceptionExisteCliente;
@@ -87,7 +88,7 @@ public class SistemadeReparaciones {
 		
 	}
 	
-	public void eliminarModelo(int codigo) throws ExceptionModeloInactivo{
+	public void bajaModelo(int codigo) throws ExceptionModeloInactivo{
 		Modelo modelo=this.buscarModelo(codigo);
 		if(modelo!=null && modelo.modeloActivo()){
 			if(!buscarModeloXEquipo(codigo)){
@@ -285,6 +286,50 @@ public class SistemadeReparaciones {
 		cliente.setDireccion(dir);
 		cliente.setTelefono(tel);
 		cliente.setEmail(mail);		
+	}
+
+	public void altaPieza(String nombre, int codPieza, int codModelo, String descripcion) {
+		Modelo modelo=buscarModelo(codModelo);
+		Pieza pieza=buscarPieza(codPieza);
+		if(modelo!=null && pieza==null){
+			pieza=new Pieza(codPieza,nombre,descripcion);
+			modelo.addPieza(pieza);
+		}
+		
+	}
+
+	private Pieza buscarPieza(int codPieza) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public PiezaView buscarPiezaView(int codigoPieza) {
+		
+		return null;
+	}
+
+	public void modificarPieza(String nombre, int codPieza,
+			String descripcion) {
+		Pieza pieza=buscarPieza(codPieza);
+		if(pieza!=null){
+			pieza.setNombrePieza(nombre);
+			pieza.setDescripcion(descripcion);
+		}
+		
+	}
+
+	public void BajaPieza(int codigoPieza) {
+		Pieza pieza=buscarPieza(codigoPieza);
+		if(pieza!=null && !hayModelosConPieza(codigoPieza)){
+			pieza.darBajaPieza();
+		}
+		
+		
+	}
+
+	private boolean hayModelosConPieza(int codigoPieza) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 	
