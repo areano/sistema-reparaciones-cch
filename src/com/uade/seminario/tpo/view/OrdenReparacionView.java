@@ -1,4 +1,4 @@
-package vista;
+package view;
 
 import java.sql.Date;
 import java.util.Vector;

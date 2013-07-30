@@ -1,10 +1,10 @@
-package controlador;
+package controller;
 import java.sql.Date;
 import java.util.Vector;
 
-import vista.ClienteView;
-import vista.OrdenReparacionView;
-import vista.TareaReparacionView;
+import view.ClienteView;
+import view.OrdenReparacionView;
+import view.TareaReparacionView;
 
 import exceptions.ExceptionExisteCliente;
 import exceptions.ExceptionExisteModelo;
@@ -13,16 +13,16 @@ import exceptions.ExceptionModeloPerteneceEquipo;
 import exceptions.ExceptionNoExisteModelo;
 import exceptions.ExceptionNoHayStock;
 
-import negocio.Cliente;
-import negocio.Empleado;
-import negocio.Equipo;
-import negocio.Garantia;
-import negocio.Modelo;
-import negocio.OrdenReparacion;
-import negocio.Pieza;
-import negocio.Remito;
-import negocio.Reporte;
-import negocio.TareaReparacion;
+import model.Cliente;
+import model.Empleado;
+import model.Equipo;
+import model.Garantia;
+import model.Modelo;
+import model.OrdenReparacion;
+import model.Pieza;
+import model.Remito;
+import model.Reporte;
+import model.TareaReparacion;
 
 //
 //
