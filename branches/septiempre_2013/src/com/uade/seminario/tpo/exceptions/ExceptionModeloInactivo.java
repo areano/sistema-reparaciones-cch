@@ -1,4 +1,4 @@
-package exceptions;
+package com.uade.seminario.tpo.exceptions;
 
 public class ExceptionModeloInactivo extends Exception {
 	private final int codigo;

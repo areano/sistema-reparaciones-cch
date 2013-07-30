@@ -1,4 +1,4 @@
-package model;
+package com.uade.seminario.tpo.model;
 
 import java.util.Vector;
 //

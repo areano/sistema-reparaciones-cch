@@ -1,7 +1,7 @@
-package model;
+package com.uade.seminario.tpo.model;
 import java.util.Vector;
 
-import view.TareaReparacionView;
+import com.uade.seminario.tpo.view.TareaReparacionView;
 
 //
 //

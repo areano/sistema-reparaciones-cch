@@ -1,4 +1,4 @@
-package exceptions;
+package com.uade.seminario.tpo.exceptions;
 
 public class ExceptionExisteCliente extends RuntimeException {
 	private final int nroDoc;
