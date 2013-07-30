@@ -1,4 +1,4 @@
-package vista;
+package view;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -9,7 +9,7 @@ import javax.swing.JTextField;
 import javax.swing.WindowConstants;
 import javax.swing.SwingUtilities;
 
-import controlador.SistemadeReparaciones;
+import controller.SistemadeReparaciones;
 
 
 /**

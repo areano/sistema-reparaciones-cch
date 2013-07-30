@@ -1,9 +1,9 @@
-package negocio;
+package model;
 import java.sql.Date;
 import java.util.Vector;
 
-import vista.OrdenReparacionView;
-import vista.TareaReparacionView;
+import view.OrdenReparacionView;
+import view.TareaReparacionView;
 
 //
 //

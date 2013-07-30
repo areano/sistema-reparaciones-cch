@@ -1,7 +1,7 @@
-package negocio;
+package model;
 import java.util.Vector;
 
-import vista.TareaReparacionView;
+import view.TareaReparacionView;
 
 //
 //
