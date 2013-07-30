@@ -1,4 +1,4 @@
-package view;
+package com.uade.seminario.tpo.view;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -9,7 +9,7 @@ import javax.swing.JTextField;
 import javax.swing.WindowConstants;
 import javax.swing.SwingUtilities;
 
-import controller.SistemadeReparaciones;
+import com.uade.seminario.tpo.controller.SistemadeReparaciones;
 
 
 /**
@@ -135,8 +135,9 @@ public class AltaClienteView extends javax.swing.JFrame {
 				ok.addActionListener(new ActionListener() {
 					
 					public void actionPerformed(ActionEvent arg0) {
-						SistemadeReparaciones.getInstancia().altaCliente(Integer.parseInt(nroDoc.getText()),tipoDoc.getText(),nombre.getText(),apellido.getText(),direccion.getText(),mail.getText(),fechaNac.getText(),tel.getText());
-						
+						if(nroDoc.getText()!=null){
+							SistemadeReparaciones.getInstancia().altaCliente(Integer.parseInt(nroDoc.getText()),tipoDoc.getText(),nombre.getText(),apellido.getText(),direccion.getText(),mail.getText(),fechaNac.getText(),tel.getText());
+						}					
 					}
 				});
 			}

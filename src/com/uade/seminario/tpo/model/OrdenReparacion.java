@@ -1,9 +1,9 @@
-package model;
+package com.uade.seminario.tpo.model;
 import java.sql.Date;
 import java.util.Vector;
 
-import view.OrdenReparacionView;
-import view.TareaReparacionView;
+import com.uade.seminario.tpo.view.OrdenReparacionView;
+import com.uade.seminario.tpo.view.TareaReparacionView;
 
 //
 //

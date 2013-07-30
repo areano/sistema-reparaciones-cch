@@ -1,28 +1,28 @@
-package controller;
+package com.uade.seminario.tpo.controller;
 import java.sql.Date;
 import java.util.Vector;
 
-import view.ClienteView;
-import view.OrdenReparacionView;
-import view.TareaReparacionView;
+import com.uade.seminario.tpo.view.ClienteView;
+import com.uade.seminario.tpo.view.OrdenReparacionView;
+import com.uade.seminario.tpo.view.TareaReparacionView;
 
-import exceptions.ExceptionExisteCliente;
-import exceptions.ExceptionExisteModelo;
-import exceptions.ExceptionModeloInactivo;
-import exceptions.ExceptionModeloPerteneceEquipo;
-import exceptions.ExceptionNoExisteModelo;
-import exceptions.ExceptionNoHayStock;
+import com.uade.seminario.tpo.exceptions.ExceptionExisteCliente;
+import com.uade.seminario.tpo.exceptions.ExceptionExisteModelo;
+import com.uade.seminario.tpo.exceptions.ExceptionModeloInactivo;
+import com.uade.seminario.tpo.exceptions.ExceptionModeloPerteneceEquipo;
+import com.uade.seminario.tpo.exceptions.ExceptionNoExisteModelo;
+import com.uade.seminario.tpo.exceptions.ExceptionNoHayStock;
 
-import model.Cliente;
-import model.Empleado;
-import model.Equipo;
-import model.Garantia;
-import model.Modelo;
-import model.OrdenReparacion;
-import model.Pieza;
-import model.Remito;
-import model.Reporte;
-import model.TareaReparacion;
+import com.uade.seminario.tpo.model.Cliente;
+import com.uade.seminario.tpo.model.Empleado;
+import com.uade.seminario.tpo.model.Equipo;
+import com.uade.seminario.tpo.model.Garantia;
+import com.uade.seminario.tpo.model.Modelo;
+import com.uade.seminario.tpo.model.OrdenReparacion;
+import com.uade.seminario.tpo.model.Pieza;
+import com.uade.seminario.tpo.model.Remito;
+import com.uade.seminario.tpo.model.Reporte;
+import com.uade.seminario.tpo.model.TareaReparacion;
 
 //
 //

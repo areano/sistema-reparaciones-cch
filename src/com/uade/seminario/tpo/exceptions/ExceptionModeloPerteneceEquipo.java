@@ -1,4 +1,4 @@
-package exceptions;
+package com.uade.seminario.tpo.exceptions;
 
 public class ExceptionModeloPerteneceEquipo extends RuntimeException{
 	private final int codigo;

@@ -1,4 +1,4 @@
-package view;
+package com.uade.seminario.tpo.view;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -9,7 +9,7 @@ import javax.swing.JTextField;
 import javax.swing.WindowConstants;
 import javax.swing.SwingUtilities;
 
-import controller.SistemadeReparaciones;
+import com.uade.seminario.tpo.controller.SistemadeReparaciones;
 
 
 /**

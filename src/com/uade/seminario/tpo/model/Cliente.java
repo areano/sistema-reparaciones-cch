@@ -1,8 +1,8 @@
-package model;
+package com.uade.seminario.tpo.model;
 
 import java.sql.Date;
 
-import vista.ClienteView;
+import com.uade.seminario.tpo.view.ClienteView;
 
 
 //

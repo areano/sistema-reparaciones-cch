@@ -1,10 +1,10 @@
-package view;
+package com.uade.seminario.tpo.view;
 
 import java.sql.Date;
 import java.util.Vector;
 
-import negocio.Equipo;
-import negocio.TareaReparacion;
+import com.uade.seminario.tpo.model.Equipo;
+import com.uade.seminario.tpo.model.TareaReparacion;
 
 public class OrdenReparacionView {
 	private int nroOrden;

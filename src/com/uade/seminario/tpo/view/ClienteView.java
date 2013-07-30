@@ -1,4 +1,4 @@
-package view;
+package com.uade.seminario.tpo.view;
 
 import java.sql.Date;
 
