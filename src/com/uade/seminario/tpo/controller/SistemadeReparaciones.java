@@ -270,6 +270,7 @@ public class SistemadeReparaciones {
 		Cliente cliente=buscarCliente(nroDoc,tipoDoc);
 		if(cliente==null){
 			cliente=new Cliente(nroDoc,tipoDoc,nombre,apellido,direccion,mail,fechaNac,tel);
+			clientes.add(cliente);
 			cliente.persistite();
 		}
 		else

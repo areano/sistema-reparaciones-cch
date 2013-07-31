@@ -113,9 +113,12 @@ public class BajaPiezaView extends javax.swing.JFrame {
 				buscar.addActionListener(new ActionListener() {
 					
 					public void actionPerformed(ActionEvent arg0) {
-						PiezaView pieza=SistemadeReparaciones.getInstancia().buscarPiezaView(Integer.parseInt(codigo.getText()));
-						nombre.setText(pieza.getNombrePieza());
-						descripcion.setText(pieza.getDescripcion());
+						if(!codigo.getText().equals("")){
+							PiezaView pieza=SistemadeReparaciones.getInstancia().buscarPiezaView(Integer.parseInt(codigo.getText()));
+							nombre.setText(pieza.getNombrePieza());
+							descripcion.setText(pieza.getDescripcion());
+							
+						}
 						
 					}
 				});
