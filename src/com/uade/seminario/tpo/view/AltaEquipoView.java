@@ -1,6 +1,7 @@
 package com.uade.seminario.tpo.view;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.Date;
 
 import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
@@ -12,6 +13,8 @@ import javax.swing.JTextField;
 
 import javax.swing.WindowConstants;
 import javax.swing.SwingUtilities;
+
+import com.uade.seminario.tpo.controller.SistemadeReparaciones;
 
 
 /**
@@ -30,6 +33,9 @@ public class AltaEquipoView extends javax.swing.JFrame {
 	private JLabel jLabel1;
 	private JLabel jLabel2;
 	private JLabel jLabel4;
+	private JButton altagarantia;
+	private JTextField nrogarantia;
+	private JLabel jLabel9;
 	private JLabel jLabel8;
 	private JButton ingresar;
 	private JButton imprimir;
@@ -138,7 +144,7 @@ public class AltaEquipoView extends javax.swing.JFrame {
 				cliente = new JButton();
 				getContentPane().add(cliente);
 				cliente.setText("Alta Cliente");
-				cliente.setBounds(248, 221, 100, 23);
+				cliente.setBounds(158, 129, 100, 23);
 				cliente.addActionListener(new ActionListener() {
 					
 					public void actionPerformed(ActionEvent e) {
@@ -170,27 +176,90 @@ public class AltaEquipoView extends javax.swing.JFrame {
 				getContentPane().add(garantia);
 				garantia.setText("En Garantia");
 				garantia.setBounds(12, 243, 109, 20);
+				garantia.addActionListener(new ActionListener() {
+					
+					public void actionPerformed(ActionEvent arg0) {
+						if(garantia.isSelected()){
+							altagarantia.setVisible(true);
+							jLabel9.setVisible(true);
+							nrogarantia.setVisible(true);
+						}
+						if(!garantia.isSelected()){
+							altagarantia.setVisible(false);
+							jLabel9.setVisible(false);
+							nrogarantia.setVisible(false);
+							nrogarantia.setText("");
+						}
+							
+						
+					}
+				});
 			}
 			{
 				repararTodos = new JCheckBox();
 				getContentPane().add(repararTodos);
 				repararTodos.setText("Reparar de todos modos");
-				repararTodos.setBounds(12, 269, 178, 20);
+				repararTodos.setBounds(12, 313, 178, 20);
 			}
 			{
 				imprimir = new JButton();
 				getContentPane().add(imprimir);
 				imprimir.setText("Imprimir Remito");
-				imprimir.setBounds(38, 308, 140, 23);
+				imprimir.setBounds(41, 360, 140, 23);
 			}
 			{
 				ingresar = new JButton();
 				getContentPane().add(ingresar);
 				ingresar.setText("Ingresar Equipo");
-				ingresar.setBounds(220, 308, 138, 23);
+				ingresar.setBounds(210, 360, 138, 23);
+				ingresar.addActionListener(new ActionListener() {
+					
+					public void actionPerformed(ActionEvent arg0) {
+						boolean repararTodosModos1=false;
+						if(garantia.isSelected()){
+							
+						}
+							
+						if(repararTodos.isSelected())
+							repararTodosModos1=true;
+						Date fecha1=new Date(Date.parse(fecha.getText()));
+						if(!numeroEquipo.getText().equals("")&& !numeroModelo.getText().equals("") && !nroDoc.getText().equals("")){
+							SistemadeReparaciones.getInstancia().altaEquipo(Integer.parseInt(numeroEquipo.getText()),Integer.parseInt(numeroModelo.getText()), jComboBox1.getSelectedItem().toString(), Integer.parseInt(nroDoc.getText()), fecha1, nrogarantia.getText(), repararTodosModos1);
+						}
+						
+					}
+				});
+			}
+			{
+				jLabel9 = new JLabel();
+				getContentPane().add(jLabel9);
+				jLabel9.setText("Numero Garantia: ");
+				jLabel9.setBounds(13, 280, 116, 16);
+				jLabel9.setVisible(false);
+			}
+			{
+				nrogarantia = new JTextField();
+				getContentPane().add(nrogarantia);
+				nrogarantia.setBounds(120, 277, 142, 23);
+				nrogarantia.setVisible(false);
+			}
+			{
+				altagarantia = new JButton();
+				getContentPane().add(altagarantia);
+				altagarantia.setText("Alta Garantia");
+				altagarantia.setBounds(229, 242, 143, 23);
+				altagarantia.setVisible(false);
+				altagarantia.addActionListener(new ActionListener() {
+					
+					public void actionPerformed(ActionEvent e) {
+						AltaGarantiaView view = new AltaGarantiaView();
+						view.setVisible(true);
+						
+					}
+				});
 			}
 			pack();
-			this.setSize(400, 381);
+			this.setSize(400, 433);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

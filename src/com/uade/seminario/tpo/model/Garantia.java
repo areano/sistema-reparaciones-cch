@@ -18,6 +18,10 @@ import java.sql.Date;
 public class Garantia {
 	private int nroGarantia;
 	private Date fechaVencimiento;
+	public Garantia(int nroGarantia2, Date fecha1) {
+		this.nroGarantia=nroGarantia2;
+		this.fechaVencimiento=fecha1;
+	}
 	public int getNroGarantia() {
 		return nroGarantia;
 	}
