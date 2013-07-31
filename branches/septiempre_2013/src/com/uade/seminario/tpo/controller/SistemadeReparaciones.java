@@ -3,6 +3,7 @@ import java.sql.Date;
 import java.util.Vector;
 
 import com.uade.seminario.tpo.view.ClienteView;
+import com.uade.seminario.tpo.view.ModeloView;
 import com.uade.seminario.tpo.view.OrdenReparacionView;
 import com.uade.seminario.tpo.view.PiezaView;
 import com.uade.seminario.tpo.view.TareaReparacionView;
@@ -73,6 +74,7 @@ public class SistemadeReparaciones {
 		Modelo modelo=buscarModelo(codigo);
 		if(modelo==null){
 			modelo=new Modelo(nombre,descripcion,codigo);
+			modelos.add(modelo);
 		}
 		else
 			throw new ExceptionExisteModelo(codigo);
@@ -114,6 +116,11 @@ public class SistemadeReparaciones {
 	}
 
 	public Modelo buscarModelo(int codigo) {
+		for (Modelo modelo : modelos) {
+			if(modelo.getNroModelo()==codigo){
+				return modelo;
+			}
+		}
 		return null;
 	}
 	
@@ -294,12 +301,16 @@ public class SistemadeReparaciones {
 		if(modelo!=null && pieza==null){
 			pieza=new Pieza(codPieza,nombre,descripcion);
 			modelo.addPieza(pieza);
+			piezas.add(pieza);
 		}
 		
 	}
 
 	private Pieza buscarPieza(int codPieza) {
-		// TODO Auto-generated method stub
+		for (Pieza pieza : piezas) {
+			if(pieza.getNroPieza()==codPieza)
+				return pieza;
+		}
 		return null;
 	}
 
@@ -330,6 +341,32 @@ public class SistemadeReparaciones {
 	private boolean hayModelosConPieza(int codigoPieza) {
 		// TODO Auto-generated method stub
 		return false;
+	}
+
+	public ModeloView buscarModeloView(int codModelo) {
+		Modelo modelo=buscarModelo(codModelo);
+		if(modelo!=null)
+			return modelo.getView();
+		else
+			return null;
+	}
+
+	public Vector<PiezaView> buscarPiezaXModeloView(int codModelo) {
+		 Vector<PiezaView> piezasview=new Vector<PiezaView>();
+		 Modelo modelo=buscarModelo(codModelo);
+		 if(modelo!=null){
+			 Vector<Pieza> piezas=modelo.getPiezas();
+			 for (Pieza p : piezas) {
+				piezasview.add(p.getView());				
+			}
+		 }
+		 return piezasview;
+	}
+
+	public void confirmarModelo(int codigo) {
+		Modelo modelo= buscarModelo(codigo);
+		modelo.activar();
+		
 	}
 
 	

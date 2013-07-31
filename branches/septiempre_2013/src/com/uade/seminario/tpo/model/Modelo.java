@@ -12,6 +12,8 @@ import java.util.Vector;
 //
 //
 
+import com.uade.seminario.tpo.view.ModeloView;
+
 
 
 
@@ -23,12 +25,18 @@ public class Modelo {
 	private String descripcion;
 	
 	
+	public String getDescripcion() {
+		return descripcion;
+	}
+	public void setDescripcion(String descripcion) {
+		this.descripcion = descripcion;
+	}
 	public Modelo(String nombre2, String descripcion, int codigo) {
 		this.nombre=nombre2;
 		this.descripcion=descripcion;
 		this.nroModelo=codigo;
 		this.piezas=new Vector<Pieza>();
-		this.estado="activo";
+		this.estado="inactivo";
 	}
 	public int getNroModelo() {
 		return nroModelo;
@@ -64,5 +72,13 @@ public class Modelo {
 	public void addPieza(Pieza pieza) {
 		this.piezas.add(pieza);
 		
+	}
+	public void activar() {
+		setEstado("activo");
+		
+	}
+	public ModeloView getView() {
+		ModeloView mod=new ModeloView(getNombre(),getDescripcion(), getNroModelo());
+		return mod;
 	}
 }

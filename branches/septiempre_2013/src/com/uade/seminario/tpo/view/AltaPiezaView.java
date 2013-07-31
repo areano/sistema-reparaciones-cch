@@ -110,7 +110,11 @@ public class AltaPiezaView extends javax.swing.JFrame {
 				ok.addActionListener(new ActionListener() {
 					
 					public void actionPerformed(ActionEvent arg0) {
-						SistemadeReparaciones.getInstancia().altaPieza(nombre.getText(),Integer.parseInt(codigo.getText()),Integer.parseInt(codModelo.getText()),descripcion.getText());
+						if(!codigo.getText().equals("") && !codModelo.getText().equals("")){
+							SistemadeReparaciones.getInstancia().altaPieza(nombre.getText(),Integer.parseInt(codigo.getText()),Integer.parseInt(codModelo.getText()),descripcion.getText());
+							dispose();
+						}
+						
 					}
 				});
 			}
