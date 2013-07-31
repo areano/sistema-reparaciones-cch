@@ -5,6 +5,7 @@ public class PiezaView {
 	private String nombrePieza;
 	private String descripcion;
 	private String estado;
+	
 	public PiezaView(int codPieza, String nombre, String descripcion2) {
 		this.nroPieza=codPieza;
 		this.nombrePieza=nombre;
