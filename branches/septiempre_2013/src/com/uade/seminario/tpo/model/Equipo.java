@@ -19,6 +19,15 @@ public class Equipo {
 	private Cliente cliente;
 	private Garantia garantia;
 	private String estado;
+	
+	public Equipo(int nroEquipo, Modelo modelo2, Cliente cliente2,
+			Garantia garantia2) {
+		this.nroSerie=nroEquipo;
+		this.modelo=modelo2;
+		this.cliente=cliente2;
+		this.garantia=garantia2;
+		this.estado="inactivo";
+	}
 	public int getNroSerie() {
 		return nroSerie;
 	}

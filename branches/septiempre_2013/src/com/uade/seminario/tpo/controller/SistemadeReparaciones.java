@@ -70,7 +70,7 @@ public class SistemadeReparaciones {
 		return instancia;
 	}
 	
-	public void altaModelo(String nombre,int codigo,String descripcion){   //LAS PIEZAS SE LAS MOSTRAMOS POR PANTALLA ANTES DE CREAR EL MODELO?
+	public void altaModelo(String nombre,int codigo,String descripcion){   
 		Modelo modelo=buscarModelo(codigo);
 		if(modelo==null){
 			modelo=new Modelo(nombre,descripcion,codigo);
@@ -372,6 +372,34 @@ public class SistemadeReparaciones {
 		Modelo modelo= buscarModelo(codigo);
 		modelo.activar();
 		
+	}
+	public void altaEquipo(int nroEquipo,int nroModelo,String tipoDoc,int nroDoc,Date fecha,String nroGarantia,boolean repararDeTodosModos){
+		Equipo equipo=buscarEquipo(nroEquipo);
+		Modelo modelo=buscarModelo(nroModelo);
+		Cliente cliente=buscarCliente(nroDoc, tipoDoc);
+		Garantia garantia1=null;
+		if(!nroGarantia.equals(""))
+			garantia1=buscarGarantia(Integer.parseInt(nroGarantia));
+		if(equipo==null && modelo!=null && cliente!=null){
+			equipo=new Equipo(nroEquipo,modelo,cliente,garantia1);
+		}
+		
+	}
+
+	private Garantia buscarGarantia(int nroGarantia) {
+		for (Garantia garantia : garantias) {
+			if(garantia.getNroGarantia()==nroGarantia)
+				return garantia;			
+		}
+		return null;
+	}
+
+	public void altaGarantia(int nroGarantia, Date fecha1) {
+		Garantia garantia=buscarGarantia(nroGarantia);
+		if(garantia==null){
+			garantia=new Garantia(nroGarantia,fecha1);
+			garantias.add(garantia);
+		}
 	}
 
 	
