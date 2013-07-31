@@ -99,7 +99,9 @@ public class BajaPiezaView extends javax.swing.JFrame {
 				ok.addActionListener(new ActionListener() {
 					
 					public void actionPerformed(ActionEvent arg0) {
-						SistemadeReparaciones.getInstancia().BajaPieza(Integer.parseInt(codigo.getText()));
+						if(!codigo.getText().equals("")){
+							SistemadeReparaciones.getInstancia().BajaPieza(Integer.parseInt(codigo.getText()));
+						}						
 					}
 				});
 			}
