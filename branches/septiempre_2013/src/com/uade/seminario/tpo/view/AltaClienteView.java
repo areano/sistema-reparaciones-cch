@@ -1,8 +1,11 @@
 package com.uade.seminario.tpo.view;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import javax.swing.ComboBoxModel;
+import javax.swing.DefaultComboBoxModel;
 
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 
@@ -28,11 +31,11 @@ public class AltaClienteView extends javax.swing.JFrame {
 	private JLabel jLabel1;
 	private JLabel jLabel2;
 	private JLabel jLabel4;
+	private JComboBox jComboBox1;
 	private JTextField tel;
 	private JLabel jLabel9;
 	private JLabel jLabel8;
 	private JTextField fechaNac;
-	private JTextField tipoDoc;
 	private JLabel jLabel7;
 	private JButton ok;
 	private JTextField mail;
@@ -136,7 +139,8 @@ public class AltaClienteView extends javax.swing.JFrame {
 					
 					public void actionPerformed(ActionEvent arg0) {
 						if(nroDoc.getText()!=null){
-							SistemadeReparaciones.getInstancia().altaCliente(Integer.parseInt(nroDoc.getText()),tipoDoc.getText(),nombre.getText(),apellido.getText(),direccion.getText(),mail.getText(),fechaNac.getText(),tel.getText());
+							SistemadeReparaciones.getInstancia().altaCliente(Integer.parseInt(nroDoc.getText()),jComboBox1.getSelectedItem().toString(),nombre.getText(),apellido.getText(),direccion.getText(),mail.getText(),fechaNac.getText(),tel.getText());
+							dispose();
 						}					
 					}
 				});
@@ -146,11 +150,6 @@ public class AltaClienteView extends javax.swing.JFrame {
 				getContentPane().add(jLabel7);
 				jLabel7.setText("Tipo Documento : ");
 				jLabel7.setBounds(12, 69, 120, 16);
-			}
-			{
-				tipoDoc = new JTextField();
-				getContentPane().add(tipoDoc);
-				tipoDoc.setBounds(153, 66, 218, 23);
 			}
 			{
 				fechaNac = new JTextField();
@@ -173,6 +172,15 @@ public class AltaClienteView extends javax.swing.JFrame {
 				tel = new JTextField();
 				getContentPane().add(tel);
 				tel.setBounds(153, 237, 219, 23);
+			}
+			{
+				ComboBoxModel jComboBox1Model = 
+						new DefaultComboBoxModel(
+								new String[] { "DNI", "CI","LC" });
+				jComboBox1 = new JComboBox();
+				getContentPane().add(jComboBox1);
+				jComboBox1.setModel(jComboBox1Model);
+				jComboBox1.setBounds(152, 66, 102, 23);
 			}
 			pack();
 			this.setSize(410, 352);
