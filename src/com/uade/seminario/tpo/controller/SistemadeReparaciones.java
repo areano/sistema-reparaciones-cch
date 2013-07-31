@@ -80,10 +80,11 @@ public class SistemadeReparaciones {
 			throw new ExceptionExisteModelo(codigo);
 	}
 	
-	public void modificarModelo(int codigo){								//HACER
+	public void modificarModelo(int codigo, String nombre, String descripcion){							
 		Modelo modelo=this.buscarModelo(codigo);
 		if(modelo!=null && modelo.modeloActivo()){
-			
+			modelo.setDescripcion(descripcion);
+			modelo.setNombre(nombre);
 		}
 		else
 			throw new ExceptionNoExisteModelo(codigo);
@@ -93,7 +94,7 @@ public class SistemadeReparaciones {
 	public void bajaModelo(int codigo) throws ExceptionModeloInactivo{
 		Modelo modelo=this.buscarModelo(codigo);
 		if(modelo!=null && modelo.modeloActivo()){
-			if(!buscarModeloXEquipo(codigo)){
+			if(!existeElModeloEnUnEquipo(codigo)){
 				modelo.darBajaModelo();
 			}
 			else{
@@ -110,8 +111,11 @@ public class SistemadeReparaciones {
 		
 	}
 	
-	public boolean buscarModeloXEquipo(int codigo) {
-		
+	public boolean existeElModeloEnUnEquipo(int codigo) {
+		for (Equipo equipo : equipos) {
+			if(equipo.getModelo().getNroModelo()==codigo)
+				return true;
+		}
 		return false;
 	}
 
