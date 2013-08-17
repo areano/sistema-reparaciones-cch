@@ -2,6 +2,7 @@ package com.uade.seminario.tpo.model;
 
 import java.sql.Date;
 
+import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -28,6 +29,7 @@ import com.uade.seminario.tpo.view.ClienteView;
 public class Cliente {
 	private String nombre;
 	private String apellido;
+	@EmbeddedId
 	public ClienteId id;
 	private Date fechaNac;
 	private String direccion;
@@ -37,7 +39,7 @@ public class Cliente {
 	public Cliente(){
 		
 	}
-	public Cliente(int nroDoc, String tipoDoc, String nombre2, String apellido2,
+	public Cliente(String nroDoc, String tipoDoc, String nombre2, String apellido2,
 			String direccion, String mail, String fechaNac2, String tel) {
 		this.nombre=nombre2;
 		this.apellido=apellido2;
@@ -68,10 +70,10 @@ public class Cliente {
 	public void setApellido(String apellido) {
 		this.apellido = apellido;
 	}
-	public int getNroDoc() {
+	public String getNroDoc() {
 		return this.id.getNroDoc();
 	}
-	public void setNroDoc(int nroDoc) {
+	public void setNroDoc(String nroDoc) {
 		this.id.setNroDoc(nroDoc);
 	}
 	public String getTipoDoc() {

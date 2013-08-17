@@ -17,9 +17,9 @@ public class ClienteDAOImpl extends GenericDAOImpl<Cliente>{
 		return instancia;
 	}
 
-	public Cliente findByDNI(int nroDoc, String tipoDoc) {
+	public Cliente findByDNI(String nroDoc, String tipoDoc) {
 		Session session = HibernateUtil.getSessionFactory().openSession();
-		String hql = "from Cliente p where p.nroDoc = :nroDoc and p.tipoDoc = tipoDoc";
+		String hql = "from Cliente p where p.nroDoc = :nroDoc and p.tipoDoc = :tipoDoc";
 		Query query = session.createQuery(hql);
 		query.setParameter("nroDoc", nroDoc);
 		query.setParameter("tipoDoc", tipoDoc);		

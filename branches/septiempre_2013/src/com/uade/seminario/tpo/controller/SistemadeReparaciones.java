@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Vector;
 
 import com.uade.seminario.tpo.service.ClienteService;
+import com.uade.seminario.tpo.service.EmpleadoService;
 import com.uade.seminario.tpo.view.ClienteView;
 import com.uade.seminario.tpo.view.ModeloView;
 import com.uade.seminario.tpo.view.OrdenReparacionView;
@@ -52,7 +53,7 @@ public class SistemadeReparaciones {
 	private Vector<OrdenReparacion> ordReparacion;
 	private Vector<Equipo> equipos;
 	private ArrayList<Cliente> clientes;
-	private Vector<Empleado> empleados;
+	private ArrayList<Empleado> empleados;
 	private Vector<Reporte> reportes;
 	
 	private SistemadeReparaciones(){
@@ -61,7 +62,7 @@ public class SistemadeReparaciones {
 		this.modelos=new Vector<Modelo>();
 		this.piezas=new Vector<Pieza>();
 		this.ordReparacion=new Vector<OrdenReparacion>();
-		this.empleados=new Vector<Empleado>();
+		this.empleados=new ArrayList<Empleado>();
 		this.equipos=new Vector<Equipo>();
 		this.clientes= new ArrayList<Cliente>();
 		this.reportes=new Vector<Reporte>();
@@ -175,7 +176,7 @@ public class SistemadeReparaciones {
 		return null;
 	}
 	
-	public OrdenReparacionView misReparaciones(int legajo){
+	public OrdenReparacionView misReparaciones(String legajo){
 		Empleado empleado=buscarEmpleado(legajo);
 		if(empleado!=null){
 			if(!empleado.hayOrdenReparacion()){
@@ -195,9 +196,18 @@ public class SistemadeReparaciones {
 		return null;
 	}
 
-	private Empleado buscarEmpleado(int legajo) {
-		// TODO Auto-generated method stub
-		return null;
+	private Empleado buscarEmpleado(String legajo) {
+		EmpleadoService empleadoService = EmpleadoService.getInstance();
+		for (Empleado empleado : empleados) {
+			if(empleado.getLegajo().equals(legajo)) 
+				return empleado;
+		}
+		
+		Empleado empleado=empleadoService.findByLegajo(legajo);
+		if (empleado != null){
+			empleados.add(empleado);//bring the client to memory for future reference
+		}
+		return empleado;
 	}
 	
 	public TareaReparacion crearTareaReparacion(String descripcion,Vector<Pieza> piezas){     //VER COMO SERIA LA CONFIRMACION
@@ -268,7 +278,7 @@ public class SistemadeReparaciones {
 		return 0;
 	}
 
-	public void altaCliente(int nroDoc, String tipoDoc, String nombre, String apellido,
+	public void altaCliente(String nroDoc, String tipoDoc, String nombre, String apellido,
 			String direccion, String mail, String fechaNac, String tel) {
 		Cliente cliente;
 		ClienteService clienteService = ClienteService.getInstance();
@@ -286,7 +296,7 @@ public class SistemadeReparaciones {
 		
 	}
 
-	private Cliente buscarCliente(int nroDoc, String tipoDoc) {
+	private Cliente buscarCliente(String nroDoc, String tipoDoc) {
 		ClienteId id= new ClienteId(nroDoc, tipoDoc);
 		ClienteService clienteService = ClienteService.getInstance();
 		for (Cliente cliente : clientes) {
@@ -301,7 +311,7 @@ public class SistemadeReparaciones {
 		return cliente;
 	}
 
-	public ClienteView obtenerClienteView(int nroDoc,String tipoDoc) {
+	public ClienteView obtenerClienteView(String nroDoc,String tipoDoc) {
 		Cliente cliente=buscarCliente(nroDoc,tipoDoc);
 		if(cliente!=null)
 			return cliente.getView();
@@ -309,7 +319,7 @@ public class SistemadeReparaciones {
 			return null;
 	}
 
-	public void modificarCliente(int nroDoc, String tipoDoc,String nombre1, String dir, String tel,
+	public void modificarCliente(String nroDoc, String tipoDoc,String nombre1, String dir, String tel,
 			String mail) {
 		Cliente cliente=buscarCliente(nroDoc,tipoDoc);
 		cliente.setNombre(nombre1);
@@ -391,7 +401,7 @@ public class SistemadeReparaciones {
 		modelo.activar();
 		
 	}
-	public void altaEquipo(int nroEquipo,int nroModelo,String tipoDoc,int nroDoc,Date fecha,String nroGarantia,boolean repararDeTodosModos){
+	public void altaEquipo(int nroEquipo,int nroModelo,String tipoDoc,String nroDoc,Date fecha,String nroGarantia,boolean repararDeTodosModos){
 		Equipo equipo=buscarEquipo(nroEquipo);
 		Modelo modelo=buscarModelo(nroModelo);
 		Cliente cliente=buscarCliente(nroDoc, tipoDoc);
