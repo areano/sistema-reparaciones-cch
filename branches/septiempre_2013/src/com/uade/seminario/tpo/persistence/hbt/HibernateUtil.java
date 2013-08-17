@@ -1,4 +1,4 @@
-package com.uade.seminario.tpo.hbt;
+package com.uade.seminario.tpo.persistence.hbt;
 
 import com.uade.seminario.tpo.model.*;
 
