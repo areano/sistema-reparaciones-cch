@@ -2,6 +2,12 @@ package com.uade.seminario.tpo.model;
 
 import java.sql.Date;
 
+import javax.persistence.Entity;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.persistence.Column;
+import javax.persistence.GeneratedValue;
 import com.uade.seminario.tpo.view.ClienteView;
 
 
@@ -17,28 +23,38 @@ import com.uade.seminario.tpo.view.ClienteView;
 //
 
 
-
-
+@Entity
+@Table(name="cliente")
 public class Cliente {
 	private String nombre;
 	private String apellido;
-	private int nroDoc;
-	private String tipoDoc;
+	public ClienteId id;
 	private Date fechaNac;
 	private String direccion;
 	private String email;
 	private String telefono;
 	
+	public Cliente(){
+		
+	}
 	public Cliente(int nroDoc, String tipoDoc, String nombre2, String apellido2,
 			String direccion, String mail, String fechaNac2, String tel) {
 		this.nombre=nombre2;
 		this.apellido=apellido2;
 		this.direccion=direccion;
-		this.nroDoc=nroDoc;
-		this.tipoDoc=tipoDoc;
 		this.fechaNac=new Date(Date.parse(fechaNac2));
 		this.email=mail;
 		this.telefono=tel;
+		this.id = new ClienteId(nroDoc, tipoDoc);
+		
+	}
+
+	public ClienteId getId() {
+		return id;
+	}
+	
+	public void setId(ClienteId id) {
+		this.id = id;
 	}
 	public String getNombre() {
 		return nombre;
@@ -53,16 +69,16 @@ public class Cliente {
 		this.apellido = apellido;
 	}
 	public int getNroDoc() {
-		return nroDoc;
+		return this.id.getNroDoc();
 	}
 	public void setNroDoc(int nroDoc) {
-		this.nroDoc = nroDoc;
+		this.id.setNroDoc(nroDoc);
 	}
 	public String getTipoDoc() {
-		return tipoDoc;
+		return this.id.getTipoDoc();
 	}
 	public void setTipoDoc(String tipoDoc) {
-		this.tipoDoc = tipoDoc;
+		this.id.setTipoDoc(tipoDoc);
 	}
 	public Date getFechaNac() {
 		return fechaNac;
@@ -70,10 +86,7 @@ public class Cliente {
 	public void setFechaNac(Date fechaNac) {
 		this.fechaNac = fechaNac;
 	}
-	public void persistite() {
-		// TODO Auto-generated method stub
-		
-	}
+
 	public ClienteView getView() {
 		// TODO Auto-generated method stub
 		return null;

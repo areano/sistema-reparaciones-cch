@@ -1,7 +1,9 @@
 package com.uade.seminario.tpo.controller;
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.Vector;
 
+import com.uade.seminario.tpo.service.ClienteService;
 import com.uade.seminario.tpo.view.ClienteView;
 import com.uade.seminario.tpo.view.ModeloView;
 import com.uade.seminario.tpo.view.OrdenReparacionView;
@@ -16,6 +18,7 @@ import com.uade.seminario.tpo.exceptions.ExceptionNoExisteModelo;
 import com.uade.seminario.tpo.exceptions.ExceptionNoHayStock;
 
 import com.uade.seminario.tpo.model.Cliente;
+import com.uade.seminario.tpo.model.ClienteId;
 import com.uade.seminario.tpo.model.Empleado;
 import com.uade.seminario.tpo.model.Equipo;
 import com.uade.seminario.tpo.model.Garantia;
@@ -48,7 +51,7 @@ public class SistemadeReparaciones {
 	private Vector<Pieza> piezas;
 	private Vector<OrdenReparacion> ordReparacion;
 	private Vector<Equipo> equipos;
-	private Vector<Cliente> clientes;
+	private ArrayList<Cliente> clientes;
 	private Vector<Empleado> empleados;
 	private Vector<Reporte> reportes;
 	
@@ -60,7 +63,7 @@ public class SistemadeReparaciones {
 		this.ordReparacion=new Vector<OrdenReparacion>();
 		this.empleados=new Vector<Empleado>();
 		this.equipos=new Vector<Equipo>();
-		this.clientes= new Vector<Cliente>();
+		this.clientes= new ArrayList<Cliente>();
 		this.reportes=new Vector<Reporte>();
 	}
 	
@@ -267,20 +270,35 @@ public class SistemadeReparaciones {
 
 	public void altaCliente(int nroDoc, String tipoDoc, String nombre, String apellido,
 			String direccion, String mail, String fechaNac, String tel) {
-		Cliente cliente=buscarCliente(nroDoc,tipoDoc);
-		if(cliente==null){
+		Cliente cliente;
+		ClienteService clienteService = ClienteService.getInstance();
+		cliente =  buscarCliente(nroDoc, tipoDoc);
+		if(cliente==null){//if client is not in memory, search into the DB
+			cliente=clienteService.findByDNI(nroDoc, tipoDoc);			
+		}
+		if(cliente==null){// client not exist in the system
 			cliente=new Cliente(nroDoc,tipoDoc,nombre,apellido,direccion,mail,fechaNac,tel);
 			clientes.add(cliente);
-			cliente.persistite();
-		}
-		else
+			clienteService.save(cliente);
+		}else {
 			throw new ExceptionExisteCliente(nroDoc);
+		}
 		
 	}
 
 	private Cliente buscarCliente(int nroDoc, String tipoDoc) {
+		ClienteId id= new ClienteId(nroDoc, tipoDoc);
+		ClienteService clienteService = ClienteService.getInstance();
+		for (Cliente cliente : clientes) {
+			if(cliente.getId().equals(id)) 
+				return cliente;
+		}
 		
-		return null;
+		Cliente cliente=clienteService.findByDNI(nroDoc, tipoDoc);
+		if (cliente != null){
+			clientes.add(cliente);//bring the client to memory for future reference
+		}
+		return cliente;
 	}
 
 	public ClienteView obtenerClienteView(int nroDoc,String tipoDoc) {
