@@ -19,7 +19,7 @@ public class ClienteService {
 		}
 		return cs;
 	}
-	public Cliente findByDNI(int nroDoc,String tipoDoc){
+	public Cliente findByDNI(String nroDoc,String tipoDoc){
 		return dao.findByDNI(nroDoc, tipoDoc);
 	}
 	public void save(Cliente cliente){

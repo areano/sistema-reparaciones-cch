@@ -224,7 +224,7 @@ public class AltaEquipoView extends javax.swing.JFrame {
 							repararTodosModos1=true;
 						Date fecha1=new Date(Date.parse(fecha.getText()));
 						if(!numeroEquipo.getText().equals("")&& !numeroModelo.getText().equals("") && !nroDoc.getText().equals("")){
-							SistemadeReparaciones.getInstancia().altaEquipo(Integer.parseInt(numeroEquipo.getText()),Integer.parseInt(numeroModelo.getText()), jComboBox1.getSelectedItem().toString(), Integer.parseInt(nroDoc.getText()), fecha1, nrogarantia.getText(), repararTodosModos1);
+							SistemadeReparaciones.getInstancia().altaEquipo(Integer.parseInt(numeroEquipo.getText()),Integer.parseInt(numeroModelo.getText()), jComboBox1.getSelectedItem().toString(), nroDoc.getText(), fecha1, nrogarantia.getText(), repararTodosModos1);
 						}
 						
 					}

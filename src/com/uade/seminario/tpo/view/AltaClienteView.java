@@ -139,7 +139,7 @@ public class AltaClienteView extends javax.swing.JFrame {
 					
 					public void actionPerformed(ActionEvent arg0) {
 						if(nroDoc.getText()!=null){
-							SistemadeReparaciones.getInstancia().altaCliente(Integer.parseInt(nroDoc.getText()),jComboBox1.getSelectedItem().toString(),nombre.getText(),apellido.getText(),direccion.getText(),mail.getText(),fechaNac.getText(),tel.getText());
+							SistemadeReparaciones.getInstancia().altaCliente(nroDoc.getText(),jComboBox1.getSelectedItem().toString(),nombre.getText(),apellido.getText(),direccion.getText(),mail.getText(),fechaNac.getText(),tel.getText());
 							dispose();
 						}					
 					}

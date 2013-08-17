@@ -89,7 +89,7 @@ public class ModificarClienteView extends javax.swing.JFrame {
 				jButton1.addActionListener(new ActionListener() {
 					
 					public void actionPerformed(ActionEvent arg0) {
-						ClienteView cliente=SistemadeReparaciones.getInstancia().obtenerClienteView(Integer.parseInt(nroDoc.getText()),tipoDoc.getText());
+						ClienteView cliente=SistemadeReparaciones.getInstancia().obtenerClienteView(nroDoc.getText(),tipoDoc.getText());
 						if(cliente!=null){
 							nombre.setText(cliente.getNombre());
 							direccion.setText(cliente.getDireccion());
@@ -165,7 +165,7 @@ public class ModificarClienteView extends javax.swing.JFrame {
 						String tel=telefono.getText();
 						String mail=email.getText();
 						if(nombre1!=null && dir!=null && tel!=null && mail!=null){
-							SistemadeReparaciones.getInstancia().modificarCliente(Integer.parseInt(nroDoc.getText()),tipoDoc.getText(),nombre1,dir,tel,mail);
+							SistemadeReparaciones.getInstancia().modificarCliente(nroDoc.getText(),tipoDoc.getText(),nombre1,dir,tel,mail);
 						}
 						else
 						{

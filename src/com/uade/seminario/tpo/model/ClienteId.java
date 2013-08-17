@@ -10,20 +10,20 @@ public class ClienteId implements Serializable{
 	 * 
 	 */
 	private static final long serialVersionUID = -4015828852452785490L;
-	private int nroDoc;
+	private String nroDoc;
 	private String tipoDoc;
 	public ClienteId(){
 		
 	}
-	public ClienteId(int nroDoc, String tipoDoc) {
+	public ClienteId(String nroDoc, String tipoDoc) {
 		super();
 		this.nroDoc = nroDoc;
 		this.tipoDoc = tipoDoc;
 	}
-	public int getNroDoc() {
+	public String getNroDoc() {
 		return nroDoc;
 	}
-	public void setNroDoc(int nroDoc) {
+	public void setNroDoc(String nroDoc) {
 		this.nroDoc = nroDoc;
 	}
 	public String getTipoDoc() {
