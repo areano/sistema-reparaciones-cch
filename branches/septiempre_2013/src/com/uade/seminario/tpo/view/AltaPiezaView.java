@@ -29,6 +29,7 @@ public class AltaPiezaView extends javax.swing.JFrame {
 	private JLabel jLabel1;
 	private JLabel jLabel2;
 	private JLabel jLabel4;
+	private JButton buscarPieza;
 	private JButton ok;
 	private JTextArea descripcion;
 	private JTextField codModelo;
@@ -42,16 +43,18 @@ public class AltaPiezaView extends javax.swing.JFrame {
 	public static void main(String[] args) {
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
-				AltaPiezaView inst = new AltaPiezaView();
+				AltaPiezaView inst = new AltaPiezaView("");
 				inst.setLocationRelativeTo(null);
 				inst.setVisible(true);
 			}
 		});
 	}
 	
-	public AltaPiezaView() {
+	public AltaPiezaView(String codigo) {
 		super();
 		initGUI();
+		codModelo.setText(codigo);
+		codModelo.setEditable(false);
 	}
 	
 	private void initGUI() {
@@ -110,16 +113,40 @@ public class AltaPiezaView extends javax.swing.JFrame {
 				ok.addActionListener(new ActionListener() {
 					
 					public void actionPerformed(ActionEvent arg0) {
-						if(!codigo.getText().equals("") && !codModelo.getText().equals("")){
-							SistemadeReparaciones.getInstancia().altaPieza(nombre.getText(),Integer.parseInt(codigo.getText()),Integer.parseInt(codModelo.getText()),descripcion.getText());
+						PiezaView piezaV=SistemadeReparaciones.getInstancia().buscarPiezaView(Integer.parseInt(codigo.getText()));
+						if(piezaV!=null){
+							SistemadeReparaciones.getInstancia().agregarPiezaModelo(piezaV,Integer.parseInt(codModelo.getText()));
 							dispose();
 						}
+						else{
+							if(!codigo.getText().equals("") && !codModelo.getText().equals("")){
+								SistemadeReparaciones.getInstancia().altaPieza(nombre.getText(),Integer.parseInt(codigo.getText()),Integer.parseInt(codModelo.getText()),descripcion.getText());
+								dispose();
+							}
+						}
+						
 						
 					}
 				});
 			}
+			{
+				buscarPieza = new JButton();
+				getContentPane().add(buscarPieza);
+				buscarPieza.setText("Buscar Pieza");
+				buscarPieza.setBounds(377, 64, 125, 23);
+				buscarPieza.addActionListener(new ActionListener() {
+					
+					public void actionPerformed(ActionEvent e) {
+						PiezaView piezaV=SistemadeReparaciones.getInstancia().buscarPiezaView(Integer.parseInt(codigo.getText()));
+						if(piezaV!=null){
+							nombre.setText(piezaV.getNombrePieza());
+							descripcion.setText(piezaV.getDescripcion());
+						}
+					}
+				});
+			}
 			pack();
-			setSize(400, 300);
+			this.setSize(530, 300);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

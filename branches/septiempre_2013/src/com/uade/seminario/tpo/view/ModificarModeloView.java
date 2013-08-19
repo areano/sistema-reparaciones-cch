@@ -33,6 +33,7 @@ public class ModificarModeloView extends javax.swing.JFrame {
 	private JLabel jLabel1;
 	private JLabel jLabel2;
 	private JLabel jLabel4;
+	private JButton quitarPieza;
 	private JButton confirmar;
 	private JButton actualizar;
 	private JList piezas;
@@ -156,11 +157,11 @@ public class ModificarModeloView extends javax.swing.JFrame {
 				agregar = new JButton();
 				getContentPane().add(agregar);
 				agregar.setText("Agregar Pieza");
-				agregar.setBounds(249, 186, 123, 23);
+				agregar.setBounds(249, 167, 123, 23);
 				agregar.addActionListener(new ActionListener() {
 					
 					public void actionPerformed(ActionEvent e) {
-						AltaPiezaView view= new AltaPiezaView();
+						AltaPiezaView view= new AltaPiezaView(codigo.getText());
 						view.setVisible(true);							
 					}
 
@@ -186,11 +187,24 @@ public class ModificarModeloView extends javax.swing.JFrame {
 				actualizar = new JButton();
 				getContentPane().add(actualizar);
 				actualizar.setText("Actualizar Lista");
-				actualizar.setBounds(249, 228, 123, 23);
+				actualizar.setBounds(249, 202, 123, 23);
 				actualizar.addActionListener(new ActionListener() {
 					
 					public void actionPerformed(ActionEvent arg0) {
 						actualizarLista();
+					}
+				});
+			}
+			{
+				quitarPieza = new JButton();
+				getContentPane().add(quitarPieza);
+				quitarPieza.setText("Quitar Pieza");
+				quitarPieza.setBounds(249, 237, 123, 23);
+				quitarPieza.addActionListener(new ActionListener() {
+					
+					public void actionPerformed(ActionEvent e) {
+						PiezaView pieza=(PiezaView)piezas.getSelectedValue();
+						
 					}
 				});
 			}
