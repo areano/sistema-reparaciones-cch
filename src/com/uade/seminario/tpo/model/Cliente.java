@@ -9,7 +9,8 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
-import com.uade.seminario.tpo.view.ClienteView;
+
+import com.uade.seminario.tpo.view.objectView.ClienteView;
 
 
 //

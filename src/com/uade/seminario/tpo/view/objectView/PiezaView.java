@@ -1,4 +1,4 @@
-package com.uade.seminario.tpo.view;
+package com.uade.seminario.tpo.view.objectView;
 
 public class PiezaView {
 	private int nroPieza;

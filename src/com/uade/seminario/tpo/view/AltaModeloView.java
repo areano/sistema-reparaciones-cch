@@ -16,6 +16,8 @@ import javax.swing.SwingUtilities;
 
 import com.uade.seminario.tpo.controller.SistemadeReparaciones;
 import com.uade.seminario.tpo.exceptions.ExceptionModeloInactivo;
+import com.uade.seminario.tpo.view.objectView.ModeloView;
+import com.uade.seminario.tpo.view.objectView.PiezaView;
 
 
 /**

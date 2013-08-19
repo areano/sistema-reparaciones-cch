@@ -1,6 +1,6 @@
 package com.uade.seminario.tpo.model;
 
-import com.uade.seminario.tpo.view.PiezaView;
+import com.uade.seminario.tpo.view.objectView.PiezaView;
 
 //
 //
