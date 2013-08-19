@@ -81,4 +81,12 @@ public class Modelo {
 		ModeloView mod=new ModeloView(getNombre(),getDescripcion(), getNroModelo());
 		return mod;
 	}
+	public void eliminar() { //Borra de la base de datos
+		// TODO Auto-generated method stub
+		
+	}
+	public void quitarPieza(Pieza pieza) {
+		this.piezas.remove(pieza);
+		
+	}
 }

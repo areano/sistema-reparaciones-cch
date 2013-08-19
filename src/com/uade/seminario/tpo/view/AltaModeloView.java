@@ -15,6 +15,7 @@ import javax.swing.WindowConstants;
 import javax.swing.SwingUtilities;
 
 import com.uade.seminario.tpo.controller.SistemadeReparaciones;
+import com.uade.seminario.tpo.exceptions.ExceptionModeloInactivo;
 
 
 /**
@@ -33,6 +34,8 @@ public class AltaModeloView extends javax.swing.JFrame {
 	private JLabel jLabel1;
 	private JLabel jLabel2;
 	private JLabel jLabel4;
+	private JButton quitarPieza;
+	private JButton cancelar;
 	private JButton confirmar;
 	private JButton actualizar;
 	private JList piezas;
@@ -114,8 +117,17 @@ public class AltaModeloView extends javax.swing.JFrame {
 								nombre.setText("");
 								descri.setText("");
 							}
-							else
+							else{
 								SistemadeReparaciones.getInstancia().altaModelo(nombre.getText(), Integer.parseInt(codigo.getText()), descri.getText());
+								jScrollPane1.setVisible(true);
+								agregar.setVisible(true);
+								actualizar.setVisible(true);
+								confirmar.setVisible(true);
+								cancelar.setVisible(true);
+								jLabel4.setVisible(true);
+								quitarPieza.setVisible(true);
+							}								
+								
 							
 						}
 						
@@ -126,11 +138,13 @@ public class AltaModeloView extends javax.swing.JFrame {
 				jLabel4 = new JLabel();
 				getContentPane().add(jLabel4);
 				jLabel4.setText("Piezas del Modelo : ");
+				jLabel4.setVisible(false);
 				jLabel4.setBounds(12, 132, 131, 16);
 			}
 			{
 				jScrollPane1 = new JScrollPane();
 				getContentPane().add(jScrollPane1);
+				jScrollPane1.setVisible(false);
 				jScrollPane1.setBounds(12, 160, 225, 119);
 				{
 					
@@ -146,6 +160,7 @@ public class AltaModeloView extends javax.swing.JFrame {
 					jScrollPane1.setViewportView(piezas);
 					piezas.setModel(piezasModelo);
 					piezas.setBounds(12, 160, 225, 119);
+					piezas.setVisible(false);
 					
 					
 				}
@@ -154,11 +169,12 @@ public class AltaModeloView extends javax.swing.JFrame {
 				agregar = new JButton();
 				getContentPane().add(agregar);
 				agregar.setText("Agregar Pieza");
-				agregar.setBounds(249, 186, 123, 23);
+				agregar.setBounds(249, 181, 123, 23);
+				agregar.setVisible(false);
 				agregar.addActionListener(new ActionListener() {
 					
 					public void actionPerformed(ActionEvent e) {
-						AltaPiezaView view= new AltaPiezaView();
+						AltaPiezaView view= new AltaPiezaView(codigo.getText());
 						view.setVisible(true);							
 					}
 
@@ -169,7 +185,8 @@ public class AltaModeloView extends javax.swing.JFrame {
 				confirmar = new JButton();
 				getContentPane().add(confirmar);
 				confirmar.setText("Confirmar");
-				confirmar.setBounds(143, 289, 111, 23);
+				confirmar.setBounds(32, 289, 111, 23);
+				confirmar.setVisible(false);
 				confirmar.addActionListener(new ActionListener() {
 					
 					public void actionPerformed(ActionEvent arg0) {
@@ -184,7 +201,8 @@ public class AltaModeloView extends javax.swing.JFrame {
 				actualizar = new JButton();
 				getContentPane().add(actualizar);
 				actualizar.setText("Actualizar Lista");
-				actualizar.setBounds(249, 228, 123, 23);
+				actualizar.setBounds(249, 251, 123, 23);
+				actualizar.setVisible(false);
 				actualizar.addActionListener(new ActionListener() {
 					
 					public void actionPerformed(ActionEvent arg0) {
@@ -204,6 +222,41 @@ public class AltaModeloView extends javax.swing.JFrame {
 						jScrollPane1.setViewportView(piezas);
 						piezas.setModel(piezasModelo);
 						piezas.setBounds(12, 160, 225, 119);
+						
+					}
+				});
+			}
+			{
+				cancelar = new JButton();
+				getContentPane().add(cancelar);
+				cancelar.setText("Cancelar");
+				cancelar.setVisible(false);
+				cancelar.setBounds(223, 289, 125, 23);
+				cancelar.addActionListener(new ActionListener() {
+					
+					public void actionPerformed(ActionEvent arg0) {
+						try {
+							SistemadeReparaciones.getInstancia().eliminarModelo(Integer.parseInt(codigo.getText()));
+							dispose();
+						} catch (NumberFormatException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+						
+					}
+				});
+			}
+			{
+				quitarPieza = new JButton();
+				getContentPane().add(quitarPieza);
+				quitarPieza.setText("Quitar Pieza");
+				quitarPieza.setVisible(false);
+				quitarPieza.setBounds(249, 216, 123, 23);
+				quitarPieza.addActionListener(new ActionListener() {
+					
+					public void actionPerformed(ActionEvent e) {
+						String nroPieza=(String) piezas.getSelectedValue().toString();
+						SistemadeReparaciones.getInstancia().quitarPiezaModelo(Integer.parseInt(codigo.getText()),Integer.parseInt(nroPieza));
 						
 					}
 				});

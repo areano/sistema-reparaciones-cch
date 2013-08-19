@@ -21,6 +21,7 @@ public class Pieza {
 	private String nombrePieza;
 	private String descripcion;
 	private String estado;
+	
 	public Pieza(int codPieza, String nombre, String descripcion2) {
 		this.nroPieza=codPieza;
 		this.nombrePieza=nombre;
@@ -62,6 +63,11 @@ public class Pieza {
 	public PiezaView getView() {
 		PiezaView piezaview=new PiezaView(getNroPieza(), getNombrePieza(), getDescripcion());
 		return piezaview;
+		
+	}
+	
+	public void eliminate() { //Elimina de la base de datos.
+		// TODO Auto-generated method stub
 		
 	}
 }
