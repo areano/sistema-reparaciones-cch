@@ -6,6 +6,7 @@ import java.util.Vector;
 import com.uade.seminario.tpo.service.ClienteService;
 import com.uade.seminario.tpo.service.EmpleadoService;
 import com.uade.seminario.tpo.view.objectView.ClienteView;
+import com.uade.seminario.tpo.view.objectView.EquipoView;
 import com.uade.seminario.tpo.view.objectView.ModeloView;
 import com.uade.seminario.tpo.view.objectView.OrdenReparacionView;
 import com.uade.seminario.tpo.view.objectView.PiezaView;
@@ -144,16 +145,19 @@ public class SistemadeReparaciones {
 	}
 	
 	
-	public void altaOrdenReparacion(int nroSerieEquipo){
+	public int altaOrdenReparacion(int nroSerieEquipo){
 		Equipo equipo=buscarEquipo(nroSerieEquipo);
 		OrdenReparacion or=BuscarEquipoxOrdenRep(nroSerieEquipo);
 		if(equipo!=null && or==null){
-			int nroOrden=generarNroOrden();
+			int nroOrden=this.obtenerNroOrdenReparacion();
 			OrdenReparacion orden=new OrdenReparacion(nroOrden);
 			orden.setEquipo(equipo);
+			return nroOrden;
 			//ACA AGREGAR LAS TAREAS ?¡?¡??¡??¡?
-			orden.setEstado("A reparar");
+			//orden.setEstado("A reparar");
 		}
+		else
+			return 0;
 		
 	}
 
@@ -168,10 +172,7 @@ public class SistemadeReparaciones {
 		return null;
 	}
 
-	public int generarNroOrden() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
+	
 
 	private OrdenReparacion BuscarEquipoxOrdenRep(int nroSerieEquipo) {
 		for (OrdenReparacion or : ordReparacion) {
@@ -463,6 +464,45 @@ public class SistemadeReparaciones {
 			modelo.addPieza(pieza);
 		}
 		
+	}
+
+	public EquipoView buscarEquipoView(int nroSerie) {
+		Equipo equipo=buscarEquipo(nroSerie);
+		if(equipo!=null && equipo.estaActivo()){
+			EquipoView equipoV=equipo.getView();
+			return equipoV;
+		}
+		else
+			return null;
+	}
+
+	public OrdenReparacionView buscarOrdenConEquipoARepararView(int nroSerie) {
+		Equipo equipo=buscarEquipo(nroSerie);
+		if(equipo!=null){
+			for (OrdenReparacion orden : ordReparacion) {
+				if(orden.estadoAReparar() && orden.esTuEquipo(nroSerie)){
+					return orden.getView();
+				}
+			}
+		}
+		return null;
+	}
+
+	public int obtenerNroOrdenReparacion() {
+		
+		return (ordReparacion.size()+1);
+	}
+
+	public Vector<TareaReparacionView> buscarTareasXOrdenReparacionView(int nroOrdenReparacion) {
+		Vector<TareaReparacionView> tareasview=new Vector<TareaReparacionView>();
+		 OrdenReparacion orden=buscarOrdenReparacion(nroOrdenReparacion);
+		 if(orden!=null){
+			 Vector<TareaReparacion> tareas=orden.getItemsReparacion();
+			 for (TareaReparacion t : tareas) {
+				tareasview.add(t.getView());				
+			}
+		 }
+		 return tareasview;
 	}
 
 	
