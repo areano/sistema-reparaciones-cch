@@ -115,6 +115,17 @@ public class SistemadeReparaciones {
 		
 	}
 	
+	public void eliminarModelo(int codigo) {
+		Modelo modelo=this.buscarModelo(codigo);
+		if(modelo!=null){
+			modelo.eliminar();
+			modelos.remove(modelo);
+		}
+		
+	}
+	
+	
+
 	public boolean existeElModeloEnUnEquipo(int codigo) {
 		for (Equipo equipo : equipos) {
 			if(equipo.getModelo().getNroModelo()==codigo)
@@ -348,8 +359,11 @@ public class SistemadeReparaciones {
 	}
 
 	public PiezaView buscarPiezaView(int codigoPieza) {
-		
-		return null;
+		Pieza pieza=buscarPieza(codigoPieza);
+		if(pieza!=null)
+			return pieza.getView();
+		else
+			return null;
 	}
 
 	public void modificarPieza(String nombre, int codPieza,
@@ -398,7 +412,10 @@ public class SistemadeReparaciones {
 
 	public void confirmarModelo(int codigo) {
 		Modelo modelo= buscarModelo(codigo);
-		modelo.activar();
+		if(modelo!=null)
+			modelo.activar();
+		else
+			throw new ExceptionNoExisteModelo(codigo);
 		
 	}
 	public void altaEquipo(int nroEquipo,int nroModelo,String tipoDoc,String nroDoc,Date fecha,String nroGarantia,boolean repararDeTodosModos){
@@ -429,6 +446,26 @@ public class SistemadeReparaciones {
 			garantias.add(garantia);
 		}
 	}
+
+	public void quitarPiezaModelo(int codigoModelo, int nroPieza) {
+		Modelo modelo=buscarModelo(codigoModelo);
+		Pieza pieza=buscarPieza(nroPieza);
+		if(modelo!=null && pieza!=null){
+			modelo.quitarPieza(pieza);
+		}
+		
+	}
+
+	public void agregarPiezaModelo(PiezaView piezaV, int codigoModelo) {
+		Modelo modelo=buscarModelo(codigoModelo);
+		Pieza pieza=buscarPieza(piezaV.getNroPieza());
+		if(modelo!=null && pieza!=null){
+			modelo.addPieza(pieza);
+		}
+		
+	}
+
+	
 
 	
 }
