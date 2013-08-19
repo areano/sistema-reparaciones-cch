@@ -1,4 +1,4 @@
-package com.uade.seminario.tpo.view;
+package com.uade.seminario.tpo.view.objectView;
 
 import java.sql.Date;
 import java.util.Vector;

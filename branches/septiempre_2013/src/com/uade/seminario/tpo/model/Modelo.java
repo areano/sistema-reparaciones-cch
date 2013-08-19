@@ -12,7 +12,7 @@ import java.util.Vector;
 //
 //
 
-import com.uade.seminario.tpo.view.ModeloView;
+import com.uade.seminario.tpo.view.objectView.ModeloView;
 
 
 

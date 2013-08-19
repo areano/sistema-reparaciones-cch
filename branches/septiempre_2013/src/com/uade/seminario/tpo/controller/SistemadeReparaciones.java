@@ -5,11 +5,11 @@ import java.util.Vector;
 
 import com.uade.seminario.tpo.service.ClienteService;
 import com.uade.seminario.tpo.service.EmpleadoService;
-import com.uade.seminario.tpo.view.ClienteView;
-import com.uade.seminario.tpo.view.ModeloView;
-import com.uade.seminario.tpo.view.OrdenReparacionView;
-import com.uade.seminario.tpo.view.PiezaView;
-import com.uade.seminario.tpo.view.TareaReparacionView;
+import com.uade.seminario.tpo.view.objectView.ClienteView;
+import com.uade.seminario.tpo.view.objectView.ModeloView;
+import com.uade.seminario.tpo.view.objectView.OrdenReparacionView;
+import com.uade.seminario.tpo.view.objectView.PiezaView;
+import com.uade.seminario.tpo.view.objectView.TareaReparacionView;
 
 import com.uade.seminario.tpo.exceptions.ExceptionExisteCliente;
 import com.uade.seminario.tpo.exceptions.ExceptionExisteModelo;
