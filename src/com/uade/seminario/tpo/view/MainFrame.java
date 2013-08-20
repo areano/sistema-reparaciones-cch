@@ -14,22 +14,33 @@ import javax.swing.JMenuItem;
 import javax.swing.WindowConstants;
 import javax.swing.SwingUtilities;
 
-import com.uade.seminario.tpo.view.clientes.AltaClienteFrame;
-import com.uade.seminario.tpo.view.clientes.BajaClienteFrame;
-import com.uade.seminario.tpo.view.clientes.ModificarClienteFrame;
-
 public class MainFrame extends javax.swing.JFrame {
-	
+
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = -865594599931243954L;
+	private JDesktopPane jdEscritorio;
 	private JMenuBar jMenu;
+	private JMenu jmCliente;
 	private JMenuItem jmiModificarCliente;
-	private JMenuItem jmiBajaCliente;
 	private JMenuItem jmiAltaCliente;
-	private JMenu jMenu1;
-	private JDesktopPane desktop;
+	private JMenu jmEquipo;
+	private JMenu jmGarantia;
+	private JMenu jmModelo;
+	private JMenu jmOrdenDeReparacion;
+	private JMenu jmPieza;
+	private JMenu jmTareaDeReparacion;
+	private JMenuItem jmiAltaEquipo;
+	private JMenuItem jmiAltaGarantia;
+	private JMenuItem jmiAltaModelo;
+	private JMenuItem jmiModificarModelo;
+	private JMenuItem jmiBajaModelo;
+	private JMenuItem jmiAltaOrdenReparacion;
+	private JMenuItem jmiAltaPieza;
+	private JMenuItem jmiModificarPieza;
+	private JMenuItem jmiBajaPieza;
+	private JMenuItem jmiAltaTareaReparacion;
 
 	/**
 	 * Auto-generated main method to display this JFrame
@@ -59,47 +70,146 @@ public class MainFrame extends javax.swing.JFrame {
 		try {
 			setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 			{
-				desktop = new JDesktopPane();
+				jdEscritorio = new JDesktopPane();
 				jMenu = new JMenuBar();
-				setContentPane(desktop);
+				setContentPane(jdEscritorio);
 				setJMenuBar(jMenu);
 				{
-					jMenu1 = new JMenu();
-					jMenu.add(jMenu1);
-					jMenu1.setText("Clientes");
 					{
-						jmiAltaCliente = new JMenuItem();
-						jMenu1.add(jmiAltaCliente);
-						jmiAltaCliente.setText("Alta");
-						jmiAltaCliente.addActionListener(new ActionListener() {
-
-							public void actionPerformed(ActionEvent e) {
-								cargarInternalFrame(new AltaClienteFrame());
-							}
-						});
+						jmCliente = new JMenu("Cliente");
+						jMenu.add(jmCliente);
+						{
+							jmiAltaCliente = new JMenuItem("Alta");
+							jmCliente.add(jmiAltaCliente);
+							jmiAltaCliente.addActionListener(new ActionListener() {
+								public void actionPerformed(ActionEvent e) {
+									cargarInternalFrame(new AltaClienteView());
+								}
+							});
+						}
+						{
+							jmiModificarCliente = new JMenuItem("Modificar");
+							jmCliente.add(jmiModificarCliente);
+							jmiModificarCliente.addActionListener(new ActionListener() {
+								public void actionPerformed(ActionEvent arg0) {
+									cargarInternalFrame(new ModificarClienteView());
+								}
+							});
+						}
 					}
 					{
-						jmiModificarCliente = new JMenuItem();
-						jMenu1.add(jmiModificarCliente);
-						jmiModificarCliente.setText("Modificar");
-						jmiModificarCliente
-								.addActionListener(new ActionListener() {
-
-									public void actionPerformed(ActionEvent arg0) {
-										cargarInternalFrame(new ModificarClienteFrame());
-									}
-								});
+						jmEquipo = new JMenu("Equipo");
+						jMenu.add(jmEquipo);
+						{
+							jmiAltaEquipo = new JMenuItem("Alta");
+							jmEquipo.add(jmiAltaEquipo);
+							jmiAltaEquipo.addActionListener(new ActionListener() {
+								public void actionPerformed(ActionEvent arg0) {
+									cargarInternalFrame(new AltaEquipoView());
+								}
+							});
+						}
 					}
 					{
-						jmiBajaCliente = new JMenuItem();
-						jMenu1.add(jmiBajaCliente);
-						jmiBajaCliente.setText("Baja");
-						jmiBajaCliente.addActionListener(new ActionListener() {
-
-							public void actionPerformed(ActionEvent arg0) {
-								cargarInternalFrame(new BajaClienteFrame());
-							}
-						});
+						jmGarantia = new JMenu("Garantia");
+						jMenu.add(jmGarantia);
+						{
+							jmiAltaGarantia = new JMenuItem("Alta");
+							jmGarantia.add(jmiAltaGarantia);
+							jmiAltaGarantia.addActionListener(new ActionListener() {
+								public void actionPerformed(ActionEvent arg0) {
+									cargarInternalFrame(new AltaGarantiaView());
+								}
+							});
+						}
+					}
+					{
+						jmModelo = new JMenu("Modelo");
+						jMenu.add(jmModelo);
+						{
+							jmiAltaModelo = new JMenuItem("Alta");
+							jmModelo.add(jmiAltaModelo);
+							jmiAltaModelo.addActionListener(new ActionListener() {
+								public void actionPerformed(ActionEvent arg0) {
+									cargarInternalFrame(new AltaModeloView());
+								}
+							});
+						}
+						{
+							jmiModificarModelo = new JMenuItem("Modificar");
+							jmModelo.add(jmiModificarModelo);
+							jmiModificarModelo.addActionListener(new ActionListener() {
+								public void actionPerformed(ActionEvent arg0) {
+									cargarInternalFrame(new ModificarModeloView());
+								}
+							});
+						}
+						{
+							jmiBajaModelo = new JMenuItem("Baja");
+							jmModelo.add(jmiBajaModelo);
+							jmiBajaModelo.addActionListener(new ActionListener() {
+								public void actionPerformed(ActionEvent arg0) {
+									cargarInternalFrame(new BajaModeloView());
+								}
+							});
+						}
+					}
+					{
+						jmOrdenDeReparacion = new JMenu("Orden de Reparacion");
+						jMenu.add(jmOrdenDeReparacion);
+						{
+							jmiAltaOrdenReparacion = new JMenuItem("Alta");
+							jmOrdenDeReparacion.add(jmiAltaOrdenReparacion);
+							jmiAltaOrdenReparacion.addActionListener(new ActionListener() {
+								public void actionPerformed(ActionEvent arg0) {
+									cargarInternalFrame(new AltaOrdenReparacionView());
+								}
+							});
+						}
+					}
+					{
+						jmPieza = new JMenu("Pieza");
+						jMenu.add(jmPieza);
+						{
+							jmiAltaPieza = new JMenuItem("Alta");
+							jmPieza.add(jmiAltaPieza);
+							jmiAltaPieza.addActionListener(new ActionListener() {
+								public void actionPerformed(ActionEvent arg0) {
+									cargarInternalFrame(new AltaPiezaView());
+								}
+							});
+						}
+						{
+							jmiModificarPieza = new JMenuItem("Modificar");
+							jmPieza.add(jmiModificarPieza);
+							jmiModificarPieza.addActionListener(new ActionListener() {
+								public void actionPerformed(ActionEvent arg0) {
+									cargarInternalFrame(new ModificarPiezaView());
+								}
+							});
+						}
+						{
+							jmiBajaPieza = new JMenuItem("Baja");
+							jmPieza.add(jmiBajaPieza);
+							jmiBajaPieza.addActionListener(new ActionListener() {
+								public void actionPerformed(ActionEvent arg0) {
+									cargarInternalFrame(new BajaPiezaView());
+								}
+							});
+						}
+					}
+					{
+						jmTareaDeReparacion = new JMenu("Tarea de Reparacion");
+						jMenu.add(jmTareaDeReparacion);
+						{
+							jmiAltaTareaReparacion = new JMenuItem("Alta");
+							jmTareaDeReparacion.add(jmiAltaTareaReparacion);
+							jmiAltaTareaReparacion.addActionListener(new ActionListener() {
+								public void actionPerformed(ActionEvent arg0) {
+									cargarInternalFrame(new AltaTareaReparacionView(""));
+								}
+							});
+						}
 					}
 				}
 			}
@@ -112,7 +222,9 @@ public class MainFrame extends javax.swing.JFrame {
 
 	private void cargarInternalFrame(JInternalFrame frame) {
 		frame.setVisible(true);
-		desktop.add(frame);
+		frame.setClosable(true);
+
+		jdEscritorio.add(frame);
 
 		// seleccionar el frame actual
 		try {

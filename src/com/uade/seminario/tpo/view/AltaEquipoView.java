@@ -8,9 +8,9 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
+import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
-
 import javax.swing.WindowConstants;
 import javax.swing.SwingUtilities;
 
@@ -29,7 +29,7 @@ import com.uade.seminario.tpo.controller.SistemadeReparaciones;
 * THIS MACHINE, SO JIGLOO OR THIS CODE CANNOT BE USED
 * LEGALLY FOR ANY CORPORATE OR COMMERCIAL PURPOSE.
 */
-public class AltaEquipoView extends javax.swing.JFrame {
+public class AltaEquipoView extends JInternalFrame {
 	private JLabel jLabel1;
 	private JLabel jLabel2;
 	private JLabel jLabel4;
@@ -56,15 +56,15 @@ public class AltaEquipoView extends javax.swing.JFrame {
 	/**
 	* Auto-generated main method to display this JFrame
 	*/
-	public static void main(String[] args) {
-		SwingUtilities.invokeLater(new Runnable() {
-			public void run() {
-				AltaEquipoView inst = new AltaEquipoView();
-				inst.setLocationRelativeTo(null);
-				inst.setVisible(true);
-			}
-		});
-	}
+//	public static void main(String[] args) {
+//		SwingUtilities.invokeLater(new Runnable() {
+//			public void run() {
+//				AltaEquipoView inst = new AltaEquipoView();
+//				inst.setLocationRelativeTo(null);
+//				inst.setVisible(true);
+//			}
+//		});
+//	}
 	
 	public AltaEquipoView() {
 		super();
@@ -73,6 +73,7 @@ public class AltaEquipoView extends javax.swing.JFrame {
 	
 	private void initGUI() {
 		try {
+			setTitle("Alta Equipo");
 			setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 			getContentPane().setLayout(null);
 			{

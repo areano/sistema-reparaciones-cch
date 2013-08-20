@@ -25,7 +25,7 @@ import com.uade.seminario.tpo.controller.SistemadeReparaciones;
 * THIS MACHINE, SO JIGLOO OR THIS CODE CANNOT BE USED
 * LEGALLY FOR ANY CORPORATE OR COMMERCIAL PURPOSE.
 */
-public class AltaGarantiaView extends javax.swing.JFrame {
+public class AltaGarantiaView extends javax.swing.JInternalFrame {
 	private JLabel jLabel1;
 	private JLabel jLabel2;
 	private JTextField fecha;
@@ -35,15 +35,15 @@ public class AltaGarantiaView extends javax.swing.JFrame {
 	/**
 	* Auto-generated main method to display this JFrame
 	*/
-	public static void main(String[] args) {
-		SwingUtilities.invokeLater(new Runnable() {
-			public void run() {
-				AltaGarantiaView inst = new AltaGarantiaView();
-				inst.setLocationRelativeTo(null);
-				inst.setVisible(true);
-			}
-		});
-	}
+//	public static void main(String[] args) {
+//		SwingUtilities.invokeLater(new Runnable() {
+//			public void run() {
+//				AltaGarantiaView inst = new AltaGarantiaView();
+//				inst.setLocationRelativeTo(null);
+//				inst.setVisible(true);
+//			}
+//		});
+//	}
 	
 	public AltaGarantiaView() {
 		super();
@@ -52,6 +52,7 @@ public class AltaGarantiaView extends javax.swing.JFrame {
 	
 	private void initGUI() {
 		try {
+			setTitle("Alta Garantia");
 			setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 			getContentPane().setLayout(null);
 			{

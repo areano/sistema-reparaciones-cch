@@ -3,11 +3,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
+import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
-
 import javax.swing.WindowConstants;
-import javax.swing.SwingUtilities;
 
 import com.uade.seminario.tpo.controller.SistemadeReparaciones;
 import com.uade.seminario.tpo.view.objectView.ClienteView;
@@ -25,7 +24,7 @@ import com.uade.seminario.tpo.view.objectView.ClienteView;
 * THIS MACHINE, SO JIGLOO OR THIS CODE CANNOT BE USED
 * LEGALLY FOR ANY CORPORATE OR COMMERCIAL PURPOSE.
 */
-public class ModificarClienteView extends javax.swing.JFrame {
+public class ModificarClienteView extends JInternalFrame {
 	private JLabel jLabel1;
 	private JLabel jLabel2;
 	private JLabel jLabel4;
@@ -46,15 +45,15 @@ public class ModificarClienteView extends javax.swing.JFrame {
 	/**
 	* Auto-generated main method to display this JFrame
 	*/
-	public static void main(String[] args) {
-		SwingUtilities.invokeLater(new Runnable() {
-			public void run() {
-				ModificarClienteView inst = new ModificarClienteView();
-				inst.setLocationRelativeTo(null);
-				inst.setVisible(true);
-			}
-		});
-	}
+//	public static void main(String[] args) {
+//		SwingUtilities.invokeLater(new Runnable() {
+//			public void run() {
+//				ModificarClienteView inst = new ModificarClienteView();
+//				inst.setLocationRelativeTo(null);
+//				inst.setVisible(true);
+//			}
+//		});
+//	}
 	
 	public ModificarClienteView() {
 		super();
@@ -63,6 +62,7 @@ public class ModificarClienteView extends javax.swing.JFrame {
 	
 	private void initGUI() {
 		try {
+			setTitle("Modificar Cliente");
 			setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 			getContentPane().setLayout(null);
 			{

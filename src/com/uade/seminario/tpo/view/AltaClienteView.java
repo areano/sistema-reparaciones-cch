@@ -1,14 +1,14 @@
 package com.uade.seminario.tpo.view;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
 import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
-
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
-
 import javax.swing.WindowConstants;
 import javax.swing.SwingUtilities;
 
@@ -27,7 +27,7 @@ import com.uade.seminario.tpo.controller.SistemadeReparaciones;
 * THIS MACHINE, SO JIGLOO OR THIS CODE CANNOT BE USED
 * LEGALLY FOR ANY CORPORATE OR COMMERCIAL PURPOSE.
 */
-public class AltaClienteView extends javax.swing.JFrame {
+public class AltaClienteView extends JInternalFrame {
 	private JLabel jLabel1;
 	private JLabel jLabel2;
 	private JLabel jLabel4;
@@ -47,18 +47,18 @@ public class AltaClienteView extends javax.swing.JFrame {
 	private JLabel jLabel5;
 	private JLabel jLabel3;
 
-	/**
-	* Auto-generated main method to display this JFrame
-	*/
-	public static void main(String[] args) {
-		SwingUtilities.invokeLater(new Runnable() {
-			public void run() {
-				AltaClienteView inst = new AltaClienteView();
-				inst.setLocationRelativeTo(null);
-				inst.setVisible(true);
-			}
-		});
-	}
+//	/**
+//	* Auto-generated main method to display this JFrame
+//	*/
+//	public static void main(String[] args) {
+//		SwingUtilities.invokeLater(new Runnable() {
+//			public void run() {
+//				AltaClienteView inst = new AltaClienteView();
+//				inst.setLocationRelativeTo(null);
+//				inst.setVisible(true);
+//			}
+//		});
+//	}
 	
 	public AltaClienteView() {
 		super();
@@ -67,6 +67,7 @@ public class AltaClienteView extends javax.swing.JFrame {
 	
 	private void initGUI() {
 		try {
+			setTitle("Alta Cliente");
 			setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 			getContentPane().setLayout(null);
 			{
