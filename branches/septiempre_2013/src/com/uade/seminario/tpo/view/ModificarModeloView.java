@@ -30,7 +30,7 @@ import com.uade.seminario.tpo.view.objectView.PiezaView;
 * THIS MACHINE, SO JIGLOO OR THIS CODE CANNOT BE USED
 * LEGALLY FOR ANY CORPORATE OR COMMERCIAL PURPOSE.
 */
-public class ModificarModeloView extends javax.swing.JFrame {
+public class ModificarModeloView extends javax.swing.JInternalFrame {
 
 	private JLabel jLabel1;
 	private JLabel jLabel2;
@@ -50,15 +50,15 @@ public class ModificarModeloView extends javax.swing.JFrame {
 	/**
 	* Auto-generated main method to display this JFrame
 	*/
-	public static void main(String[] args) {
-		SwingUtilities.invokeLater(new Runnable() {
-			public void run() {
-				ModificarModeloView inst = new ModificarModeloView();
-				inst.setLocationRelativeTo(null);
-				inst.setVisible(true);
-			}
-		});
-	}
+//	public static void main(String[] args) {
+//		SwingUtilities.invokeLater(new Runnable() {
+//			public void run() {
+//				ModificarModeloView inst = new ModificarModeloView();
+//				inst.setLocationRelativeTo(null);
+//				inst.setVisible(true);
+//			}
+//		});
+//	}
 	
 	public ModificarModeloView() {
 		super();
@@ -67,6 +67,7 @@ public class ModificarModeloView extends javax.swing.JFrame {
 	
 	private void initGUI() {
 		try {
+			setTitle("Modificar Modelo");
 			setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 			getContentPane().setLayout(null);
 			{

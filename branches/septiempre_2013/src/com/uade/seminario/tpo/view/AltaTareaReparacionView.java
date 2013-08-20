@@ -1,7 +1,6 @@
 package com.uade.seminario.tpo.view;
 
 import javax.swing.WindowConstants;
-import javax.swing.SwingUtilities;
 
 
 /**
@@ -16,29 +15,29 @@ import javax.swing.SwingUtilities;
 * THIS MACHINE, SO JIGLOO OR THIS CODE CANNOT BE USED
 * LEGALLY FOR ANY CORPORATE OR COMMERCIAL PURPOSE.
 */
-public class AltaTareaReparacionView extends javax.swing.JFrame {
+public class AltaTareaReparacionView extends javax.swing.JInternalFrame {
 
 	/**
 	* Auto-generated main method to display this JFrame
 	*/
-	public static void main(String[] args) {
-		SwingUtilities.invokeLater(new Runnable() {
-			public void run() {
-				AltaTareaReparacionView inst = new AltaTareaReparacionView();
-				inst.setLocationRelativeTo(null);
-				inst.setVisible(true);
-			}
-		});
-	}
+//	public static void main(String[] args) {
+//		SwingUtilities.invokeLater(new Runnable() {
+//			public void run() {
+//				AltaTareaReparacionView inst = new AltaTareaReparacionView("");
+//				inst.setLocationRelativeTo(null);
+//				inst.setVisible(true);
+//			}
+//		});
+//	}
 	
 	public AltaTareaReparacionView(String nroOrdenReparacion) {
 		super();
-		initGUI();
-		
+		initGUI();		
 	}
 	
 	private void initGUI() {
 		try {
+			setTitle("Alta Tarea de Reparacion");
 			setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 			getContentPane().setLayout(null);
 			pack();

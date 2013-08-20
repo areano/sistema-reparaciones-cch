@@ -1,7 +1,6 @@
 package com.uade.seminario.tpo.view;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import javax.swing.DefaultComboBoxModel;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
@@ -11,16 +10,12 @@ import javax.swing.JList;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
-import javax.swing.ListModel;
 
 import javax.swing.WindowConstants;
-import javax.swing.SwingUtilities;
 
 import com.uade.seminario.tpo.controller.SistemadeReparaciones;
-import com.uade.seminario.tpo.model.OrdenReparacion;
 import com.uade.seminario.tpo.view.objectView.EquipoView;
 import com.uade.seminario.tpo.view.objectView.OrdenReparacionView;
-import com.uade.seminario.tpo.view.objectView.PiezaView;
 import com.uade.seminario.tpo.view.objectView.TareaReparacionView;
 
 
@@ -36,7 +31,7 @@ import com.uade.seminario.tpo.view.objectView.TareaReparacionView;
 * THIS MACHINE, SO JIGLOO OR THIS CODE CANNOT BE USED
 * LEGALLY FOR ANY CORPORATE OR COMMERCIAL PURPOSE.
 */
-public class AltaOrdenReparacionView extends javax.swing.JFrame {
+public class AltaOrdenReparacionView extends javax.swing.JInternalFrame {
 	private JLabel jLabel1;
 	private JButton buscarEquipo;
 	private JLabel jLabel2;
@@ -62,15 +57,15 @@ public class AltaOrdenReparacionView extends javax.swing.JFrame {
 	/**
 	* Auto-generated main method to display this JFrame
 	*/
-	public static void main(String[] args) {
-		SwingUtilities.invokeLater(new Runnable() {
-			public void run() {
-				AltaOrdenReparacionView inst = new AltaOrdenReparacionView();
-				inst.setLocationRelativeTo(null);
-				inst.setVisible(true);
-			}
-		});
-	}
+//	public static void main(String[] args) {
+//		SwingUtilities.invokeLater(new Runnable() {
+//			public void run() {
+//				AltaOrdenReparacionView inst = new AltaOrdenReparacionView();
+//				inst.setLocationRelativeTo(null);
+//				inst.setVisible(true);
+//			}
+//		});
+//	}
 	
 	public AltaOrdenReparacionView() {
 		super();
@@ -79,6 +74,7 @@ public class AltaOrdenReparacionView extends javax.swing.JFrame {
 	
 	private void initGUI() {
 		try {
+			setTitle("Alta Orden de Reparacion");
 			setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 			getContentPane().setLayout(null);
 			{

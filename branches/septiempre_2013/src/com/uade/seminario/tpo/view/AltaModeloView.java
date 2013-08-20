@@ -32,7 +32,7 @@ import com.uade.seminario.tpo.view.objectView.PiezaView;
 * THIS MACHINE, SO JIGLOO OR THIS CODE CANNOT BE USED
 * LEGALLY FOR ANY CORPORATE OR COMMERCIAL PURPOSE.
 */
-public class AltaModeloView extends javax.swing.JFrame {
+public class AltaModeloView extends javax.swing.JInternalFrame {
 	private JLabel jLabel1;
 	private JLabel jLabel2;
 	private JLabel jLabel4;
@@ -52,15 +52,15 @@ public class AltaModeloView extends javax.swing.JFrame {
 	/**
 	* Auto-generated main method to display this JFrame
 	*/
-	public static void main(String[] args) {
-		SwingUtilities.invokeLater(new Runnable() {
-			public void run() {
-				AltaModeloView inst = new AltaModeloView();
-				inst.setLocationRelativeTo(null);
-				inst.setVisible(true);
-			}
-		});
-	}
+//	public static void main(String[] args) {
+//		SwingUtilities.invokeLater(new Runnable() {
+//			public void run() {
+//				AltaModeloView inst = new AltaModeloView();
+//				inst.setLocationRelativeTo(null);
+//				inst.setVisible(true);
+//			}
+//		});
+//	}
 	
 	public AltaModeloView() {
 		super();
@@ -69,6 +69,7 @@ public class AltaModeloView extends javax.swing.JFrame {
 	
 	private void initGUI() {
 		try {
+			setTitle("Alta Modelo");
 			setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 			getContentPane().setLayout(null);
 			{

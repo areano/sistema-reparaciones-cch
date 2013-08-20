@@ -8,7 +8,6 @@ import javax.swing.JLabel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.WindowConstants;
-import javax.swing.SwingUtilities;
 
 import com.uade.seminario.tpo.controller.SistemadeReparaciones;
 import com.uade.seminario.tpo.view.objectView.PiezaView;
@@ -26,7 +25,7 @@ import com.uade.seminario.tpo.view.objectView.PiezaView;
 * THIS MACHINE, SO JIGLOO OR THIS CODE CANNOT BE USED
 * LEGALLY FOR ANY CORPORATE OR COMMERCIAL PURPOSE.
 */
-public class BajaPiezaView extends javax.swing.JFrame {
+public class BajaPiezaView extends javax.swing.JInternalFrame {
 
 	private JLabel jLabel1;
 	private JLabel jLabel2;
@@ -40,15 +39,15 @@ public class BajaPiezaView extends javax.swing.JFrame {
 	/**
 	* Auto-generated main method to display this JFrame
 	*/
-	public static void main(String[] args) {
-		SwingUtilities.invokeLater(new Runnable() {
-			public void run() {
-				BajaPiezaView inst = new BajaPiezaView();
-				inst.setLocationRelativeTo(null);
-				inst.setVisible(true);
-			}
-		});
-	}
+//	public static void main(String[] args) {
+//		SwingUtilities.invokeLater(new Runnable() {
+//			public void run() {
+//				BajaPiezaView inst = new BajaPiezaView();
+//				inst.setLocationRelativeTo(null);
+//				inst.setVisible(true);
+//			}
+//		});
+//	}
 	
 	public BajaPiezaView() {
 		super();
@@ -57,6 +56,7 @@ public class BajaPiezaView extends javax.swing.JFrame {
 	
 	private void initGUI() {
 		try {
+			setTitle("Baja Pieza");
 			setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 			getContentPane().setLayout(null);
 			{

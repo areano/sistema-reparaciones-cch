@@ -30,7 +30,7 @@ import com.uade.seminario.tpo.view.objectView.PiezaView;
 * THIS MACHINE, SO JIGLOO OR THIS CODE CANNOT BE USED
 * LEGALLY FOR ANY CORPORATE OR COMMERCIAL PURPOSE.
 */
-public class BajaModeloView extends javax.swing.JFrame {
+public class BajaModeloView extends javax.swing.JInternalFrame {
 	private JLabel jLabel1;
 	private JLabel jLabel2;
 	private JLabel jLabel4;
@@ -46,15 +46,15 @@ public class BajaModeloView extends javax.swing.JFrame {
 	/**
 	* Auto-generated main method to display this JFrame
 	*/
-	public static void main(String[] args) {
-		SwingUtilities.invokeLater(new Runnable() {
-			public void run() {
-				BajaModeloView inst = new BajaModeloView();
-				inst.setLocationRelativeTo(null);
-				inst.setVisible(true);
-			}
-		});
-	}
+//	public static void main(String[] args) {
+//		SwingUtilities.invokeLater(new Runnable() {
+//			public void run() {
+//				BajaModeloView inst = new BajaModeloView();
+//				inst.setLocationRelativeTo(null);
+//				inst.setVisible(true);
+//			}
+//		});
+//	}
 	
 	public BajaModeloView() {
 		super();
@@ -63,6 +63,7 @@ public class BajaModeloView extends javax.swing.JFrame {
 	
 	private void initGUI() {
 		try {
+			setTitle("Baja Modelo");
 			setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 			getContentPane().setLayout(null);
 			{
