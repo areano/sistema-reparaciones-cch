@@ -56,7 +56,7 @@ public class TareaReparacion {
 		return estado.equals("Activa");
 	}
 	public TareaReparacionView getView() {
-		TareaReparacionView tareaView=new TareaReparacionView();
+		TareaReparacionView tareaView=new TareaReparacionView(nroItemReparacion,detalle,piezas,estado);
 		return null;
 	}
 	public void listaPiezas() {

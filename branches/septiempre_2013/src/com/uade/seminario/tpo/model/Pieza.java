@@ -21,12 +21,14 @@ public class Pieza {
 	private String nombrePieza;
 	private String descripcion;
 	private String estado;
+	private int stock;
 	
 	public Pieza(int codPieza, String nombre, String descripcion2) {
 		this.nroPieza=codPieza;
 		this.nombrePieza=nombre;
 		this.descripcion=descripcion2;
 		this.estado="activo";
+		this.stock=0;
 	}
 	public int getNroPieza() {
 		return nroPieza;
@@ -69,5 +71,11 @@ public class Pieza {
 	public void eliminate() { //Elimina de la base de datos.
 		// TODO Auto-generated method stub
 		
+	}
+	public int getStock() {
+		return stock;
+	}
+	public void setStock(int stock) {
+		this.stock = stock;
 	}
 }
