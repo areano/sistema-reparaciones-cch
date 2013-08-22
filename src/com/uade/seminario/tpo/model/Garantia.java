@@ -34,4 +34,9 @@ public class Garantia {
 	public void setFechaVencimiento(Date fechaVencimiento) {
 		this.fechaVencimiento = fechaVencimiento;
 	}
+	public boolean estasEnGarantia() {
+		return false;
+		// TODO Auto-generated method stub
+		
+	}
 }

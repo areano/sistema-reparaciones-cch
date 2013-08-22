@@ -152,9 +152,8 @@ public class SistemadeReparaciones {
 			int nroOrden=this.obtenerNroOrdenReparacion();
 			OrdenReparacion orden=new OrdenReparacion(nroOrden);
 			orden.setEquipo(equipo);
+			orden.setEstado("A confirmar");
 			return nroOrden;
-			//ACA AGREGAR LAS TAREAS ?¡?¡??¡??¡?
-			//orden.setEstado("A reparar");
 		}
 		else
 			return 0;
@@ -503,6 +502,97 @@ public class SistemadeReparaciones {
 			}
 		 }
 		 return tareasview;
+	}
+
+	public OrdenReparacionView buscarOrdenReparacionView(int nroOrden) {
+		OrdenReparacion orden=this.buscarOrdenReparacion(nroOrden);
+		if(orden!=null){
+			return orden.getView();			
+		}
+		return null;
+	}
+
+	public int crearTareaReparacion(String descripcion, int numeroOrden) {
+		OrdenReparacion orden=buscarOrdenReparacion(numeroOrden);
+		if(orden!=null){
+			int numeroTarea=obtenerNumeroTarea(orden);
+			TareaReparacion tarea=new TareaReparacion(numeroTarea, descripcion);
+			orden.agregarItemReparacion(tarea);
+			return numeroTarea;
+		}
+		return 0;
+		
+	}
+
+	private int obtenerNumeroTarea(OrdenReparacion orden) {
+		return orden.getItemsReparacion().size()+1;
+	}
+
+	public Vector<PiezaView> buscarPiezasXTareaView(int nroOrden, int nroTarea) {
+		Vector<PiezaView> piezas=new Vector<PiezaView>();
+		OrdenReparacion orden=buscarOrdenReparacion(nroOrden);
+		if(orden!=null){
+			TareaReparacion tarea=orden.obtenerTarea(nroTarea);
+			if(tarea!=null){
+				for (Pieza pieza : tarea.getPiezas()) {
+					piezas.add(pieza.getView());
+				}
+			}
+		}
+		return piezas;
+	}
+
+	public void agregarPiezaTarea(int nroOrden, int nroTarea, int nroPieza) {
+		OrdenReparacion orden=buscarOrdenReparacion(nroOrden);
+		Pieza pieza=buscarPieza(nroPieza);
+		if(orden!=null){
+			TareaReparacion tarea= orden.obtenerTarea(nroTarea);
+			if(tarea!=null){
+				tarea.agregarPieza(pieza);
+			}
+		}
+		
+		
+	}
+
+	public void quitarPiezaTarea(int nroOrden, int nroTarea, int nroPieza) {
+		OrdenReparacion orden=buscarOrdenReparacion(nroOrden);
+		Pieza pieza=buscarPieza(nroPieza);
+		if(orden!=null){
+			TareaReparacion tarea= orden.obtenerTarea(nroTarea);
+			if(tarea!=null){
+				tarea.quitarPieza(pieza);
+			}
+		}
+		
+	}
+
+	public void quitarTareaOrdenReparacion(int nroOrden, int nroTarea) {
+		OrdenReparacion orden=buscarOrdenReparacion(nroOrden);
+		if(orden!=null){
+			TareaReparacion tarea=orden.obtenerTarea(nroTarea);
+			if(tarea!=null){
+				orden.quitarTarea(tarea);
+			}
+		}
+		
+	}
+
+	public void confirmarOrdenReparacion(int nroOrden, String fallas) {
+		OrdenReparacion orden=buscarOrdenReparacion(nroOrden);
+		if(orden!=null){
+			orden.setDescripcionFallas(fallas);
+			orden.setEstado("A reparar");
+		}
+		
+	}
+
+	public void llevarAPresupuestarOrdenReparacion(int nroOrden, String fallas) {
+		OrdenReparacion orden=buscarOrdenReparacion(nroOrden);
+		if(orden!=null){
+			orden.setDescripcionFallas(fallas);
+			orden.setEstado("Presupuestar");
+		}
 	}
 
 	

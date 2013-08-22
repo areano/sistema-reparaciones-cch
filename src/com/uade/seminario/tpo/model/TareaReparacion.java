@@ -63,4 +63,12 @@ public class TareaReparacion {
 		// TODO Auto-generated method stub
 		
 	}
+	public void agregarPieza(Pieza pieza) {
+		this.piezas.add(pieza);
+		
+	}
+	public void quitarPieza(Pieza pieza) {
+		this.piezas.remove(pieza);
+		
+	}
 }
