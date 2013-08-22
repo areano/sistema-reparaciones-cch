@@ -14,6 +14,19 @@ import javax.swing.JMenuItem;
 import javax.swing.WindowConstants;
 import javax.swing.SwingUtilities;
 
+
+/**
+* This code was edited or generated using CloudGarden's Jigloo
+* SWT/Swing GUI Builder, which is free for non-commercial
+* use. If Jigloo is being used commercially (ie, by a corporation,
+* company or business for any purpose whatever) then you
+* should purchase a license for each developer using Jigloo.
+* Please visit www.cloudgarden.com for details.
+* Use of Jigloo implies acceptance of these licensing terms.
+* A COMMERCIAL LICENSE HAS NOT BEEN PURCHASED FOR
+* THIS MACHINE, SO JIGLOO OR THIS CODE CANNOT BE USED
+* LEGALLY FOR ANY CORPORATE OR COMMERCIAL PURPOSE.
+*/
 public class MainFrame extends javax.swing.JFrame {
 
 	/**
@@ -69,10 +82,12 @@ public class MainFrame extends javax.swing.JFrame {
 	private void initGUI() {
 		try {
 			setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+			getContentPane().setLayout(null);
 			{
 				jdEscritorio = new JDesktopPane();
 				jMenu = new JMenuBar();
-				setContentPane(jdEscritorio);
+				this.setContentPane(jdEscritorio);
+				jdEscritorio.setBounds(0, 0, 0, 0);
 				setJMenuBar(jMenu);
 				{
 					{
@@ -214,6 +229,7 @@ public class MainFrame extends javax.swing.JFrame {
 				}
 			}
 			pack();
+			this.setSize(465, 252);
 		} catch (Exception e) {
 			// add your error handling code here
 			e.printStackTrace();

@@ -25,6 +25,7 @@ public class OrdenReparacion {
 	private Equipo equipo;
 	private Date fecha;
 	private String estado;
+	private String descripcionFallas;
 	
 	
 	public OrdenReparacion(int nroOrden2) {
@@ -90,6 +91,29 @@ public class OrdenReparacion {
 		for (TareaReparacion tareaReparacion : tareas) {
 			tareaReparacion.listaPiezas();
 		}
+		
+	}
+	public void agregarItemReparacion(TareaReparacion tarea) {
+		this.itemsReparacion.add(tarea);
+		
+	}
+	public TareaReparacion obtenerTarea(int nroTarea) {
+		for (TareaReparacion tarea : itemsReparacion) {
+			if(tarea.getNroItemReparacion()==nroTarea)
+				return tarea;
+		}
+		return null;
+	}
+	public void quitarTarea(TareaReparacion tarea) {
+		this.itemsReparacion.remove(tarea);
+		
+	}
+	public void setDescripcionFallas(String fallas) {
+		this.descripcionFallas=fallas;
+		
+	}
+	public String getDescripcionFallas() {
+		return this.descripcionFallas;
 		
 	}
 }
