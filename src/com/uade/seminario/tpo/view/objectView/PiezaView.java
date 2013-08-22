@@ -5,6 +5,7 @@ public class PiezaView {
 	private String nombrePieza;
 	private String descripcion;
 	private String estado;
+	private int stock;
 	
 	public PiezaView(int codPieza, String nombre, String descripcion2) {
 		this.nroPieza=codPieza;
@@ -35,5 +36,11 @@ public class PiezaView {
 	}
 	public void setEstado(String estado) {
 		this.estado = estado;
+	}
+	public int getStock() {
+		return stock;
+	}
+	public void setStock(int stock) {
+		this.stock = stock;
 	}
 }

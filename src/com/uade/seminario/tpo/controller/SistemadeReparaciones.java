@@ -160,9 +160,13 @@ public class SistemadeReparaciones {
 		
 	}
 
-	public void modificarOrdenReparacion(int nroReparacion){
+	public void modificarOrdenReparacion(int nroReparacion, String fallas, int prioridad){
 		OrdenReparacion orden=buscarOrdenReparacion(nroReparacion);
-		
+		if(orden!=null && !orden.getEstado().equals("Reparado")){
+			orden.setDescripcionFallas(fallas);
+			orden.setPrioridad(prioridad);
+		}
+			
 		
 	}
 	
@@ -183,7 +187,10 @@ public class SistemadeReparaciones {
 	}
 
 	public Equipo buscarEquipo(int nroSerieEquipo) {
-		// TODO Auto-generated method stub
+		for (Equipo equipo : equipos) {
+			if(equipo.getNroSerie()==nroSerieEquipo)
+				return equipo;
+		}
 		return null;
 	}
 	
@@ -202,8 +209,11 @@ public class SistemadeReparaciones {
 			return null;		
 	}
 
-	public OrdenReparacion buscarOrdenReparacionPrioridad() {
-		// TODO Auto-generated method stub
+	public OrdenReparacion buscarOrdenReparacionPrioridad() { //SE supone que el vector esta ordenado de mayor a menor segun el numero de prioridad!
+		for (OrdenReparacion orden : ordReparacion) {
+			if(orden.estadoAReparar())
+				return orden;
+		}		
 		return null;
 	}
 
@@ -498,7 +508,8 @@ public class SistemadeReparaciones {
 		 if(orden!=null){
 			 Vector<TareaReparacion> tareas=orden.getItemsReparacion();
 			 for (TareaReparacion t : tareas) {
-				tareasview.add(t.getView());				
+				 if(t.estaActiva())
+					 tareasview.add(t.getView());				
 			}
 		 }
 		 return tareasview;
@@ -514,7 +525,7 @@ public class SistemadeReparaciones {
 
 	public int crearTareaReparacion(String descripcion, int numeroOrden) {
 		OrdenReparacion orden=buscarOrdenReparacion(numeroOrden);
-		if(orden!=null){
+		if(orden!=null && !orden.getEstado().equals("Reparado")){
 			int numeroTarea=obtenerNumeroTarea(orden);
 			TareaReparacion tarea=new TareaReparacion(numeroTarea, descripcion);
 			orden.agregarItemReparacion(tarea);
@@ -571,29 +582,32 @@ public class SistemadeReparaciones {
 		OrdenReparacion orden=buscarOrdenReparacion(nroOrden);
 		if(orden!=null){
 			TareaReparacion tarea=orden.obtenerTarea(nroTarea);
-			if(tarea!=null){
-				orden.quitarTarea(tarea);
+			if(tarea!=null && tarea.estaActiva()){
+				tarea.setEstado("inactivo");
 			}
 		}
 		
 	}
 
-	public void confirmarOrdenReparacion(int nroOrden, String fallas) {
+	public void confirmarOrdenReparacion(int nroOrden, String fallas, boolean estaEnGarantiaFisica,boolean repararDeTodosModos, int prioridad1) {
 		OrdenReparacion orden=buscarOrdenReparacion(nroOrden);
 		if(orden!=null){
 			orden.setDescripcionFallas(fallas);
-			orden.setEstado("A reparar");
+			orden.setEstaEnGarantiaFisica(estaEnGarantiaFisica);
+			orden.setRepararDeTodosModos(repararDeTodosModos);
+			orden.setPrioridad(prioridad1);
+			
+			if(repararDeTodosModos||(orden.getEquipo().getGarantia().estasEnGarantia() && estaEnGarantiaFisica) ){
+				orden.setEstado("A reparar");
+			}
+			else{
+				orden.setEstado("Presupuestar");
+			}
+			
 		}
 		
 	}
 
-	public void llevarAPresupuestarOrdenReparacion(int nroOrden, String fallas) {
-		OrdenReparacion orden=buscarOrdenReparacion(nroOrden);
-		if(orden!=null){
-			orden.setDescripcionFallas(fallas);
-			orden.setEstado("Presupuestar");
-		}
-	}
 
 	
 

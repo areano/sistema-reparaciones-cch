@@ -1,4 +1,5 @@
 package com.uade.seminario.tpo.view;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.ComboBoxModel;
@@ -13,12 +14,11 @@ import javax.swing.JList;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
-
 import javax.swing.WindowConstants;
+import javax.swing.SwingUtilities;
 
 import com.uade.seminario.tpo.controller.SistemadeReparaciones;
 import com.uade.seminario.tpo.model.Equipo;
-import com.uade.seminario.tpo.view.objectView.EquipoView;
 import com.uade.seminario.tpo.view.objectView.OrdenReparacionView;
 import com.uade.seminario.tpo.view.objectView.TareaReparacionView;
 
@@ -35,17 +35,19 @@ import com.uade.seminario.tpo.view.objectView.TareaReparacionView;
 * THIS MACHINE, SO JIGLOO OR THIS CODE CANNOT BE USED
 * LEGALLY FOR ANY CORPORATE OR COMMERCIAL PURPOSE.
 */
-public class AltaOrdenReparacionView extends javax.swing.JInternalFrame {
+public class ModificarOrdenReparacionView extends javax.swing.JFrame {
+	
 	private JLabel jLabel1;
-	private JButton buscarEquipo;
 	private JLabel jLabel2;
 	private JCheckBox repararTodas;
 	private JLabel jLabel4;
+	private JLabel jLabel8;
 	private JComboBox prioridad;
+	private JTextField estado;
 	private JLabel jLabel3;
 	private JCheckBox garantiaPapel;
-	private JButton crearOrden;
-	private JButton confirmar;
+	private JButton buscarOrden;
+	private JButton modificarOrden;
 	private JList tareas;
 	private JScrollPane jScrollPane1;
 	private JButton actualizar;
@@ -59,22 +61,18 @@ public class AltaOrdenReparacionView extends javax.swing.JInternalFrame {
 	private JCheckBox jCheckBox1;
 	private JTextField nombreEquipo;
 	private JTextField nroSerie;
-	
 
-	/**
-	* Auto-generated main method to display this JFrame
-	*/
-//	public static void main(String[] args) {
-//		SwingUtilities.invokeLater(new Runnable() {
-//			public void run() {
-//				AltaOrdenReparacionView inst = new AltaOrdenReparacionView();
-//				inst.setLocationRelativeTo(null);
-//				inst.setVisible(true);
-//			}
-//		});
-//	}
+	public static void main(String[] args) {
+		SwingUtilities.invokeLater(new Runnable() {
+			public void run() {
+				ModificarOrdenReparacionView inst = new ModificarOrdenReparacionView();
+				inst.setLocationRelativeTo(null);
+				inst.setVisible(true);
+			}
+		});
+	}
 	
-	public AltaOrdenReparacionView() {
+	public ModificarOrdenReparacionView() {
 		super();
 		initGUI();
 	}
@@ -88,62 +86,45 @@ public class AltaOrdenReparacionView extends javax.swing.JInternalFrame {
 				jLabel1 = new JLabel();
 				getContentPane().add(jLabel1);
 				jLabel1.setText("Numero serie equipo : ");
-				jLabel1.setBounds(12, 28, 156, 16);
+				jLabel1.setBounds(12, 79, 156, 16);
 			}
 			{
 				nroSerie = new JTextField();
 				getContentPane().add(nroSerie);
-				nroSerie.setBounds(174, 25, 201, 23);
-			}
-			{
-				buscarEquipo = new JButton();
-				getContentPane().add(buscarEquipo);
-				buscarEquipo.setText("Buscar Equipo");
-				buscarEquipo.setBounds(387, 25, 123, 23);
-				buscarEquipo.addActionListener(new ActionListener() {
-					
-					public void actionPerformed(ActionEvent arg0) {
-						if(!nroSerie.getText().equals("")){
-							Equipo equipo=SistemadeReparaciones.getInstancia().buscarEquipo(Integer.parseInt(nroSerie.getText()));
-							if(equipo!=null ){
-								nombreEquipo.setText(equipo.getCliente().getNombre());
-								if(equipo.getGarantia().estasEnGarantia())
-									garantiaPapel.doClick();
-								
-							}
-						}
-						
-					}
-				});
+				nroSerie.setEditable(false);
+				nroSerie.setBounds(174, 76, 201, 23);
 			}
 			{
 				jLabel2 = new JLabel();
 				getContentPane().add(jLabel2);
 				jLabel2.setText("Nombre Cliente : ");
-				jLabel2.setBounds(12, 56, 156, 16);
+				jLabel2.setBounds(12, 108, 156, 16);
 			}
 			{
 				nombreEquipo = new JTextField();
 				getContentPane().add(nombreEquipo);
-				nombreEquipo.setBounds(174, 53, 201, 23);
+				nombreEquipo.setBounds(174, 105, 201, 23);
+				nombreEquipo.setEditable(false);
 			}
 			{
 				jCheckBox1 = new JCheckBox();
 				getContentPane().add(jCheckBox1);
 				jCheckBox1.setText("En Garantia Fisica");
-				jCheckBox1.setBounds(12, 150, 113, 20);
+				jCheckBox1.setEnabled(false);
+				jCheckBox1.setBounds(12, 160, 113, 20);
 			}
 			{
 				repararTodas = new JCheckBox();
 				getContentPane().add(repararTodas);
 				repararTodas.setText("Reparar de todas maneras");
-				repararTodas.setBounds(174, 150, 182, 20);
+				repararTodas.setEnabled(false);
+				repararTodas.setBounds(174, 160, 182, 20);
 			}
 			{
 				jLabel4 = new JLabel();
 				getContentPane().add(jLabel4);
 				jLabel4.setText("Datos Equipo");
-				jLabel4.setBounds(12, 6, 119, 16);
+				jLabel4.setBounds(12, 51, 119, 16);
 			}
 			{
 				jLabel5 = new JLabel();
@@ -160,20 +141,19 @@ public class AltaOrdenReparacionView extends javax.swing.JInternalFrame {
 				jLabel6 = new JLabel();
 				getContentPane().add(jLabel6);
 				jLabel6.setText("Reparaciones a realizar : ");
-				jLabel6.setBounds(12, 176, 162, 16);
+				jLabel6.setBounds(12, 201, 162, 16);
 			}
 			
 			{
 				jLabel7 = new JLabel();
 				getContentPane().add(jLabel7);
 				jLabel7.setText("Numero Orden Reparacion : ");
-				jLabel7.setBounds(12, 198, 168, 16);
+				jLabel7.setBounds(12, 25, 168, 16);
 			}
 			{
 				nroOrdenReparacion = new JTextField();
 				getContentPane().add(nroOrdenReparacion);
-				nroOrdenReparacion.setBounds(192, 195, 183, 23);
-				nroOrdenReparacion.setEditable(false);
+				nroOrdenReparacion.setBounds(179, 22, 183, 23);
 			}
 			{
 				agregar = new JButton();
@@ -238,22 +218,16 @@ public class AltaOrdenReparacionView extends javax.swing.JInternalFrame {
 				jScrollPane1.setBounds(12, 226, 242, 97);
 			}
 			{
-				confirmar = new JButton();
-				getContentPane().add(confirmar);
-				confirmar.setText("Confirmar");
-				confirmar.setBounds(394, 339, 116, 23);
-				confirmar.addActionListener(new ActionListener() {
+				modificarOrden = new JButton();
+				getContentPane().add(modificarOrden);
+				modificarOrden.setText("Modificar Orden");
+				modificarOrden.setBounds(375, 339, 135, 23);
+				modificarOrden.addActionListener(new ActionListener() {
 					
 					public void actionPerformed(ActionEvent e) {
-						boolean estaEnGarantiaFisica=false;
-						boolean repararDeTodosModos=false;
-						if(jCheckBox1.isSelected())
-							estaEnGarantiaFisica=true;
-						if(repararTodas.isSelected())
-							repararDeTodosModos=true;
-						int prioridad1=Integer.parseInt(prioridad.getSelectedItem().toString()); 
-						SistemadeReparaciones.getInstancia().confirmarOrdenReparacion(Integer.parseInt(nroOrdenReparacion.getText()),fallas.getText(),estaEnGarantiaFisica,repararDeTodosModos,prioridad1);
-
+						if(!nroOrdenReparacion.getText().equals(""))
+							SistemadeReparaciones.getInstancia().modificarOrdenReparacion(Integer.parseInt(nroOrdenReparacion.getText()),fallas.getText(),Integer.parseInt(prioridad.getSelectedItem().toString()));						
+						
 					}
 				});
 			}
@@ -274,21 +248,30 @@ public class AltaOrdenReparacionView extends javax.swing.JInternalFrame {
 
 			}
 			{
-				crearOrden = new JButton();
-				getContentPane().add(crearOrden);
-				crearOrden.setText("Crear Orden");
-				crearOrden.setBounds(163, 115, 139, 23);
-				crearOrden.addActionListener(new ActionListener() {
+				buscarOrden = new JButton();
+				getContentPane().add(buscarOrden);
+				buscarOrden.setText("Buscar Orden");
+				buscarOrden.setBounds(375, 22, 139, 23);
+				buscarOrden.addActionListener(new ActionListener() {
 					
 					public void actionPerformed(ActionEvent arg0) {
-						if(!nroSerie.getText().equals("")){
-							Equipo equipo=SistemadeReparaciones.getInstancia().buscarEquipo(Integer.parseInt(nroSerie.getText()));
-							OrdenReparacionView ordenView= SistemadeReparaciones.getInstancia().buscarOrdenConEquipoARepararView(Integer.parseInt(nroSerie.getText()));
-							if(equipo!=null && ordenView==null){
-								int nroOrden=SistemadeReparaciones.getInstancia().altaOrdenReparacion(Integer.parseInt(nroSerie.getText()));
-								ordenView=SistemadeReparaciones.getInstancia().buscarOrdenReparacionView(nroOrden);
-								String nro= String.valueOf(ordenView.getNroOrden());
-								nroOrdenReparacion.setText(nro);
+						if(!nroOrdenReparacion.getText().equals("")){
+							OrdenReparacionView ordenview=SistemadeReparaciones.getInstancia().buscarOrdenReparacionView(Integer.parseInt(nroOrdenReparacion.getText()));
+							Equipo equipo=ordenview.getEquipo();
+							if(equipo!=null && ordenview!=null){
+								nombreEquipo.setText(equipo.getCliente().getNombre());
+								if(equipo.getGarantia().estasEnGarantia())
+									garantiaPapel.doClick();
+								nroSerie.setText(String.valueOf(equipo.getNroSerie()));
+								if(ordenview.isEstaEnGarantiaFisica())
+									jCheckBox1.doClick();
+								if(ordenview.isRepararDeTodosModos())
+									repararTodas.doClick();
+								fallas.setText(ordenview.getDescripcionFallas());
+								estado.setText(ordenview.getEstado());
+								prioridad.setSelectedIndex(ordenview.getPrioridad());
+								actualizar.doClick();
+								
 								
 							}
 						}
@@ -300,14 +283,20 @@ public class AltaOrdenReparacionView extends javax.swing.JInternalFrame {
 				garantiaPapel = new JCheckBox();
 				getContentPane().add(garantiaPapel);
 				garantiaPapel.setText("Esta en garantia de fabrica");
-				garantiaPapel.setBounds(12, 89, 190, 20);
+				garantiaPapel.setBounds(12, 130, 190, 20);
 				garantiaPapel.setEnabled(false);
 			}
 			{
 				jLabel3 = new JLabel();
 				getContentPane().add(jLabel3);
-				jLabel3.setText("Prioridad : ");
-				jLabel3.setBounds(243, 91, 72, 16);
+				jLabel3.setText("Etapa del proceso : ");
+				jLabel3.setBounds(387, 132, 127, 16);
+			}
+			{
+				estado = new JTextField();
+				getContentPane().add(estado);
+				estado.setEditable(false);
+				estado.setBounds(543, 129, 309, 23);
 			}
 			{
 				ComboBoxModel prioridadModel = 
@@ -316,13 +305,19 @@ public class AltaOrdenReparacionView extends javax.swing.JInternalFrame {
 				prioridad = new JComboBox();
 				getContentPane().add(prioridad);
 				prioridad.setModel(prioridadModel);
-				prioridad.setBounds(327, 88, 41, 23);
+				prioridad.setBounds(444, 159, 43, 23);
+			}
+			{
+				jLabel8 = new JLabel();
+				getContentPane().add(jLabel8);
+				jLabel8.setText("Prioridad : ");
+				jLabel8.setBounds(362, 162, 82, 16);
 			}
 
 			pack();
-			this.setSize(929, 363);
-			this.setPreferredSize(new java.awt.Dimension(929, 399));
-			this.setBounds(0, 0, 929, 399);
+			this.setSize(929, 412);
+			this.setPreferredSize(new java.awt.Dimension(929, 412));
+			this.setBounds(0, 0, 929, 412);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

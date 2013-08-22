@@ -26,6 +26,9 @@ public class OrdenReparacion {
 	private Date fecha;
 	private String estado;
 	private String descripcionFallas;
+	private boolean estaEnGarantiaFisica;
+	private boolean repararDeTodosModos;
+	private int prioridad;
 	
 	
 	public OrdenReparacion(int nroOrden2) {
@@ -79,6 +82,7 @@ public class OrdenReparacion {
 		Vector<TareaReparacionView> tareas=new Vector<TareaReparacionView>();
 		
 		for (TareaReparacion tarea : itemsReparacion) {
+			if(tarea.estaActiva())
 			tareas.add(tarea.getView());
 		}
 		return tareas;
@@ -104,10 +108,6 @@ public class OrdenReparacion {
 		}
 		return null;
 	}
-	public void quitarTarea(TareaReparacion tarea) {
-		this.itemsReparacion.remove(tarea);
-		
-	}
 	public void setDescripcionFallas(String fallas) {
 		this.descripcionFallas=fallas;
 		
@@ -115,5 +115,23 @@ public class OrdenReparacion {
 	public String getDescripcionFallas() {
 		return this.descripcionFallas;
 		
+	}
+	public boolean isEstaEnGarantiaFisica() {
+		return estaEnGarantiaFisica;
+	}
+	public void setEstaEnGarantiaFisica(boolean estaEnGarantiaFisica) {
+		this.estaEnGarantiaFisica = estaEnGarantiaFisica;
+	}
+	public boolean isRepararDeTodosModos() {
+		return repararDeTodosModos;
+	}
+	public void setRepararDeTodosModos(boolean repararDeTodosModos) {
+		this.repararDeTodosModos = repararDeTodosModos;
+	}
+	public int getPrioridad() {
+		return prioridad;
+	}
+	public void setPrioridad(int prioridad) {
+		this.prioridad = prioridad;
 	}
 }
