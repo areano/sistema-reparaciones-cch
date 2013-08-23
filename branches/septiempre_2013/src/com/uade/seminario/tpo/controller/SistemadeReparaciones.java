@@ -17,7 +17,6 @@ import com.uade.seminario.tpo.exceptions.ExceptionExisteModelo;
 import com.uade.seminario.tpo.exceptions.ExceptionModeloInactivo;
 import com.uade.seminario.tpo.exceptions.ExceptionModeloPerteneceEquipo;
 import com.uade.seminario.tpo.exceptions.ExceptionNoExisteModelo;
-import com.uade.seminario.tpo.exceptions.ExceptionNoHayStock;
 
 import com.uade.seminario.tpo.model.Cliente;
 import com.uade.seminario.tpo.model.ClienteId;
@@ -84,6 +83,9 @@ public class SistemadeReparaciones {
 		Equipo equipo=new Equipo(1, modelo, cliente, garantia);
 		equipo.setEstado("activo");
 		equipos.add(equipo);
+		Equipo equipo2=new Equipo(2, modelo, cliente, garantia);
+		equipo2.setEstado("activo");
+		equipos.add(equipo2);
 		OrdenReparacion orden=new OrdenReparacion(1);
 		TareaReparacion tarea=new TareaReparacion(1, "Le falta un tornillo");
 		TareaReparacion tarea1=new TareaReparacion(2, "Le faltan dos tornillos");
@@ -101,7 +103,10 @@ public class SistemadeReparaciones {
 		orden.agregarItemReparacion(tarea);
 		orden.agregarItemReparacion(tarea1);
 		ordReparacion.add(orden);
-		
+		Empleado empleado=new Empleado();
+		empleado.setLegajo("1");
+		empleado.setaReparar(new Vector<OrdenReparacion>());
+		empleados.add(empleado);
 		/* CLASES PARA TEST */
 	}
 	
@@ -189,6 +194,7 @@ public class SistemadeReparaciones {
 			OrdenReparacion orden=new OrdenReparacion(nroOrden);
 			orden.setEquipo(equipo);
 			orden.setEstado("A confirmar");
+			ordReparacion.add(orden);
 			return nroOrden;
 		}
 		else
@@ -270,38 +276,6 @@ public class SistemadeReparaciones {
 		return empleado;
 	}
 	
-	public TareaReparacion crearTareaReparacion(String descripcion,Vector<Pieza> piezas){     //VER COMO SERIA LA CONFIRMACION
-		int nroTarea=generarNroTarea();
-		boolean stock=true;
-		for (Pieza pieza : piezas) {
-			if(!pieza.hayStock()){
-				stock=false;
-				throw new ExceptionNoHayStock(pieza.getNroPieza());
-			}
-		}
-		if(stock){
-			TareaReparacion tarea=new TareaReparacion(nroTarea,descripcion);
-			tarea.setPiezas(piezas);
-			tarea.setEstado("Activa");
-			return tarea;
-		}
-		else
-			return null;
-			
-	}
-	
-	public void modificarTareaReparacion(int nroReparacion){
-		TareaReparacion tarea=buscarTareaReparacion(nroReparacion);
-		
-	}
-	
-	public void bajaTareaReparacion(int nroReparacion){
-		TareaReparacion tarea=buscarTareaReparacion(nroReparacion);
-		if(tarea!=null && tarea.estaActiva()){
-			tarea.setEstado("Inactiva");
-		}
-		
-	}
 	
 	public Vector<TareaReparacionView> listarTareasReparacion(int nroReparacion){
 		OrdenReparacion orden=buscarOrdenReparacion(nroReparacion);
@@ -328,15 +302,8 @@ public class SistemadeReparaciones {
 		return null;
 	}
 
-	private TareaReparacion buscarTareaReparacion(int nroReparacion) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	
 
-	private int generarNroTarea() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
 
 	public void altaCliente(String nroDoc, String tipoDoc, String nombre, String apellido,
 			String direccion, String mail, String fechaNac, String tel) {
@@ -427,7 +394,7 @@ public class SistemadeReparaciones {
 
 	public void BajaPieza(int codigoPieza) {
 		Pieza pieza=buscarPieza(codigoPieza);
-		if(pieza!=null && !hayModelosConPieza(codigoPieza)){
+		if(pieza!=null && !hayModelosConPieza(codigoPieza) && pieza.estaActiva()){
 			pieza.darBajaPieza();
 		}
 		
@@ -435,7 +402,11 @@ public class SistemadeReparaciones {
 	}
 
 	private boolean hayModelosConPieza(int codigoPieza) {
-		// TODO Auto-generated method stub
+		Pieza pieza=buscarPieza(codigoPieza);
+		for (Modelo modelo : modelos) {
+			if(modelo.getPiezas().contains(pieza))
+				return true;
+		}
 		return false;
 	}
 

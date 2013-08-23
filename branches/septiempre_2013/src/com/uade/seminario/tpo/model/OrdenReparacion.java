@@ -133,4 +133,11 @@ public class OrdenReparacion {
 	public void setPrioridad(int prioridad) {
 		this.prioridad = prioridad;
 	}
+	public TareaReparacionView obtenerTareaView(int nroTarea) {
+		for (TareaReparacion tarea : itemsReparacion) {
+			if(tarea.getNroItemReparacion()==nroTarea)
+				return tarea.getView();
+		}
+		return null;
+	}
 }

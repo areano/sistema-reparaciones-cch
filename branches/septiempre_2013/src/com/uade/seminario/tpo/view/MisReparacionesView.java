@@ -56,6 +56,7 @@ public class MisReparacionesView extends javax.swing.JFrame {
 		try {
 			setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 			getContentPane().setLayout(null);
+			setTitle("Mis Reparaciones");
 			{
 				jLabel1 = new JLabel();
 				getContentPane().add(jLabel1);
@@ -65,7 +66,7 @@ public class MisReparacionesView extends javax.swing.JFrame {
 			{
 				legajo = new JTextField();
 				getContentPane().add(legajo);
-				legajo.setBounds(129, 26, 210, 23);
+				legajo.setBounds(129, 26, 167, 23);
 			}
 			{
 				obtenerReparacion = new JButton();
@@ -93,14 +94,14 @@ public class MisReparacionesView extends javax.swing.JFrame {
 			{
 				nroOrden = new JTextField();
 				getContentPane().add(nroOrden);
-				nroOrden.setBounds(129, 61, 210, 23);
+				nroOrden.setBounds(129, 61, 167, 23);
 				nroOrden.setEditable(false);
 			}
 			{
 				mostrarOrden = new JButton();
 				getContentPane().add(mostrarOrden);
 				mostrarOrden.setText("Mostrar Orden");
-				mostrarOrden.setBounds(360, 61, 91, 23);
+				mostrarOrden.setBounds(323, 61, 134, 23);
 				mostrarOrden.setVisible(false);
 				mostrarOrden.addActionListener(new ActionListener() {
 					

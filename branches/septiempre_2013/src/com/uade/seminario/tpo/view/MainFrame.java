@@ -178,7 +178,7 @@ public class MainFrame extends javax.swing.JFrame {
 							jmOrdenDeReparacion.add(jmiAltaOrdenReparacion);
 							jmiAltaOrdenReparacion.addActionListener(new ActionListener() {
 								public void actionPerformed(ActionEvent arg0) {
-									cargarInternalFrame(new AltaOrdenReparacionView());
+									//cargarInternalFrame(new AltaOrdenReparacionView());
 								}
 							});
 						}
@@ -234,7 +234,7 @@ public class MainFrame extends javax.swing.JFrame {
 							jmTareaDeReparacion.add(jmiAltaTareaReparacion);
 							jmiAltaTareaReparacion.addActionListener(new ActionListener() {
 								public void actionPerformed(ActionEvent arg0) {
-									cargarInternalFrame(new AltaTareaReparacionView(""));
+									//cargarInternalFrame(new AltaTareaReparacionView(""));
 								}
 							});
 						}
