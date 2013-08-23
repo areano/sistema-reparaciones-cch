@@ -7,6 +7,15 @@ public class PiezaView {
 	private String estado;
 	private int stock;
 	
+	public PiezaView(int nroPieza, String nombrePieza, String descripcion,
+			String estado) {
+		super();
+		this.nroPieza = nroPieza;
+		this.nombrePieza = nombrePieza;
+		this.descripcion = descripcion;
+		this.estado = estado;
+		
+	}
 	public PiezaView(int codPieza, String nombre, String descripcion2) {
 		this.nroPieza=codPieza;
 		this.nombrePieza=nombre;

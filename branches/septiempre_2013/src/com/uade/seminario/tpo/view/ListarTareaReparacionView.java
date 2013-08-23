@@ -73,7 +73,7 @@ public class ListarTareaReparacionView extends javax.swing.JFrame {
 				buscarTareas = new JButton();
 				getContentPane().add(buscarTareas);
 				buscarTareas.setText("Buscar Tareas");
-				buscarTareas.setBounds(123, 44, 109, 23);
+				buscarTareas.setBounds(123, 44, 128, 23);
 				buscarTareas.addActionListener(new ActionListener() {
 					
 					public void actionPerformed(ActionEvent arg0) {
@@ -102,7 +102,7 @@ public class ListarTareaReparacionView extends javax.swing.JFrame {
 				mostrarOrden = new JButton();
 				getContentPane().add(mostrarOrden);
 				mostrarOrden.setText("Mostrar Orden");
-				mostrarOrden.setBounds(123, 161, 91, 24);
+				mostrarOrden.setBounds(123, 161, 120, 24);
 				mostrarOrden.addActionListener(new ActionListener() {
 					
 					public void actionPerformed(ActionEvent e) {

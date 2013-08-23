@@ -9,6 +9,7 @@ import javax.swing.JList;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.SwingUtilities;
 
 import javax.swing.WindowConstants;
 
@@ -29,10 +30,11 @@ import com.uade.seminario.tpo.view.objectView.PiezaView;
 * THIS MACHINE, SO JIGLOO OR THIS CODE CANNOT BE USED
 * LEGALLY FOR ANY CORPORATE OR COMMERCIAL PURPOSE.
 */
-public class AltaTareaReparacionView extends javax.swing.JInternalFrame {
+public class AltaTareaReparacionView extends javax.swing.JFrame {
 	private JLabel jLabel1;
 	private JLabel jLabel2;
 	private JLabel jLabel4;
+	private JButton confirmar;
 	private JButton actualizar;
 	private JTextField nroTarea;
 	private JButton quitarPieza;
@@ -47,15 +49,15 @@ public class AltaTareaReparacionView extends javax.swing.JInternalFrame {
 	/**
 	* Auto-generated main method to display this JFrame
 	*/
-//	public static void main(String[] args) {
-//		SwingUtilities.invokeLater(new Runnable() {
-//			public void run() {
-//				AltaTareaReparacionView inst = new AltaTareaReparacionView("");
-//				inst.setLocationRelativeTo(null);
-//				inst.setVisible(true);
-//			}
-//		});
-//	}
+	public static void main(String[] args) {
+		SwingUtilities.invokeLater(new Runnable() {
+			public void run() {
+				AltaTareaReparacionView inst = new AltaTareaReparacionView("");
+				inst.setLocationRelativeTo(null);
+				inst.setVisible(true);
+			}
+		});
+	}
 	
 	public AltaTareaReparacionView(String nroOrdenReparacion) {
 		super();
@@ -71,9 +73,9 @@ public class AltaTareaReparacionView extends javax.swing.JInternalFrame {
 			setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 			getContentPane().setLayout(null);
 			pack();
-			setSize(400, 300);
-			this.setPreferredSize(new java.awt.Dimension(400, 353));
-			this.setBounds(0, 0, 400, 353);
+			this.setSize(449, 405);
+			this.setPreferredSize(new java.awt.Dimension(449, 405));
+			this.setBounds(0, 0, 449, 405);
 			{
 				jLabel1 = new JLabel();
 				getContentPane().add(jLabel1);
@@ -91,7 +93,7 @@ public class AltaTareaReparacionView extends javax.swing.JInternalFrame {
 				getContentPane().add(jLabel3);
 				jLabel3.setText("Lista de piezas : ");
 				jLabel3.setVisible(false);
-				jLabel3.setBounds(12, 169, 84, 16);
+				jLabel3.setBounds(12, 169, 128, 16);
 			}
 			{
 				nroOrden = new JTextField();
@@ -154,7 +156,7 @@ public class AltaTareaReparacionView extends javax.swing.JInternalFrame {
 				getContentPane().add(agregarPieza);
 				agregarPieza.setText("Agregar Pieza");
 				agregarPieza.setVisible(false);
-				agregarPieza.setBounds(254, 216, 132, 23);
+				agregarPieza.setBounds(254, 211, 132, 23);
 				agregarPieza.addActionListener(new ActionListener() {
 					
 					public void actionPerformed(ActionEvent e) {
@@ -169,12 +171,15 @@ public class AltaTareaReparacionView extends javax.swing.JInternalFrame {
 				getContentPane().add(quitarPieza);
 				quitarPieza.setText("Quitar Pieza");
 				quitarPieza.setVisible(false);
-				quitarPieza.setBounds(254, 258, 132, 23);
+				quitarPieza.setBounds(254, 246, 132, 23);
 				quitarPieza.addActionListener(new ActionListener() {
 					
 					public void actionPerformed(ActionEvent e) {
-						String nroPieza=(String) piezas.getSelectedValue().toString();
-						SistemadeReparaciones.getInstancia().quitarPiezaTarea(Integer.parseInt(nroOrden.getText()),Integer.parseInt(nroTarea.getText()),Integer.parseInt(nroPieza));
+						PiezaView pieza=(PiezaView) piezas.getSelectedValue();
+						if(pieza!=null){
+							SistemadeReparaciones.getInstancia().quitarPiezaTarea(Integer.parseInt(nroOrden.getText()),Integer.parseInt(nroTarea.getText()),pieza.getNroPieza());
+						}
+						
 						
 					}
 				});
@@ -183,7 +188,7 @@ public class AltaTareaReparacionView extends javax.swing.JInternalFrame {
 				jLabel4 = new JLabel();
 				getContentPane().add(jLabel4);
 				jLabel4.setText("Numero Tarea : ");
-				jLabel4.setBounds(12, 132, 101, 16);
+				jLabel4.setBounds(12, 132, 132, 16);
 			}
 			{
 				nroTarea = new JTextField();
@@ -195,7 +200,7 @@ public class AltaTareaReparacionView extends javax.swing.JInternalFrame {
 				actualizar = new JButton();
 				getContentPane().add(actualizar);
 				actualizar.setText("Actualizar Tabla");
-				actualizar.setBounds(254, 293, 132, 23);
+				actualizar.setBounds(254, 281, 132, 23);
 				actualizar.setVisible(false);
 				actualizar.addActionListener(new ActionListener() {
 					
@@ -219,6 +224,23 @@ public class AltaTareaReparacionView extends javax.swing.JInternalFrame {
 					}
 				});
 			}
+			{
+				confirmar = new JButton();
+				getContentPane().add(confirmar);
+				confirmar.setText("Confirmar");
+				confirmar.setBounds(157, 332, 97, 23);
+				confirmar.addActionListener(new ActionListener() {
+					
+					public void actionPerformed(ActionEvent e) {
+						if(!nroTarea.getText().equals("") && !nroOrden.getText().equals("")){
+							SistemadeReparaciones.getInstancia().confirmarTarea(Integer.parseInt(nroTarea.getText()),Integer.parseInt(nroOrden.getText()));
+							dispose();
+						}
+						
+					}
+				});
+			}
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

@@ -38,6 +38,7 @@ public class MainFrame extends javax.swing.JFrame {
 	private JMenu jmCliente;
 	private JMenuItem jmiModificarCliente;
 	private JMenuItem jmiAltaCliente;
+	private JMenuItem modificar;
 	private JMenu jmEquipo;
 	private JMenu jmGarantia;
 	private JMenu jmModelo;
@@ -178,6 +179,18 @@ public class MainFrame extends javax.swing.JFrame {
 							jmiAltaOrdenReparacion.addActionListener(new ActionListener() {
 								public void actionPerformed(ActionEvent arg0) {
 									cargarInternalFrame(new AltaOrdenReparacionView());
+								}
+							});
+						}
+						{
+							modificar = new JMenuItem();
+							jmOrdenDeReparacion.add(modificar);
+							modificar.setText("modificar");
+							modificar.addActionListener(new ActionListener() {
+								
+								public void actionPerformed(ActionEvent arg0) {
+									ModificarOrdenReparacionView view=new ModificarOrdenReparacionView();
+									view.setVisible(true);
 								}
 							});
 						}

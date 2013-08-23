@@ -14,6 +14,7 @@ import javax.swing.SwingUtilities;
 
 import com.uade.seminario.tpo.controller.SistemadeReparaciones;
 import com.uade.seminario.tpo.model.OrdenReparacion;
+import com.uade.seminario.tpo.model.Pieza;
 import com.uade.seminario.tpo.view.objectView.OrdenReparacionView;
 import com.uade.seminario.tpo.view.objectView.PiezaView;
 
@@ -55,52 +56,57 @@ public class AgregarPiezaTareaView extends javax.swing.JFrame {
 	
 	public AgregarPiezaTareaView(String numeroTarea, String numeroOrden) {
 		super();
-		initGUI();
-		nroOrden.setText(numeroOrden);
-		nroTarea.setText(numeroTarea);
+		initGUI(numeroOrden,numeroTarea);
+		
 	}
 	
-	private void initGUI() {
+	private void initGUI(String numeroOrden, String numeroTarea) {
 		try {
 			setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 			getContentPane().setLayout(null);
 			{
 				jLabel1 = new JLabel();
-			getContentPane().add(jLabel1);
+				getContentPane().add(jLabel1);
 				jLabel1.setText("Numero Orden : ");
-				jLabel1.setBounds(12, 12, 89, 16);
+				jLabel1.setBounds(12, 12, 120, 16);
 			}
 			{
 				jLabel2 = new JLabel();
 				getContentPane().add(jLabel2);
 				jLabel2.setText("Numero Tarea: ");
-				jLabel2.setBounds(12, 46, 82, 16);
+				jLabel2.setBounds(12, 46, 120, 16);
 			}
 			{
 				nroOrden = new JTextField();
 				getContentPane().add(nroOrden);
 				nroOrden.setBounds(132, 9, 198, 23);
+				nroOrden.setText(numeroOrden);
+				nroOrden.setEditable(false);
 			}
 			{
 				nroTarea = new JTextField();
 				getContentPane().add(nroTarea);
 				nroTarea.setBounds(132, 43, 198, 23);
+				nroTarea.setText(numeroTarea);
+				nroTarea.setEditable(false);
 			}
 			{
 				jLabel3 = new JLabel();
 				getContentPane().add(jLabel3);
 				jLabel3.setText("Lista de Piezas del Modelo : ");
-				jLabel3.setBounds(12, 81, 147, 16);
+				jLabel3.setBounds(12, 81, 197, 16);
 			}
 			{
 				jScrollPane1 = new JScrollPane();
 				getContentPane().add(jScrollPane1);
-				jScrollPane1.setBounds(12, 109, 225, 119);
+				jScrollPane1.setVisible(true);
+				jScrollPane1.setBounds(12, 109, 346, 132);
 				{
 					
 					SistemadeReparaciones sist=SistemadeReparaciones.getInstancia();
 					
 					DefaultListModel piezasModelo=new DefaultListModel();
+					
 					OrdenReparacionView ordenv= SistemadeReparaciones.getInstancia().buscarOrdenReparacionView(Integer.parseInt(nroOrden.getText()));
 					int nroModelo=ordenv.getEquipo().getModelo().getNroModelo();
 					if(!nroOrden.getText().equals("") && !nroTarea.getText().equals("")){
@@ -111,8 +117,8 @@ public class AgregarPiezaTareaView extends javax.swing.JFrame {
 					piezas = new JList();
 					jScrollPane1.setViewportView(piezas);
 					piezas.setModel(piezasModelo);
-					piezas.setBounds(12, 160, 225, 119);
-					piezas.setVisible(false);
+					piezas.setBounds(12, 109, 346, 132);
+					piezas.setVisible(true);
 					
 					
 				}
@@ -121,12 +127,15 @@ public class AgregarPiezaTareaView extends javax.swing.JFrame {
 				agregar = new JButton();
 				getContentPane().add(agregar);
 				agregar.setText("Agregar Pieza");
-				agregar.setBounds(138, 247, 86, 23);
+				agregar.setBounds(123, 247, 116, 23);
 				agregar.addActionListener(new ActionListener() {
 					
 					public void actionPerformed(ActionEvent arg0) {
-						String nroPieza=(String) piezas.getSelectedValue().toString();
-						SistemadeReparaciones.getInstancia().agregarPiezaTarea(Integer.parseInt(nroOrden.getText()),Integer.parseInt(nroTarea.getText()),Integer.parseInt(nroPieza));
+						PiezaView pieza=((PiezaView)piezas.getSelectedValue());
+						if(pieza!=null){
+							SistemadeReparaciones.getInstancia().agregarPiezaTarea(Integer.parseInt(nroOrden.getText()),Integer.parseInt(nroTarea.getText()),pieza.getNroPieza());
+						}
+						
 						
 					}
 				});

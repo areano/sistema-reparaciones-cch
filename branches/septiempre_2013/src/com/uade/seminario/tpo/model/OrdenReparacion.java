@@ -75,8 +75,7 @@ public class OrdenReparacion {
 		return estado.equals("A reparar");
 	}
 	public OrdenReparacionView getView() {
-		
-		return null;
+		return new OrdenReparacionView(getNroOrden(),getDescripcionFallas(),getEquipo(),getEstado(),getFecha(),getItemsReparacion(),getPrioridad(),isRepararDeTodosModos(),isEstaEnGarantiaFisica());
 	}
 	public Vector<TareaReparacionView> listarTareasView() {
 		Vector<TareaReparacionView> tareas=new Vector<TareaReparacionView>();
