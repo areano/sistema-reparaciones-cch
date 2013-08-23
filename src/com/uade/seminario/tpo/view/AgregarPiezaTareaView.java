@@ -64,6 +64,7 @@ public class AgregarPiezaTareaView extends javax.swing.JFrame {
 		try {
 			setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 			getContentPane().setLayout(null);
+			setTitle("Agregar Piezas a la Tarea de Reparacion");
 			{
 				jLabel1 = new JLabel();
 				getContentPane().add(jLabel1);

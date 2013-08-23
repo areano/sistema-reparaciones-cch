@@ -34,7 +34,7 @@ public class ListarTareaReparacionView extends javax.swing.JFrame {
 	private JTextField nroOrden;
 	private JButton buscarTareas;
 	private JList lista;
-	private JButton mostrarOrden;
+	private JButton mostrarTarea;
 
 	/**
 	* Auto-generated main method to display this JFrame
@@ -58,6 +58,7 @@ public class ListarTareaReparacionView extends javax.swing.JFrame {
 		try {
 			setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 			getContentPane().setLayout(null);
+			setTitle("Listar Tareas de Reparacion");
 			{
 				jLabel1 = new JLabel();
 				getContentPane().add(jLabel1);
@@ -99,14 +100,14 @@ public class ListarTareaReparacionView extends javax.swing.JFrame {
 				lista.setBounds(18, 78, 78, 197);
 			}
 			{
-				mostrarOrden = new JButton();
-				getContentPane().add(mostrarOrden);
-				mostrarOrden.setText("Mostrar Orden");
-				mostrarOrden.setBounds(123, 161, 120, 24);
-				mostrarOrden.addActionListener(new ActionListener() {
+				mostrarTarea = new JButton();
+				getContentPane().add(mostrarTarea);
+				mostrarTarea.setText("Mostrar Tarea");
+				mostrarTarea.setBounds(123, 161, 120, 24);
+				mostrarTarea.addActionListener(new ActionListener() {
 					
 					public void actionPerformed(ActionEvent e) {
-						MostrarOrdenReparacionView view = new MostrarOrdenReparacionView(nroOrden.getText());
+						MostrarTareaReparacionView view = new MostrarTareaReparacionView(nroOrden.getText(),lista.getSelectedValue().toString());
 						view.setVisible(true);
 					}
 				});

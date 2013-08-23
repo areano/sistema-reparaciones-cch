@@ -77,7 +77,7 @@ public class MostrarOrdenReparacionView extends javax.swing.JFrame {
 	
 	private void initGUI(String nroOrden) {
 		try {
-			setTitle("Alta Orden de Reparacion");
+			setTitle("Mostrar Orden de Reparacion");
 			setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 			getContentPane().setLayout(null);
 			{

@@ -13,6 +13,7 @@ import javax.swing.JList;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.SwingUtilities;
 
 import javax.swing.WindowConstants;
 
@@ -35,7 +36,7 @@ import com.uade.seminario.tpo.view.objectView.TareaReparacionView;
 * THIS MACHINE, SO JIGLOO OR THIS CODE CANNOT BE USED
 * LEGALLY FOR ANY CORPORATE OR COMMERCIAL PURPOSE.
 */
-public class AltaOrdenReparacionView extends javax.swing.JInternalFrame {
+public class AltaOrdenReparacionView extends javax.swing.JFrame {
 	private JLabel jLabel1;
 	private JButton buscarEquipo;
 	private JLabel jLabel2;
@@ -64,15 +65,15 @@ public class AltaOrdenReparacionView extends javax.swing.JInternalFrame {
 	/**
 	* Auto-generated main method to display this JFrame
 	*/
-//	public static void main(String[] args) {
-//		SwingUtilities.invokeLater(new Runnable() {
-//			public void run() {
-//				AltaOrdenReparacionView inst = new AltaOrdenReparacionView();
-//				inst.setLocationRelativeTo(null);
-//				inst.setVisible(true);
-//			}
-//		});
-//	}
+	public static void main(String[] args) {
+		SwingUtilities.invokeLater(new Runnable() {
+			public void run() {
+				AltaOrdenReparacionView inst = new AltaOrdenReparacionView();
+				inst.setLocationRelativeTo(null);
+				inst.setVisible(true);
+			}
+		});
+	}
 	
 	public AltaOrdenReparacionView() {
 		super();
@@ -108,7 +109,7 @@ public class AltaOrdenReparacionView extends javax.swing.JInternalFrame {
 							if(equipo!=null ){
 								nombreEquipo.setText(equipo.getCliente().getNombre());
 								if(equipo.getGarantia().estasEnGarantia())
-									garantiaPapel.doClick();
+									garantiaPapel.setSelected(true);
 								
 							}
 						}
@@ -131,7 +132,7 @@ public class AltaOrdenReparacionView extends javax.swing.JInternalFrame {
 				jCheckBox1 = new JCheckBox();
 				getContentPane().add(jCheckBox1);
 				jCheckBox1.setText("En Garantia Fisica");
-				jCheckBox1.setBounds(12, 150, 113, 20);
+				jCheckBox1.setBounds(12, 150, 156, 20);
 			}
 			{
 				repararTodas = new JCheckBox();
@@ -197,8 +198,10 @@ public class AltaOrdenReparacionView extends javax.swing.JInternalFrame {
 				quitarTarea.addActionListener(new ActionListener() {
 					
 					public void actionPerformed(ActionEvent arg0) {
-						String nroTarea=(String) tareas.getSelectedValue().toString();
-						SistemadeReparaciones.getInstancia().quitarTareaOrdenReparacion(Integer.parseInt(nroOrdenReparacion.getText()),Integer.parseInt(nroTarea));
+						if(!tareas.isSelectionEmpty()){
+							int nroTarea=((TareaReparacionView) tareas.getSelectedValue()).getNroItemReparacion();
+							SistemadeReparaciones.getInstancia().quitarTareaOrdenReparacion(Integer.parseInt(nroOrdenReparacion.getText()),nroTarea);
+						}
 						
 					}
 				});

@@ -55,7 +55,7 @@ public class Pieza {
 		this.estado = estado;
 	}
 	public boolean hayStock() {
-		
+
 		return false;
 	}
 	public void darBajaPieza() {
@@ -65,11 +65,6 @@ public class Pieza {
 	public PiezaView getView() {
 		PiezaView piezaview=new PiezaView(getNroPieza(), getNombrePieza(), getDescripcion());
 		return piezaview;
-		
-	}
-	
-	public void eliminate() { //Elimina de la base de datos.
-		// TODO Auto-generated method stub
 		
 	}
 	public int getStock() {
