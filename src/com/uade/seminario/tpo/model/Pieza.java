@@ -78,4 +78,8 @@ public class Pieza {
 	public void setStock(int stock) {
 		this.stock = stock;
 	}
+	public boolean estaActiva() {
+		
+		return estado.equals("activo");
+	}
 }

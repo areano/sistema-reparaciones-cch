@@ -27,6 +27,7 @@ public class TareaReparacion {
 		this.nroItemReparacion=nroItem;
 		this.piezas=new Vector<Pieza>();
 		this.detalle=descripcion;
+		estado="inactivo";
 	}
 	public int getNroItemReparacion() {
 		return nroItemReparacion;
@@ -53,11 +54,11 @@ public class TareaReparacion {
 		this.estado = estado;
 	}
 	public boolean estaActiva() {
-		return estado.equals("Activa");
+		return estado.equals("activo");
 	}
 	public TareaReparacionView getView() {
 		TareaReparacionView tareaView=new TareaReparacionView(nroItemReparacion,detalle,piezas,estado);
-		return null;
+		return tareaView;
 	}
 	public void listaPiezas() {
 		// TODO Auto-generated method stub

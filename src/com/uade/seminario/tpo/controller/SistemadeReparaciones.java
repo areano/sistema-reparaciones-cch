@@ -67,6 +67,42 @@ public class SistemadeReparaciones {
 		this.equipos=new Vector<Equipo>();
 		this.clientes= new ArrayList<Cliente>();
 		this.reportes=new Vector<Reporte>();
+		
+		/* CLASES PARA TEST */
+		Pieza pieza= new Pieza(1, "tornillo", "es un tornillo");
+		pieza.setEstado("activo");
+		piezas.add(pieza);
+		Modelo modelo= new Modelo("XP","windows", 1);
+		modelo.setEstado("activo");
+		modelo.addPieza(pieza);
+		modelos.add(modelo);
+		Cliente cliente= new Cliente("1", "DNI", "mau", "Gri", "bla", "bla", "14/12/1990", "12");
+		clientes.add(cliente);
+		Date dia=new Date( Date.parse("12/14/1990"));
+		Garantia garantia=new Garantia(1,dia);
+		garantias.add(garantia);
+		Equipo equipo=new Equipo(1, modelo, cliente, garantia);
+		equipo.setEstado("activo");
+		equipos.add(equipo);
+		OrdenReparacion orden=new OrdenReparacion(1);
+		TareaReparacion tarea=new TareaReparacion(1, "Le falta un tornillo");
+		TareaReparacion tarea1=new TareaReparacion(2, "Le faltan dos tornillos");
+		tarea.agregarPieza(pieza);
+		tarea.setEstado("activo");
+		tarea1.agregarPieza(pieza);
+		tarea1.setEstado("activo");
+		orden.setDescripcionFallas("falla blabla");		
+		orden.setEquipo(equipo);
+		orden.setEstado("A reparar");
+		orden.setEstaEnGarantiaFisica(true);
+		orden.setFecha(dia);
+		orden.setPrioridad(10);
+		orden.setRepararDeTodosModos(true);
+		orden.agregarItemReparacion(tarea);
+		orden.agregarItemReparacion(tarea1);
+		ordReparacion.add(orden);
+		
+		/* CLASES PARA TEST */
 	}
 	
 	public static SistemadeReparaciones getInstancia(){
@@ -171,7 +207,10 @@ public class SistemadeReparaciones {
 	}
 	
 	public OrdenReparacion buscarOrdenReparacion(int nroReparacion) {
-		// TODO Auto-generated method stub
+		for (OrdenReparacion orden : ordReparacion) {
+			if(orden.getNroOrden()==nroReparacion)
+				return orden;
+		}
 		return null;
 	}
 
@@ -546,6 +585,7 @@ public class SistemadeReparaciones {
 			TareaReparacion tarea=orden.obtenerTarea(nroTarea);
 			if(tarea!=null){
 				for (Pieza pieza : tarea.getPiezas()) {
+					if(pieza.estaActiva())
 					piezas.add(pieza.getView());
 				}
 			}
@@ -572,7 +612,7 @@ public class SistemadeReparaciones {
 		if(orden!=null){
 			TareaReparacion tarea= orden.obtenerTarea(nroTarea);
 			if(tarea!=null){
-				tarea.quitarPieza(pieza);
+				pieza.setEstado("inactivo");
 			}
 		}
 		
@@ -604,6 +644,16 @@ public class SistemadeReparaciones {
 				orden.setEstado("Presupuestar");
 			}
 			
+		}
+		
+	}
+
+	public void confirmarTarea(int nroTarea, int numeroOrden) {
+		OrdenReparacion orden=buscarOrdenReparacion(numeroOrden);
+		if(orden!=null){
+			TareaReparacion tarea=orden.obtenerTarea(nroTarea);
+			if(tarea!=null)
+				tarea.setEstado("activo");
 		}
 		
 	}

@@ -19,7 +19,9 @@ import javax.swing.SwingUtilities;
 
 import com.uade.seminario.tpo.controller.SistemadeReparaciones;
 import com.uade.seminario.tpo.model.Equipo;
+import com.uade.seminario.tpo.model.TareaReparacion;
 import com.uade.seminario.tpo.view.objectView.OrdenReparacionView;
+import com.uade.seminario.tpo.view.objectView.PiezaView;
 import com.uade.seminario.tpo.view.objectView.TareaReparacionView;
 
 
@@ -177,9 +179,10 @@ public class ModificarOrdenReparacionView extends javax.swing.JFrame {
 				quitarTarea.addActionListener(new ActionListener() {
 					
 					public void actionPerformed(ActionEvent arg0) {
-						String nroTarea=(String) tareas.getSelectedValue().toString();
-						SistemadeReparaciones.getInstancia().quitarTareaOrdenReparacion(Integer.parseInt(nroOrdenReparacion.getText()),Integer.parseInt(nroTarea));
-						
+						TareaReparacionView tarea= ((TareaReparacionView) tareas.getSelectedValue());
+						if(tarea!=null)
+							SistemadeReparaciones.getInstancia().quitarTareaOrdenReparacion(Integer.parseInt(nroOrdenReparacion.getText()),tarea.getNroItemReparacion());
+						actualizar.doClick();
 					}
 				});
 			}
@@ -261,15 +264,15 @@ public class ModificarOrdenReparacionView extends javax.swing.JFrame {
 							if(equipo!=null && ordenview!=null){
 								nombreEquipo.setText(equipo.getCliente().getNombre());
 								if(equipo.getGarantia().estasEnGarantia())
-									garantiaPapel.doClick();
+									garantiaPapel.setSelected(true);
 								nroSerie.setText(String.valueOf(equipo.getNroSerie()));
 								if(ordenview.isEstaEnGarantiaFisica())
-									jCheckBox1.doClick();
+									jCheckBox1.setSelected(true);
 								if(ordenview.isRepararDeTodosModos())
-									repararTodas.doClick();
+									repararTodas.setSelected(true);
 								fallas.setText(ordenview.getDescripcionFallas());
 								estado.setText(ordenview.getEstado());
-								prioridad.setSelectedIndex(ordenview.getPrioridad());
+								prioridad.setSelectedIndex(ordenview.getPrioridad()-1);
 								actualizar.doClick();
 								
 								

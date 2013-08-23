@@ -17,6 +17,21 @@ public class OrdenReparacionView {
 	private boolean repararDeTodosModos;
 	private int prioridad;
 	
+
+	
+	public OrdenReparacionView(int nroOrden2, String descripcionFallas2,
+			Equipo equipo2, String estado2, Date fecha2,
+			Vector<TareaReparacion> itemsReparacion2, int prioridad2,boolean repararDeTodos,boolean garantiaFisica) {
+		this.nroOrden=nroOrden2;
+		this.descripcionFallas=descripcionFallas2;
+		this.equipo=equipo2;
+		this.estado=estado2;
+		this.fecha=fecha2;
+		this.itemsReparacion=itemsReparacion2;
+		this.prioridad=prioridad2;
+		this.repararDeTodosModos=repararDeTodos;
+		this.estaEnGarantiaFisica=garantiaFisica;
+	}
 	public int getNroOrden() {
 		return nroOrden;
 	}

@@ -109,7 +109,7 @@ public class MostrarOrdenReparacionView extends javax.swing.JFrame {
 				getContentPane().add(jCheckBox1);
 				jCheckBox1.setText("En Garantia Fisica");
 				jCheckBox1.setEnabled(false);
-				jCheckBox1.setBounds(12, 160, 113, 20);
+				jCheckBox1.setBounds(12, 160, 156, 20);
 			}
 			{
 				repararTodas = new JCheckBox();
@@ -219,39 +219,6 @@ public class MostrarOrdenReparacionView extends javax.swing.JFrame {
 
 			}
 			{
-				buscarOrden = new JButton();
-				getContentPane().add(buscarOrden);
-				buscarOrden.setText("Buscar Orden");
-				buscarOrden.setBounds(375, 22, 139, 23);
-				buscarOrden.addActionListener(new ActionListener() {
-					
-					public void actionPerformed(ActionEvent arg0) {
-						if(!nroOrdenReparacion.getText().equals("")){
-							OrdenReparacionView ordenview=SistemadeReparaciones.getInstancia().buscarOrdenReparacionView(Integer.parseInt(nroOrdenReparacion.getText()));
-							Equipo equipo=ordenview.getEquipo();
-							if(equipo!=null && ordenview!=null){
-								nombreEquipo.setText(equipo.getCliente().getNombre());
-								if(equipo.getGarantia().estasEnGarantia())
-									garantiaPapel.doClick();
-								nroSerie.setText(String.valueOf(equipo.getNroSerie()));
-								if(ordenview.isEstaEnGarantiaFisica())
-									jCheckBox1.doClick();
-								if(ordenview.isRepararDeTodosModos())
-									repararTodas.doClick();
-								fallas.setText(ordenview.getDescripcionFallas());
-								estado.setText(ordenview.getEstado());
-								prioridad.setSelectedIndex(ordenview.getPrioridad());
-								actualizar.doClick();
-								
-								
-							}
-						}
-						
-					}
-				});
-				buscarOrden.doClick();
-			}
-			{
 				garantiaPapel = new JCheckBox();
 				getContentPane().add(garantiaPapel);
 				garantiaPapel.setText("Esta en garantia de fabrica");
@@ -262,7 +229,7 @@ public class MostrarOrdenReparacionView extends javax.swing.JFrame {
 				jLabel3 = new JLabel();
 				getContentPane().add(jLabel3);
 				jLabel3.setText("Etapa del proceso : ");
-				jLabel3.setBounds(387, 132, 127, 16);
+				jLabel3.setBounds(435, 132, 127, 16);
 			}
 			{
 				estado = new JTextField();
@@ -286,6 +253,42 @@ public class MostrarOrdenReparacionView extends javax.swing.JFrame {
 				prioridad.setBounds(290, 129, 42, 23);
 				prioridad.setEditable(false);
 			}
+			{
+				buscarOrden = new JButton();
+				getContentPane().add(buscarOrden);
+				buscarOrden.setText("Buscar Orden");
+				buscarOrden.setBounds(375, 22, 139, 23);
+				buscarOrden.addActionListener(new ActionListener() {
+					
+					public void actionPerformed(ActionEvent arg0) {
+						if(!nroOrdenReparacion.getText().equals("")){
+							OrdenReparacionView ordenview=SistemadeReparaciones.getInstancia().buscarOrdenReparacionView(Integer.parseInt(nroOrdenReparacion.getText()));
+							Equipo equipo=ordenview.getEquipo();
+							if(equipo!=null && ordenview!=null){
+								nombreEquipo.setText(equipo.getCliente().getNombre());
+								if(equipo.getGarantia().estasEnGarantia())
+									garantiaPapel.setSelected(true);
+								nroSerie.setText(String.valueOf(equipo.getNroSerie()));
+								if(ordenview.isEstaEnGarantiaFisica())
+									jCheckBox1.setSelected(true);
+								if(ordenview.isRepararDeTodosModos())
+									repararTodas.setSelected(true);
+								fallas.setText(ordenview.getDescripcionFallas());
+								estado.setText(ordenview.getEstado());
+								prioridad.setSelectedIndex(ordenview.getPrioridad()-1);
+								prioridad.setEnabled(false);
+								buscarOrden.setEnabled(false);
+								actualizar.doClick();
+								
+								
+							}
+						}
+						
+					}
+				});
+				buscarOrden.doClick();
+			}
+			
 
 			pack();
 			this.setSize(929, 412);
