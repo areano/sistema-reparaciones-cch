@@ -2,7 +2,7 @@ package com.uade.seminario.tpo.model;
 
 import java.io.Serializable;
 
-import javax.persistence.Embeddable;
+import javax.persistence.*;
 
 @Embeddable
 public class ClienteId implements Serializable{
@@ -10,8 +10,12 @@ public class ClienteId implements Serializable{
 	 * 
 	 */
 	private static final long serialVersionUID = -4015828852452785490L;
+	
+	@Column(name="nro_doc", columnDefinition="varchar(12)", nullable=false)
 	private String nroDoc;
+	@Column(name="tipo_doc", columnDefinition="varchar(5)", nullable=false)
 	private String tipoDoc;
+	
 	public ClienteId(){
 		
 	}
