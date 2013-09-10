@@ -1,6 +1,7 @@
 package com.uade.seminario.tpo.controller;
 import java.sql.Date;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Vector;
 
 import com.uade.seminario.tpo.service.ClienteService;
@@ -11,13 +12,11 @@ import com.uade.seminario.tpo.view.objectView.ModeloView;
 import com.uade.seminario.tpo.view.objectView.OrdenReparacionView;
 import com.uade.seminario.tpo.view.objectView.PiezaView;
 import com.uade.seminario.tpo.view.objectView.TareaReparacionView;
-
 import com.uade.seminario.tpo.exceptions.ExceptionExisteCliente;
 import com.uade.seminario.tpo.exceptions.ExceptionExisteModelo;
 import com.uade.seminario.tpo.exceptions.ExceptionModeloInactivo;
 import com.uade.seminario.tpo.exceptions.ExceptionModeloPerteneceEquipo;
 import com.uade.seminario.tpo.exceptions.ExceptionNoExisteModelo;
-
 import com.uade.seminario.tpo.model.Cliente;
 import com.uade.seminario.tpo.model.ClienteId;
 import com.uade.seminario.tpo.model.Empleado;
@@ -422,7 +421,7 @@ public class SistemadeReparaciones {
 		 Vector<PiezaView> piezasview=new Vector<PiezaView>();
 		 Modelo modelo=buscarModelo(codModelo);
 		 if(modelo!=null){
-			 Vector<Pieza> piezas=modelo.getPiezas();
+			 List<Pieza> piezas=modelo.getPiezas();
 			 for (Pieza p : piezas) {
 				piezasview.add(p.getView());				
 			}
