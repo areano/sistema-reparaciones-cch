@@ -6,9 +6,7 @@ import javax.persistence.*;
 
 @Embeddable
 public class ClienteId implements Serializable{
-	/**
-	 * 
-	 */
+
 	private static final long serialVersionUID = -4015828852452785490L;
 	
 	@Column(name="nro_doc", columnDefinition="varchar(12)", nullable=false)

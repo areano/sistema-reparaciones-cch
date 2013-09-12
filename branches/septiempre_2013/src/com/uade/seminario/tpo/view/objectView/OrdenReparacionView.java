@@ -1,6 +1,7 @@
 package com.uade.seminario.tpo.view.objectView;
 
 import java.sql.Date;
+import java.util.List;
 import java.util.Vector;
 
 import com.uade.seminario.tpo.model.Equipo;
@@ -8,7 +9,7 @@ import com.uade.seminario.tpo.model.TareaReparacion;
 
 public class OrdenReparacionView {
 	private int nroOrden;
-	private Vector<TareaReparacion> itemsReparacion;
+	private List<TareaReparacion> itemsReparacion;
 	private Equipo equipo;
 	private Date fecha;
 	private String estado;
@@ -21,7 +22,7 @@ public class OrdenReparacionView {
 	
 	public OrdenReparacionView(int nroOrden2, String descripcionFallas2,
 			Equipo equipo2, String estado2, Date fecha2,
-			Vector<TareaReparacion> itemsReparacion2, int prioridad2,boolean repararDeTodos,boolean garantiaFisica) {
+			List<TareaReparacion> itemsReparacion2, int prioridad2,boolean repararDeTodos,boolean garantiaFisica) {
 		this.nroOrden=nroOrden2;
 		this.descripcionFallas=descripcionFallas2;
 		this.equipo=equipo2;
@@ -38,10 +39,10 @@ public class OrdenReparacionView {
 	public void setNroOrden(int nroOrden) {
 		this.nroOrden = nroOrden;
 	}
-	public Vector<TareaReparacion> getItemsReparacion() {
+	public List<TareaReparacion> getItemsReparacion() {
 		return itemsReparacion;
 	}
-	public void setItemsReparacion(Vector<TareaReparacion> itemsReparacion) {
+	public void setItemsReparacion(List<TareaReparacion> itemsReparacion) {
 		this.itemsReparacion = itemsReparacion;
 	}
 	public Equipo getEquipo() {
