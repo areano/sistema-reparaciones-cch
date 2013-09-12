@@ -1,5 +1,6 @@
 package com.uade.seminario.tpo.view.objectView;
 
+import java.util.List;
 import java.util.Vector;
 
 import com.uade.seminario.tpo.model.Pieza;
@@ -7,10 +8,10 @@ import com.uade.seminario.tpo.model.Pieza;
 public class TareaReparacionView {
 	private int nroItemReparacion;
 	private String detalle;
-	private Vector<Pieza> piezas;
+	private List<Pieza> piezas;
 	private String estado;
 	
-	public TareaReparacionView(int nroItem,String descripcion, Vector<Pieza> piezas2, String estado2) {
+	public TareaReparacionView(int nroItem,String descripcion, List<Pieza> piezas2, String estado2) {
 		this.nroItemReparacion=nroItem;
 		this.piezas=piezas2;
 		this.detalle=descripcion;
@@ -29,7 +30,7 @@ public class TareaReparacionView {
 	public void setDetalle(String detalle) {
 		this.detalle = detalle;
 	}
-	public Vector<Pieza> getPiezas() {
+	public List<Pieza> getPiezas() {
 		return piezas;
 	}
 	public void setPiezas(Vector<Pieza> piezas) {

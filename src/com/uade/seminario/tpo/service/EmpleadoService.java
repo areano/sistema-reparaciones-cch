@@ -25,7 +25,7 @@ public class EmpleadoService {
 	public void save(Empleado entidad){
 		dao.save(entidad);
 	}
-	public Empleado findByLegajo(String legajo) {
+	public Empleado findByLegajo(int legajo) {
 		return dao.findByLegajo(legajo);
 	}
 }

@@ -26,7 +26,7 @@ public class EmpleadoDAOImpl extends GenericDAOImpl<Empleado>{
 		return (Empleado)query.uniqueResult();
 	}
 
-	public Empleado findByLegajo(String legajo) {
+	public Empleado findByLegajo(int legajo) {
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		String hql = "from empleado p where p.legajo = : legajo";
 		Query query = session.createQuery(hql);

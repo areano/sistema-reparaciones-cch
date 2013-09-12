@@ -1,10 +1,12 @@
 package com.uade.seminario.tpo.model;
 
+import java.io.Serializable;
+
 import javax.persistence.*;
 
 @Entity
 @Table(name="item_remito")
-public class ItemRemito {
+public class ItemRemito implements Serializable{
 	
 	@Column(name="ir_detalle_falla", columnDefinition="varchar(200)")
 	private String detalleReparacion;

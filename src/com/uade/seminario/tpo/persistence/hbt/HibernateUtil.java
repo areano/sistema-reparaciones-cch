@@ -19,13 +19,13 @@ public class HibernateUtil {
 	        	 cfg.addAnnotatedClass(Equipo.class);
 	        	 cfg.addAnnotatedClass(Garantia.class);
 	        	 cfg.addAnnotatedClass(ItemRemito.class);
-	        	 cfg.addAnnotatedClass(itemReporte.class);
 	        	 cfg.addAnnotatedClass(Modelo.class);
 	        	 cfg.addAnnotatedClass(OrdenReparacion.class);
+	        	 cfg.addAnnotatedClass(TareaReparacion.class);
 	        	 cfg.addAnnotatedClass(Pieza.class);
 	        	 cfg.addAnnotatedClass(Remito.class);
-	        	 cfg.addAnnotatedClass(Reporte.class);
-	        	 cfg.addAnnotatedClass(TareaReparacion.class);
+//	        	 cfg.addAnnotatedClass(Reporte.class);
+//	        	 cfg.addAnnotatedClass(itemReporte.class);
 
 	             sessionFactory = cfg.buildSessionFactory();
 	        }
