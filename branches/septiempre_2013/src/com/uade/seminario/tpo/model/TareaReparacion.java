@@ -62,9 +62,12 @@ public class TareaReparacion {
 		TareaReparacionView tareaView=new TareaReparacionView(nroItemReparacion,detalle,piezas,estado);
 		return tareaView;
 	}
-	public void listaPiezas() {
-		// TODO Auto-generated method stub
-		
+	public Vector<String> listaPiezas() {
+		Vector<String> nombrePiezas=new Vector<String>();
+		for (Pieza pieza : piezas) {
+			nombrePiezas.add(pieza.getNombrePieza());
+		}
+		return nombrePiezas;
 	}
 	public void agregarPieza(Pieza pieza) {
 		this.piezas.add(pieza);
