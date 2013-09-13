@@ -1,21 +1,22 @@
 package com.uade.seminario.tpo.service;
 
+import java.util.List;
 import com.uade.seminario.tpo.model.Cliente;
 import com.uade.seminario.tpo.persistence.dao.generic.impl.ClienteDAOImpl;
 
-public class ClienteService {
+public class ClienteDataService {
 	private static ClienteDAOImpl dao;
-	private static ClienteService cs=null;
+	private static ClienteDataService cs=null;
 	static {
 		dao = ClienteDAOImpl.getInstancia();
 	}
 
-	private ClienteService(){
+	private ClienteDataService(){
 		
 	}
-	public static ClienteService getInstance(){
+	public static ClienteDataService getInstance(){
 		if (cs==null){
-			cs =  new ClienteService();
+			cs =  new ClienteDataService();
 		}
 		return cs;
 	}
@@ -24,5 +25,8 @@ public class ClienteService {
 	}
 	public void save(Cliente cliente){
 		dao.save(cliente);
+	}
+	public List<Cliente> todosLosClientes(){
+		return dao.findAll();
 	}
 }

@@ -1,21 +1,23 @@
 package com.uade.seminario.tpo.service;
 
+import java.util.List;
+
 import com.uade.seminario.tpo.model.Empleado;
 import com.uade.seminario.tpo.persistence.dao.generic.impl.EmpleadoDAOImpl;
 
-public class EmpleadoService {
+public class EmpleadoDataService {
 	private static EmpleadoDAOImpl dao;
-	private static EmpleadoService es=null;
+	private static EmpleadoDataService es=null;
 	static {
 		dao = EmpleadoDAOImpl.getInstancia();
 	}
 
-	private EmpleadoService(){
+	private EmpleadoDataService(){
 		
 	}
-	public static EmpleadoService getInstance(){
+	public static EmpleadoDataService getInstance(){
 		if (es==null){
-			es =  new EmpleadoService();
+			es =  new EmpleadoDataService();
 		}
 		return es;
 	}
@@ -27,5 +29,8 @@ public class EmpleadoService {
 	}
 	public Empleado findByLegajo(int legajo) {
 		return dao.findByLegajo(legajo);
+	} 
+	public List<Empleado> todosLosEmpleados(){
+		return dao.findAll();
 	}
 }

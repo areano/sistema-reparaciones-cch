@@ -7,8 +7,8 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Vector;
 
-import com.uade.seminario.tpo.service.ClienteService;
-import com.uade.seminario.tpo.service.EmpleadoService;
+import com.uade.seminario.tpo.service.ClienteDataService;
+import com.uade.seminario.tpo.service.EmpleadoDataService;
 import com.uade.seminario.tpo.view.objectView.ClienteView;
 import com.uade.seminario.tpo.view.objectView.EquipoView;
 import com.uade.seminario.tpo.view.objectView.ModeloView;
@@ -317,13 +317,13 @@ public class SistemadeReparaciones {
 	}
 
 	private Empleado buscarEmpleado(String legajo) {
-		EmpleadoService empleadoService = EmpleadoService.getInstance();
+		EmpleadoDataService empleadoDataService = EmpleadoDataService.getInstance();
 		for (Empleado empleado : empleados) {
 			if(empleado.getLegajo()==Integer.parseInt(legajo)) 
 				return empleado;
 		}
 		
-		Empleado empleado=empleadoService.findByLegajo(Integer.parseInt(legajo));
+		Empleado empleado=empleadoDataService.findByLegajo(Integer.parseInt(legajo));
 		if (empleado != null){
 			empleados.add(empleado);//bring the client to memory for future reference
 		}
@@ -394,15 +394,15 @@ public class SistemadeReparaciones {
 	public void altaCliente(String nroDoc, String tipoDoc, String nombre, String apellido,
 			String direccion, String mail, String fechaNac, String tel) {
 		Cliente cliente;
-		ClienteService clienteService = ClienteService.getInstance();
+		ClienteDataService clienteDataService = ClienteDataService.getInstance();
 		cliente =  buscarCliente(nroDoc, tipoDoc);
 		if(cliente==null){//if client is not in memory, search into the DB
-			cliente=clienteService.findByDNI(nroDoc, tipoDoc);			
+			cliente=clienteDataService.findByDNI(nroDoc, tipoDoc);			
 		}
 		if(cliente==null){// client not exist in the system
 			cliente=new Cliente(nroDoc,tipoDoc,nombre,apellido,direccion,mail,fechaNac,tel);
 			clientes.add(cliente);
-			clienteService.save(cliente);
+			clienteDataService.save(cliente);
 		}else {
 			throw new ExceptionExisteCliente(nroDoc);
 		}
@@ -411,13 +411,13 @@ public class SistemadeReparaciones {
 
 	private Cliente buscarCliente(String nroDoc, String tipoDoc) {
 		ClienteId id= new ClienteId(nroDoc, tipoDoc);
-		ClienteService clienteService = ClienteService.getInstance();
+		ClienteDataService clienteDataService = ClienteDataService.getInstance();
 		for (Cliente cliente : clientes) {
 			if(cliente.getId().equals(id)) 
 				return cliente;
 		}
 		
-		Cliente cliente=clienteService.findByDNI(nroDoc, tipoDoc);
+		Cliente cliente=clienteDataService.findByDNI(nroDoc, tipoDoc);
 		if (cliente != null){
 			clientes.add(cliente);//bring the client to memory for future reference
 		}

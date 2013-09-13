@@ -5,8 +5,9 @@ import java.util.List;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+
+import com.uade.seminario.tpo.exceptions.DataAccessLayerException;
 import com.uade.seminario.tpo.model.Empleado;
-import com.uade.seminario.tpo.model.Equipo;
 import com.uade.seminario.tpo.persistence.hbt.HibernateUtil;
 
 public class EmpleadoDAOImpl extends GenericDAOImpl<Empleado>{
@@ -32,7 +33,7 @@ public class EmpleadoDAOImpl extends GenericDAOImpl<Empleado>{
 	}
 
 	public Empleado findByLegajo(int legajo) {
-		Session session = HibernateUtil.getSessionFactory().openSession();
+		Session session = sf.openSession();
 		String hql = "from empleado p where p.legajo = : legajo";
 		Query query = session.createQuery(hql);
 		query.setParameter("legajo", legajo);
@@ -40,13 +41,16 @@ public class EmpleadoDAOImpl extends GenericDAOImpl<Empleado>{
 		session.close();
 		return retorno;
 	}
-	public List<Empleado> todosLosEmpleados() {
-		Session session = HibernateUtil.getSessionFactory().openSession();
-		String hql = "from Empleado";
-		Query query = session.createQuery(hql);
-		List<Empleado> retorno =  query.list();
-		session.close();
-		return retorno;
-	}		
+    public List<Empleado> findAll() throws DataAccessLayerException{
+        return super.findAll(Empleado.class);
+    }
+//	public List<Empleado> todosLosEmpleados() {
+//		Session session = HibernateUtil.getSessionFactory().openSession();
+//		String hql = "from Empleado";
+//		Query query = session.createQuery(hql);
+//		List<Empleado> retorno =  query.list();
+//		session.close();
+//		return retorno;
+//	}		
 
 }

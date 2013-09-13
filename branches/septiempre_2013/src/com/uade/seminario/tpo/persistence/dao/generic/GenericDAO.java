@@ -4,11 +4,11 @@ import java.util.List;
 
 public interface GenericDAO<T> {
 
-	void save(T entidad);
-	void delete(T entity);
-	List<T> findAll(@SuppressWarnings("rawtypes") Class clazz);
-	void update(T entidad);
-	void merge(T entidad);
+	abstract void save(T entidad);
+	abstract void delete(T entity);
+	abstract List<T> findAll(@SuppressWarnings("rawtypes") Class clazz);
+	abstract void update(T entidad);
+	abstract void merge(T entidad);
 	
 	
 }
