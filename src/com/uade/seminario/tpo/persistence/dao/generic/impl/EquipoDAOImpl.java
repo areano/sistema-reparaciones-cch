@@ -6,8 +6,8 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
+import com.uade.seminario.tpo.exceptions.DataAccessLayerException;
 import com.uade.seminario.tpo.model.Equipo;
-import com.uade.seminario.tpo.model.Modelo;
 import com.uade.seminario.tpo.persistence.hbt.HibernateUtil;
 
 public class EquipoDAOImpl extends GenericDAOImpl<Equipo> {
@@ -22,7 +22,7 @@ public class EquipoDAOImpl extends GenericDAOImpl<Equipo> {
 	}
 
 	public Equipo findByNroSerie(int nroSerie) {
-		Session session = HibernateUtil.getSessionFactory().openSession();
+		Session session = sf.openSession();
 		String hql = "from Equipo e where e.nroSerie = :nroSerie";
 		Query query = session.createQuery(hql);
 		query.setParameter("nroSerie", nroSerie);
@@ -30,13 +30,16 @@ public class EquipoDAOImpl extends GenericDAOImpl<Equipo> {
 		session.close();
 		return retorno;
 	}
-	public List<Equipo> todosLosEquipos() {
-		Session session = HibernateUtil.getSessionFactory().openSession();
-		String hql = "from Equipo";
-		Query query = session.createQuery(hql);
-		List<Equipo> retorno =  query.list();
-		session.close();
-		return retorno;
-	}	
+    public List<Equipo> findAll() throws DataAccessLayerException{
+        return super.findAll(Equipo.class);
+    }
+//	public List<Equipo> todosLosEquipos() {
+//		Session session = HibernateUtil.getSessionFactory().openSession();
+//		String hql = "from Equipo";
+//		Query query = session.createQuery(hql);
+//		List<Equipo> retorno =  query.list();
+//		session.close();
+//		return retorno;
+//	}	
 	
 }

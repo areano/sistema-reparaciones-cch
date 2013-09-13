@@ -6,6 +6,7 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
+import com.uade.seminario.tpo.exceptions.DataAccessLayerException;
 import com.uade.seminario.tpo.model.Garantia;
 import com.uade.seminario.tpo.persistence.hbt.HibernateUtil;
 
@@ -21,7 +22,7 @@ public class GarantiaDAOImpl extends GenericDAOImpl<Garantia> {
 	}
 
 	public Garantia findByNroSerie(int nroGarantia) {
-		Session session = HibernateUtil.getSessionFactory().openSession();
+		Session session = sf.openSession();
 		String hql = "from Garantia g where g.nroGarantia = :nroGarantia";
 		Query query = session.createQuery(hql);
 		query.setParameter("nroGarantia", nroGarantia);
@@ -29,13 +30,16 @@ public class GarantiaDAOImpl extends GenericDAOImpl<Garantia> {
 		session.close();
 		return retorno;
 	}
-	public List<Garantia> todasLasGarantias() {
-		Session session = HibernateUtil.getSessionFactory().openSession();
-		String hql = "from Garantia";
-		Query query = session.createQuery(hql);
-		List<Garantia> retorno =  query.list();
-		session.close();
-		return retorno;
-	}	
+    public List<Garantia> findAll() throws DataAccessLayerException{
+        return super.findAll(Garantia.class);
+    }
+//	public List<Garantia> todasLasGarantias() {
+//		Session session = HibernateUtil.getSessionFactory().openSession();
+//		String hql = "from Garantia";
+//		Query query = session.createQuery(hql);
+//		List<Garantia> retorno =  query.list();
+//		session.close();
+//		return retorno;
+//	}	
 	
 }

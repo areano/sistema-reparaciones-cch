@@ -6,6 +6,7 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
+import com.uade.seminario.tpo.exceptions.DataAccessLayerException;
 import com.uade.seminario.tpo.model.Modelo;
 import com.uade.seminario.tpo.persistence.hbt.HibernateUtil;
 
@@ -21,7 +22,7 @@ public class ModeloDAOImpl extends GenericDAOImpl<Modelo> {
 	}
 
 	public Modelo findByNroSerie(int nroModelo) {
-		Session session = HibernateUtil.getSessionFactory().openSession();
+		Session session = sf.openSession();
 		String hql = "from Modelo m where m.nroModelo = :nroModelo";
 		Query query = session.createQuery(hql);
 		query.setParameter("nroModelo", nroModelo);
@@ -29,13 +30,16 @@ public class ModeloDAOImpl extends GenericDAOImpl<Modelo> {
 		session.close();
 		return retorno;
 	}
-	public List<Modelo> todosLosModelos() {
-		Session session = HibernateUtil.getSessionFactory().openSession();
-		String hql = "from Modelo";
-		Query query = session.createQuery(hql);
-		List<Modelo> retorno =  query.list();
-		session.close();
-		return retorno;
-	}	
+    public List<Modelo> findAll() throws DataAccessLayerException{
+        return super.findAll(Modelo.class);
+    }
+//	public List<Modelo> todosLosModelos() {
+//		Session session = HibernateUtil.getSessionFactory().openSession();
+//		String hql = "from Modelo";
+//		Query query = session.createQuery(hql);
+//		List<Modelo> retorno =  query.list();
+//		session.close();
+//		return retorno;
+//	}	
 	
 }

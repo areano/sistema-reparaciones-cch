@@ -6,6 +6,7 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
+import com.uade.seminario.tpo.exceptions.DataAccessLayerException;
 import com.uade.seminario.tpo.model.Remito;
 import com.uade.seminario.tpo.persistence.hbt.HibernateUtil;
 
@@ -20,8 +21,8 @@ public class RemitoDAOImpl extends GenericDAOImpl<Remito> {
 		return instancia;
 	}
 
-	public Remito findByNroSerie(int nroRemito) {
-		Session session = HibernateUtil.getSessionFactory().openSession();
+	public Remito findByNroRemito(int nroRemito) {
+		Session session =sf.openSession();
 		String hql = "from Remito m where m.nroRemito = :nroRemito";
 		Query query = session.createQuery(hql);
 		query.setParameter("nroRemito", nroRemito);
@@ -29,13 +30,16 @@ public class RemitoDAOImpl extends GenericDAOImpl<Remito> {
 		session.close();
 		return retorno;
 	}
-	public List<Remito> todosLosModelos() {
-		Session session = HibernateUtil.getSessionFactory().openSession();
-		String hql = "from Remito";
-		Query query = session.createQuery(hql);
-		List<Remito> retorno =  query.list();
-		session.close();
-		return retorno;
-	}	
+    public List<Remito> findAll() throws DataAccessLayerException{
+        return super.findAll(Remito.class);
+    }
+//	public List<Remito> todosLosModelos() {
+//		Session session = HibernateUtil.getSessionFactory().openSession();
+//		String hql = "from Remito";
+//		Query query = session.createQuery(hql);
+//		List<Remito> retorno =  query.list();
+//		session.close();
+//		return retorno;
+//	}	
 	
 }

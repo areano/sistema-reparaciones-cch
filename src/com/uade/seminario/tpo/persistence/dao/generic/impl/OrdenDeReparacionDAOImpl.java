@@ -5,6 +5,8 @@ import java.util.List;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+
+import com.uade.seminario.tpo.exceptions.DataAccessLayerException;
 import com.uade.seminario.tpo.model.OrdenReparacion;
 import com.uade.seminario.tpo.persistence.hbt.HibernateUtil;
 
@@ -19,8 +21,8 @@ public class OrdenDeReparacionDAOImpl extends GenericDAOImpl<OrdenReparacion>{
 		return instancia;
 	}
 
-	public OrdenReparacion findByDNI(int nroOrden) {
-		Session session = HibernateUtil.getSessionFactory().openSession();
+	public OrdenReparacion findByNroOrden(int nroOrden) {
+		Session session = sf.openSession();
 		String hql = "from OrdenReparacion o where o.nroOrden := nroOrden";
 		Query query = session.createQuery(hql);
 		query.setParameter("nroOrden", nroOrden);
@@ -28,13 +30,16 @@ public class OrdenDeReparacionDAOImpl extends GenericDAOImpl<OrdenReparacion>{
 		session.close();
 		return retorno;
 	}
-	public List<OrdenReparacion> todasLasOrdenReparacion() {
-		Session session = HibernateUtil.getSessionFactory().openSession();
-		String hql = "from OrdenReparacion";
-		Query query = session.createQuery(hql);
-		List<OrdenReparacion> retorno =  query.list();
-		session.close();
-		return retorno;
-	}	
+    public List<OrdenReparacion> findAll() throws DataAccessLayerException{
+        return super.findAll(OrdenReparacion.class);
+    }
+//	public List<OrdenReparacion> todasLasOrdenReparacion() {
+//		Session session = HibernateUtil.getSessionFactory().openSession();
+//		String hql = "from OrdenReparacion";
+//		Query query = session.createQuery(hql);
+//		List<OrdenReparacion> retorno =  query.list();
+//		session.close();
+//		return retorno;
+//	}	
 
 }
