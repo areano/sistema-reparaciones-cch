@@ -60,6 +60,8 @@ public class ModificarOrdenReparacionView extends javax.swing.JFrame {
 	private JLabel jLabel6;
 	private JTextArea fallas;
 	private JLabel jLabel5;
+	private JButton avanzar;
+	private JButton retroceder;
 	private JCheckBox jCheckBox1;
 	private JTextField nombreEquipo;
 	private JTextField nroSerie;
@@ -81,7 +83,7 @@ public class ModificarOrdenReparacionView extends javax.swing.JFrame {
 	
 	private void initGUI() {
 		try {
-			setTitle("Alta Orden de Reparacion");
+			setTitle("Modificar Orden de Reparacion");
 			setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 			getContentPane().setLayout(null);
 			{
@@ -113,7 +115,7 @@ public class ModificarOrdenReparacionView extends javax.swing.JFrame {
 				getContentPane().add(jCheckBox1);
 				jCheckBox1.setText("En Garantia Fisica");
 				jCheckBox1.setEnabled(false);
-				jCheckBox1.setBounds(12, 160, 113, 20);
+				jCheckBox1.setBounds(12, 160, 151, 20);
 			}
 			{
 				repararTodas = new JCheckBox();
@@ -162,6 +164,7 @@ public class ModificarOrdenReparacionView extends javax.swing.JFrame {
 				getContentPane().add(agregar);
 				agregar.setText("Agregar Tarea");
 				agregar.setBounds(266, 227, 128, 23);
+				agregar.setEnabled(false);
 				agregar.addActionListener(new ActionListener() {
 					
 					public void actionPerformed(ActionEvent arg0) {
@@ -176,6 +179,7 @@ public class ModificarOrdenReparacionView extends javax.swing.JFrame {
 				getContentPane().add(quitarTarea);
 				quitarTarea.setText("Quitar Tarea");
 				quitarTarea.setBounds(266, 262, 128, 23);
+				quitarTarea.setEnabled(false);
 				quitarTarea.addActionListener(new ActionListener() {
 					
 					public void actionPerformed(ActionEvent arg0) {
@@ -191,6 +195,7 @@ public class ModificarOrdenReparacionView extends javax.swing.JFrame {
 				getContentPane().add(actualizar);
 				actualizar.setText("Actualizar");
 				actualizar.setBounds(266, 297, 128, 23);
+				actualizar.setEnabled(false);
 				actualizar.addActionListener(new ActionListener() {
 					
 					public void actionPerformed(ActionEvent e) {
@@ -274,7 +279,11 @@ public class ModificarOrdenReparacionView extends javax.swing.JFrame {
 								estado.setText(ordenview.getEstado());
 								prioridad.setSelectedIndex(ordenview.getPrioridad()-1);
 								actualizar.doClick();
-								
+								retroceder.setVisible(true);
+								avanzar.setVisible(true);	
+								agregar.setEnabled(true);
+								quitarTarea.setEnabled(true);
+								actualizar.setEnabled(true);
 								
 							}
 						}
@@ -293,7 +302,7 @@ public class ModificarOrdenReparacionView extends javax.swing.JFrame {
 				jLabel3 = new JLabel();
 				getContentPane().add(jLabel3);
 				jLabel3.setText("Etapa del proceso : ");
-				jLabel3.setBounds(387, 132, 127, 16);
+				jLabel3.setBounds(417, 132, 127, 16);
 			}
 			{
 				estado = new JTextField();
@@ -315,6 +324,39 @@ public class ModificarOrdenReparacionView extends javax.swing.JFrame {
 				getContentPane().add(jLabel8);
 				jLabel8.setText("Prioridad : ");
 				jLabel8.setBounds(362, 162, 82, 16);
+			}
+			{
+				retroceder = new JButton();
+				getContentPane().add(retroceder);
+				retroceder.setText("Retroceder Etapa");
+				retroceder.setBounds(543, 178, 140, 23);
+				retroceder.setVisible(false);
+				retroceder.addActionListener(new ActionListener() {
+					
+					public void actionPerformed(ActionEvent e) {
+						if(!nroOrdenReparacion.equals("")){
+						String etapa=SistemadeReparaciones.getInstancia().retrocederEtapaOrden(Integer.parseInt(nroOrdenReparacion.getText()));
+						if (!etapa.equals(""))
+						estado.setText(etapa);}
+						
+					}
+				});
+			}
+			{
+				avanzar = new JButton();
+				getContentPane().add(avanzar);
+				avanzar.setText("Avanzar Etapa");
+				avanzar.setBounds(718, 178, 134, 23);
+				avanzar.setVisible(false);
+				avanzar.addActionListener(new ActionListener() {
+					
+					public void actionPerformed(ActionEvent e) {
+						if(!nroOrdenReparacion.equals("")){
+						String etapa=SistemadeReparaciones.getInstancia().avanzarEtapaOrden((Integer.parseInt(nroOrdenReparacion.getText())));
+						if (!etapa.equals(""))
+						estado.setText(etapa);}
+					}
+				});
 			}
 
 			pack();
