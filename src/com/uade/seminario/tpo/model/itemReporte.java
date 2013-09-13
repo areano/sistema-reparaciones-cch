@@ -13,9 +13,13 @@ package com.uade.seminario.tpo.model;
 
 
 
-public class itemReporte {
+public class ItemReporte {
 	private String nombrePieza;
 	private int cantidadPieza;
+	public ItemReporte(String nombre, Integer cantidad) {
+		this.cantidadPieza=cantidad;
+		this.nombrePieza=nombre;
+	}
 	public String getNombrePieza() {
 		return nombrePieza;
 	}
