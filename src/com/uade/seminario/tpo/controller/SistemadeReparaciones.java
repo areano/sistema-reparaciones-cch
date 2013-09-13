@@ -112,7 +112,7 @@ public class SistemadeReparaciones {
 		orden.agregarItemReparacion(tarea1);
 		ordReparacion.add(orden);
 		Empleado empleado=new Empleado();
-		empleado.setLegajo("1");
+		empleado.setLegajo(1);
 		empleado.setaReparar(new Vector<OrdenReparacion>());
 		empleados.add(empleado);
 		
@@ -319,11 +319,11 @@ public class SistemadeReparaciones {
 	private Empleado buscarEmpleado(String legajo) {
 		EmpleadoService empleadoService = EmpleadoService.getInstance();
 		for (Empleado empleado : empleados) {
-			if(empleado.getLegajo().equals(legajo)) 
+			if(empleado.getLegajo()==Integer.parseInt(legajo)) 
 				return empleado;
 		}
 		
-		Empleado empleado=empleadoService.findByLegajo(legajo);
+		Empleado empleado=empleadoService.findByLegajo(Integer.parseInt(legajo));
 		if (empleado != null){
 			empleados.add(empleado);//bring the client to memory for future reference
 		}
@@ -602,7 +602,7 @@ public class SistemadeReparaciones {
 		Vector<TareaReparacionView> tareasview=new Vector<TareaReparacionView>();
 		 OrdenReparacion orden=buscarOrdenReparacion(nroOrdenReparacion);
 		 if(orden!=null){
-			 Vector<TareaReparacion> tareas=orden.getItemsReparacion();
+			 List<TareaReparacion> tareas=orden.getItemsReparacion();
 			 for (TareaReparacion t : tareas) {
 				 if(t.estaActiva())
 					 tareasview.add(t.getView());				
