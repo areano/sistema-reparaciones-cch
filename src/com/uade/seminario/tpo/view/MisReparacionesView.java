@@ -77,8 +77,7 @@ public class MisReparacionesView extends javax.swing.JFrame {
 					
 					public void actionPerformed(ActionEvent arg0) {
 						if(!legajo.getText().equals("")){
-							int numeroLegajo = Integer.parseInt(legajo.getText());
-							OrdenReparacionView orden=SistemadeReparaciones.getInstancia().misReparaciones(numeroLegajo);
+							OrdenReparacionView orden=SistemadeReparaciones.getInstancia().misReparaciones(legajo.getText());
 							nroOrden.setText(String.valueOf(orden.getNroOrden()));
 							mostrarOrden.setVisible(true);
 						}
@@ -90,7 +89,7 @@ public class MisReparacionesView extends javax.swing.JFrame {
 				jLabel2 = new JLabel();
 				getContentPane().add(jLabel2);
 				jLabel2.setText("Numero de Orden : ");
-				jLabel2.setBounds(12, 64, 105, 16);
+				jLabel2.setBounds(12, 64, 131, 16);
 			}
 			{
 				nroOrden = new JTextField();
