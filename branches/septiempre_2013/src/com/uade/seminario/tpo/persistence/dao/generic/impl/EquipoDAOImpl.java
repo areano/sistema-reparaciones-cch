@@ -5,38 +5,38 @@ import java.util.List;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import com.uade.seminario.tpo.model.Cliente;
-import com.uade.seminario.tpo.model.Empleado;
+
+import com.uade.seminario.tpo.model.Equipo;
+import com.uade.seminario.tpo.model.Modelo;
 import com.uade.seminario.tpo.persistence.hbt.HibernateUtil;
 
-public class ClienteDAOImpl extends GenericDAOImpl<Cliente>{
-	private static ClienteDAOImpl instancia = null;
+public class EquipoDAOImpl extends GenericDAOImpl<Equipo> {
+	private static EquipoDAOImpl instancia = null;
 	private static SessionFactory sf = null;
-	public static ClienteDAOImpl getInstancia(){
+	public static EquipoDAOImpl getInstancia(){
 		if(instancia == null){
 			sf = HibernateUtil.getSessionFactory();
-			instancia = new ClienteDAOImpl();
+			instancia = new EquipoDAOImpl();
 		} 
 		return instancia;
 	}
 
-	public Cliente findByDNI(String nroDoc, String tipoDoc) {
+	public Equipo findByNroSerie(int nroSerie) {
 		Session session = HibernateUtil.getSessionFactory().openSession();
-		String hql = "from Cliente p where p.nroDoc = :nroDoc and p.tipoDoc = :tipoDoc";
+		String hql = "from Equipo e where e.nroSerie = :nroSerie";
 		Query query = session.createQuery(hql);
-		query.setParameter("nroDoc", nroDoc);
-		query.setParameter("tipoDoc", tipoDoc);	
-		Cliente retorno =  (Cliente)query.uniqueResult();
+		query.setParameter("nroSerie", nroSerie);
+		Equipo retorno =  (Equipo)query.uniqueResult();
 		session.close();
 		return retorno;
 	}
-	public List<Cliente> todosLosClientes() {
+	public List<Equipo> todosLosEquipos() {
 		Session session = HibernateUtil.getSessionFactory().openSession();
-		String hql = "from Cliente";
+		String hql = "from Equipo";
 		Query query = session.createQuery(hql);
-		List<Cliente> retorno =  query.list();
+		List<Equipo> retorno =  query.list();
 		session.close();
 		return retorno;
 	}	
-
+	
 }

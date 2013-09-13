@@ -1,7 +1,7 @@
 package com.uade.seminario.tpo.model;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Vector;
 
 import javax.persistence.*;
 
@@ -27,7 +27,7 @@ public class TareaReparacion {
 	
 	public TareaReparacion(int nroItem,String descripcion) {
 		this.nroItemReparacion=nroItem;
-		this.piezas=new Vector<Pieza>();
+		this.piezas=new ArrayList<Pieza>();
 		this.detalle=descripcion;
 		estado="inactivo";
 	}
@@ -46,7 +46,7 @@ public class TareaReparacion {
 	public List<Pieza> getPiezas() {
 		return piezas;
 	}
-	public void setPiezas(Vector<Pieza> piezas) {
+	public void setPiezas(List<Pieza> piezas) {
 		this.piezas = piezas;
 	}
 	public String getEstado() {
@@ -62,8 +62,8 @@ public class TareaReparacion {
 		TareaReparacionView tareaView=new TareaReparacionView(nroItemReparacion,detalle,piezas,estado);
 		return tareaView;
 	}
-	public Vector<String> listaPiezas() {
-		Vector<String> nombrePiezas=new Vector<String>();
+	public List<String> listaPiezas() {
+		List<String> nombrePiezas=new ArrayList<String>();
 		for (Pieza pieza : piezas) {
 			nombrePiezas.add(pieza.getNombrePieza());
 		}

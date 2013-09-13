@@ -101,11 +101,11 @@ public class OrdenReparacion {
 	public List<TareaReparacion> listarTareas() {
 		return this.itemsReparacion;
 	}
-	public Vector<String> listaPiezas() {
+	public List<String> listaPiezas() {
 		List<TareaReparacion> tareas=listarTareas();
 		Vector<String> nombrePiezas= new Vector<String>();
 		for (TareaReparacion tareaReparacion : tareas) {
-			Vector<String> nombrePiezasTarea=tareaReparacion.listaPiezas();
+			List<String> nombrePiezasTarea=tareaReparacion.listaPiezas();
 			for (String nombre : nombrePiezasTarea) {
 				nombrePiezas.add(nombre);
 			}
