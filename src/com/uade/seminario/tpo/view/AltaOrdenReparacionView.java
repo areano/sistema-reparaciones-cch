@@ -181,6 +181,7 @@ public class AltaOrdenReparacionView extends javax.swing.JFrame {
 				getContentPane().add(agregar);
 				agregar.setText("Agregar Tarea");
 				agregar.setBounds(266, 227, 128, 23);
+				agregar.setEnabled(false);
 				agregar.addActionListener(new ActionListener() {
 					
 					public void actionPerformed(ActionEvent arg0) {
@@ -195,6 +196,7 @@ public class AltaOrdenReparacionView extends javax.swing.JFrame {
 				getContentPane().add(quitarTarea);
 				quitarTarea.setText("Quitar Tarea");
 				quitarTarea.setBounds(266, 262, 128, 23);
+				quitarTarea.setEnabled(false);
 				quitarTarea.addActionListener(new ActionListener() {
 					
 					public void actionPerformed(ActionEvent arg0) {
@@ -211,6 +213,7 @@ public class AltaOrdenReparacionView extends javax.swing.JFrame {
 				getContentPane().add(actualizar);
 				actualizar.setText("Actualizar");
 				actualizar.setBounds(266, 297, 128, 23);
+				actualizar.setEnabled(false);
 				actualizar.addActionListener(new ActionListener() {
 					
 					public void actionPerformed(ActionEvent e) {
@@ -289,11 +292,15 @@ public class AltaOrdenReparacionView extends javax.swing.JFrame {
 							OrdenReparacionView ordenView= SistemadeReparaciones.getInstancia().buscarOrdenConEquipoARepararView(Integer.parseInt(nroSerie.getText()));
 							if(equipo!=null && ordenView==null){
 								int nroOrden=SistemadeReparaciones.getInstancia().altaOrdenReparacion(Integer.parseInt(nroSerie.getText()));
+								if(nroOrden!=0){
 								ordenView=SistemadeReparaciones.getInstancia().buscarOrdenReparacionView(nroOrden);
 								String nro= String.valueOf(ordenView.getNroOrden());
 								nroOrdenReparacion.setText(nro);
-								
+								agregar.setEnabled(true);
+								quitarTarea.setEnabled(true);
+								actualizar.setEnabled(true);}
 							}
+							
 						}
 						
 					}
@@ -323,9 +330,9 @@ public class AltaOrdenReparacionView extends javax.swing.JFrame {
 			}
 
 			pack();
-			this.setSize(929, 363);
-			this.setPreferredSize(new java.awt.Dimension(929, 399));
-			this.setBounds(0, 0, 929, 399);
+			this.setSize(929, 419);
+			this.setPreferredSize(new java.awt.Dimension(929, 419));
+			this.setBounds(0, 0, 929, 419);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
