@@ -26,7 +26,7 @@ public class Cliente {
 	private String telefono;
 	
 	public Cliente(){
-		
+		this.id = new ClienteId();
 	}
 	public Cliente(String nroDoc, String tipoDoc, String nombre2, String apellido2,
 			String direccion, String mail, String fechaNac2, String tel) {
