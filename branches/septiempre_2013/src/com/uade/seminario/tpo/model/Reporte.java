@@ -17,13 +17,18 @@ import java.util.Vector;
 
 
 public class Reporte {
-	private Vector<itemReporte> itemsReporte;
+	private Vector<ItemReporte> itemsReporte;
 	private Date fechaDesde;
 	private Date fechaHasta;
-	public Vector<itemReporte> getItemsReporte() {
+	public Reporte(Date desde, Date hasta) {
+		this.itemsReporte=new Vector<ItemReporte>();
+		this.fechaDesde=desde;
+		this.fechaHasta=hasta;
+	}
+	public Vector<ItemReporte> getItemsReporte() {
 		return itemsReporte;
 	}
-	public void setItemsReporte(Vector<itemReporte> itemsReporte) {
+	public void setItemsReporte(Vector<ItemReporte> itemsReporte) {
 		this.itemsReporte = itemsReporte;
 	}
 	public Date getFechaDesde() {
