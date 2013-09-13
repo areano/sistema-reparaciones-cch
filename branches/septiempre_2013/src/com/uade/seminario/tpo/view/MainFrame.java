@@ -44,7 +44,8 @@ public class MainFrame extends javax.swing.JFrame {
 	private JMenu jmModelo;
 	private JMenu jmOrdenDeReparacion;
 	private JMenu jmPieza;
-	private JMenu jmTareaDeReparacion;
+	private JMenu jmMisReparaciones;
+	private JMenu jmMisReportes;
 	private JMenuItem jmiAltaEquipo;
 	private JMenuItem jmiAltaGarantia;
 	private JMenuItem jmiAltaModelo;
@@ -54,7 +55,8 @@ public class MainFrame extends javax.swing.JFrame {
 	private JMenuItem jmiAltaPieza;
 	private JMenuItem jmiModificarPieza;
 	private JMenuItem jmiBajaPieza;
-	private JMenuItem jmiAltaTareaReparacion;
+	private JMenuItem jmiObtenerReparacion;
+	private JMenuItem jmiObtenerReporte;
 
 	/**
 	 * Auto-generated main method to display this JFrame
@@ -171,31 +173,6 @@ public class MainFrame extends javax.swing.JFrame {
 						}
 					}
 					{
-						jmOrdenDeReparacion = new JMenu("Orden de Reparacion");
-						jMenu.add(jmOrdenDeReparacion);
-						{
-							jmiAltaOrdenReparacion = new JMenuItem("Alta");
-							jmOrdenDeReparacion.add(jmiAltaOrdenReparacion);
-							jmiAltaOrdenReparacion.addActionListener(new ActionListener() {
-								public void actionPerformed(ActionEvent arg0) {
-									//cargarInternalFrame(new AltaOrdenReparacionView());
-								}
-							});
-						}
-						{
-							modificar = new JMenuItem();
-							jmOrdenDeReparacion.add(modificar);
-							modificar.setText("modificar");
-							modificar.addActionListener(new ActionListener() {
-								
-								public void actionPerformed(ActionEvent arg0) {
-									ModificarOrdenReparacionView view=new ModificarOrdenReparacionView();
-									view.setVisible(true);
-								}
-							});
-						}
-					}
-					{
 						jmPieza = new JMenu("Pieza");
 						jMenu.add(jmPieza);
 						{
@@ -227,14 +204,59 @@ public class MainFrame extends javax.swing.JFrame {
 						}
 					}
 					{
-						jmTareaDeReparacion = new JMenu("Tarea de Reparacion");
-						jMenu.add(jmTareaDeReparacion);
+						jmOrdenDeReparacion = new JMenu("Orden de Reparacion");
+						jMenu.add(jmOrdenDeReparacion);
 						{
-							jmiAltaTareaReparacion = new JMenuItem("Alta");
-							jmTareaDeReparacion.add(jmiAltaTareaReparacion);
-							jmiAltaTareaReparacion.addActionListener(new ActionListener() {
+							jmiAltaOrdenReparacion = new JMenuItem("Alta");
+							jmOrdenDeReparacion.add(jmiAltaOrdenReparacion);
+							jmiAltaOrdenReparacion.addActionListener(new ActionListener() {
 								public void actionPerformed(ActionEvent arg0) {
-									//cargarInternalFrame(new AltaTareaReparacionView(""));
+									AltaOrdenReparacionView view=new AltaOrdenReparacionView();
+									view.setVisible(true);
+								}
+							});
+						}
+						{
+							modificar = new JMenuItem();
+							jmOrdenDeReparacion.add(modificar);
+							modificar.setText("modificar");
+							modificar.addActionListener(new ActionListener() {
+								
+								public void actionPerformed(ActionEvent arg0) {
+									ModificarOrdenReparacionView view=new ModificarOrdenReparacionView();
+									view.setVisible(true);
+								}
+							});
+						}
+					}
+					
+					{
+						jmMisReparaciones = new JMenu("Mis reparaciones");
+						jMenu.add(jmMisReparaciones);
+						{
+							jmiObtenerReparacion = new JMenuItem("Obtener Reparacion");
+							jmMisReparaciones.add(jmiObtenerReparacion);
+							jmiObtenerReparacion.addActionListener(new ActionListener() {
+								public void actionPerformed(ActionEvent arg0) {
+									//cargarInternalFrame(new MisReparacionesView());
+									MisReparacionesView view=new MisReparacionesView();
+									view.setVisible(true);
+								}
+							});
+						}
+					}
+					
+					{
+						jmMisReportes = new JMenu("Reportes");
+						jMenu.add(jmMisReportes);
+						{
+							jmiObtenerReporte = new JMenuItem("Obtener Reporte");
+							jmMisReportes.add(jmiObtenerReporte);
+							jmiObtenerReporte.addActionListener(new ActionListener() {
+								public void actionPerformed(ActionEvent arg0) {
+									//cargarInternalFrame(new GenerarReporteView());
+									GenerarReporteView view=new GenerarReporteView();
+									view.setVisible(true);
 								}
 							});
 						}
