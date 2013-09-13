@@ -1,8 +1,11 @@
 package com.uade.seminario.tpo.model;
 
 import java.sql.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 
 import javax.persistence.*;
+
 
 import com.uade.seminario.tpo.view.objectView.ClienteView;
 
@@ -33,11 +36,20 @@ public class Cliente {
 		this.nombre=nombre2;
 		this.apellido=apellido2;
 		this.direccion=direccion;
-		this.fechaNac=new Date(Date.parse(fechaNac2));
-		this.email=mail;
-		this.telefono=tel;
-		this.id = new ClienteId(nroDoc, tipoDoc);
 		
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/mm/yyyy");
+        java.util.Date date;
+        java.sql.Date sqlDate;
+		try {
+			date = sdf.parse(fechaNac2);
+			sqlDate = new Date(date.getTime());	
+			this.fechaNac=sqlDate;//new Date());
+			this.email=mail;
+			this.telefono=tel;
+			this.id = new ClienteId(nroDoc, tipoDoc);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}		
 	}
 
 	public ClienteId getId() {
@@ -74,8 +86,18 @@ public class Cliente {
 	public Date getFechaNac() {
 		return fechaNac;
 	}
-	public void setFechaNac(Date fechaNac) {
-		this.fechaNac = fechaNac;
+	public void setFechaNac(String fechaNac) {
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/mm/yyyy");
+        java.util.Date date;
+        java.sql.Date sqlDate;
+		try {
+			date = sdf.parse(fechaNac);
+			sqlDate = new Date(date.getTime());	
+			this.fechaNac=sqlDate;//new Date());
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}	
+		//this.fechaNac = fechaNac;
 	}
 
 	public ClienteView getView() {
