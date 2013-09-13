@@ -101,12 +101,16 @@ public class OrdenReparacion {
 	public List<TareaReparacion> listarTareas() {
 		return this.itemsReparacion;
 	}
-	public void listaPiezas() {
+	public Vector<String> listaPiezas() {
 		List<TareaReparacion> tareas=listarTareas();
+		Vector<String> nombrePiezas= new Vector<String>();
 		for (TareaReparacion tareaReparacion : tareas) {
-			tareaReparacion.listaPiezas();
+			Vector<String> nombrePiezasTarea=tareaReparacion.listaPiezas();
+			for (String nombre : nombrePiezasTarea) {
+				nombrePiezas.add(nombre);
+			}
 		}
-		
+		return nombrePiezas;
 	}
 	public void agregarItemReparacion(TareaReparacion tarea) {
 		this.itemsReparacion.add(tarea);
@@ -151,5 +155,9 @@ public class OrdenReparacion {
 				return tarea.getView();
 		}
 		return null;
+	}
+	public boolean estadoAConfirmar() {
+		
+		return this.estado.equals("A Confirmar");
 	}
 }
