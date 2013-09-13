@@ -22,8 +22,10 @@ public class ClienteDAOImpl extends GenericDAOImpl<Cliente>{
 		String hql = "from Cliente p where p.nroDoc = :nroDoc and p.tipoDoc = :tipoDoc";
 		Query query = session.createQuery(hql);
 		query.setParameter("nroDoc", nroDoc);
-		query.setParameter("tipoDoc", tipoDoc);		
-		return (Cliente)query.uniqueResult();
+		query.setParameter("tipoDoc", tipoDoc);	
+		Cliente retorno =  (Cliente)query.uniqueResult();
+		session.close();
+		return retorno;
 	}
 
 }
