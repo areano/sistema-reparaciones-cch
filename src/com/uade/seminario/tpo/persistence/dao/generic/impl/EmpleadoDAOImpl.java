@@ -1,9 +1,12 @@
 package com.uade.seminario.tpo.persistence.dao.generic.impl;
 
+import java.util.List;
+
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import com.uade.seminario.tpo.model.Empleado;
+import com.uade.seminario.tpo.model.Equipo;
 import com.uade.seminario.tpo.persistence.hbt.HibernateUtil;
 
 public class EmpleadoDAOImpl extends GenericDAOImpl<Empleado>{
@@ -22,8 +25,10 @@ public class EmpleadoDAOImpl extends GenericDAOImpl<Empleado>{
 		String hql = "from empleado p where p.nroDoc = :nroDoc and p.tipoDoc = tipoDoc";
 		Query query = session.createQuery(hql);
 		query.setParameter("nroDoc", nroDoc);
-		query.setParameter("tipoDoc", tipoDoc);		
-		return (Empleado)query.uniqueResult();
+		query.setParameter("tipoDoc", tipoDoc);
+		Empleado retorno = (Empleado)query.uniqueResult();
+		session.close();
+		return retorno;
 	}
 
 	public Empleado findByLegajo(int legajo) {
@@ -31,7 +36,17 @@ public class EmpleadoDAOImpl extends GenericDAOImpl<Empleado>{
 		String hql = "from empleado p where p.legajo = : legajo";
 		Query query = session.createQuery(hql);
 		query.setParameter("legajo", legajo);
-		return (Empleado)query.uniqueResult();
+		Empleado retorno = (Empleado)query.uniqueResult();
+		session.close();
+		return retorno;
 	}
+	public List<Empleado> todosLosEmpleados() {
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		String hql = "from Empleado";
+		Query query = session.createQuery(hql);
+		List<Empleado> retorno =  query.list();
+		session.close();
+		return retorno;
+	}		
 
 }

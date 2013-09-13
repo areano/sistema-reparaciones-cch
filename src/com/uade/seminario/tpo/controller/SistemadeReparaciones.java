@@ -352,7 +352,7 @@ public class SistemadeReparaciones {
 
 	public Vector<ItemReporte> generarListaPiezas(Vector<OrdenReparacion> ordenes) {
 		Vector<String> piezas=new Vector<String>();
-		Vector<String> nombrePiezas=new Vector<String>();
+		List<String> nombrePiezas=new ArrayList<String>();
 		Vector<Integer> cantidad=new Vector<Integer>();
 		Vector<ItemReporte> itemsReporte=new Vector<ItemReporte>();
 		for (OrdenReparacion ordenReparacion : ordenes) {

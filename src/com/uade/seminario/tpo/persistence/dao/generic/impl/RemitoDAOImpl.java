@@ -5,38 +5,37 @@ import java.util.List;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import com.uade.seminario.tpo.model.Cliente;
-import com.uade.seminario.tpo.model.Empleado;
+
+import com.uade.seminario.tpo.model.Remito;
 import com.uade.seminario.tpo.persistence.hbt.HibernateUtil;
 
-public class ClienteDAOImpl extends GenericDAOImpl<Cliente>{
-	private static ClienteDAOImpl instancia = null;
+public class RemitoDAOImpl extends GenericDAOImpl<Remito> {
+	private static RemitoDAOImpl instancia = null;
 	private static SessionFactory sf = null;
-	public static ClienteDAOImpl getInstancia(){
+	public static RemitoDAOImpl getInstancia(){
 		if(instancia == null){
 			sf = HibernateUtil.getSessionFactory();
-			instancia = new ClienteDAOImpl();
+			instancia = new RemitoDAOImpl();
 		} 
 		return instancia;
 	}
 
-	public Cliente findByDNI(String nroDoc, String tipoDoc) {
+	public Remito findByNroSerie(int nroRemito) {
 		Session session = HibernateUtil.getSessionFactory().openSession();
-		String hql = "from Cliente p where p.nroDoc = :nroDoc and p.tipoDoc = :tipoDoc";
+		String hql = "from Remito m where m.nroRemito = :nroRemito";
 		Query query = session.createQuery(hql);
-		query.setParameter("nroDoc", nroDoc);
-		query.setParameter("tipoDoc", tipoDoc);	
-		Cliente retorno =  (Cliente)query.uniqueResult();
+		query.setParameter("nroRemito", nroRemito);
+		Remito retorno =  (Remito)query.uniqueResult();
 		session.close();
 		return retorno;
 	}
-	public List<Cliente> todosLosClientes() {
+	public List<Remito> todosLosModelos() {
 		Session session = HibernateUtil.getSessionFactory().openSession();
-		String hql = "from Cliente";
+		String hql = "from Remito";
 		Query query = session.createQuery(hql);
-		List<Cliente> retorno =  query.list();
+		List<Remito> retorno =  query.list();
 		session.close();
 		return retorno;
 	}	
-
+	
 }
