@@ -35,8 +35,8 @@ public class Reporte {
 	public List<ItemReporte> getItemsReporte() {
 		return itemsReporte;
 	}
-	public void setItemsReporte(Vector<ItemReporte> itemsReporte) {
-		this.itemsReporte = itemsReporte;
+	public void setItemsReporte(List<ItemReporte> itemsReporte2) {
+		this.itemsReporte = itemsReporte2;
 	}
 	public Date getFechaDesde() {
 		return fechaDesde;
