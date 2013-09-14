@@ -18,6 +18,11 @@ public class Garantia {
 		this.nroGarantia=nroGarantia2;
 		this.fechaVencimiento=fecha1;
 	}
+	
+	public Garantia(){ //NO tiene vectores a inicializar
+		
+	}
+	
 	public int getNroGarantia() {
 		return nroGarantia;
 	}

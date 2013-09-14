@@ -31,6 +31,11 @@ public class Equipo {
 		this.garantia=garantia2;
 		this.estado="inactivo";
 	}
+	
+	public Equipo(){ //NO Tiene vectores a inicializar
+		
+	}
+	
 	public int getNroSerie() {
 		return nroSerie;
 	}

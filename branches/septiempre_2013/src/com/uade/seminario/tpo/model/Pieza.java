@@ -20,6 +20,10 @@ public class Pieza {
 	@Transient
 	private int stock;
 	
+	public Pieza(){ // No tiene vector a inicializar
+		
+	}
+	
 	public Pieza(int codPieza, String nombre, String descripcion2) {
 		this.nroPieza=codPieza;
 		this.nombrePieza=nombre;

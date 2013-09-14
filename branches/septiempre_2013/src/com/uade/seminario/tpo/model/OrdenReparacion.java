@@ -1,6 +1,7 @@
 package com.uade.seminario.tpo.model;
 
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
 
@@ -42,6 +43,12 @@ public class OrdenReparacion {
 	
 	@Column(name="or_prioridad")
 	private int prioridad;
+	
+	public OrdenReparacion(){
+		
+		this.itemsReparacion=new ArrayList<TareaReparacion>();
+		
+	}
 	
 	public OrdenReparacion(int nroOrden2) {
 		this.nroOrden=nroOrden2;

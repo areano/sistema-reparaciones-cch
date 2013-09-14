@@ -22,6 +22,9 @@ public class ItemRemito implements Serializable{
 	public String getDetalleReparacion() {
 		return detalleReparacion;
 	}
+	public ItemRemito(){ //No tiene vectores a inicializar
+		
+	}
 	public void setDetalleReparacion(String detalleReparacion) {
 		this.detalleReparacion = detalleReparacion;
 	}

@@ -34,7 +34,13 @@ public class Empleado {
 			, joinColumns = {@JoinColumn(name = "nro_doc"), @JoinColumn(name = "tipo_doc") }
 			, inverseJoinColumns = { @JoinColumn(name = "nro_orden_reparacion") })
 	private List<OrdenReparacion> aReparar;
-
+	
+	public Empleado(){
+		
+		this.aReparar=new Vector<OrdenReparacion>();
+		
+	}
+	
 	public String getNombre() {
 		return nombre;
 	}

@@ -16,6 +16,9 @@ package com.uade.seminario.tpo.model;
 public class ItemReporte {
 	private String nombrePieza;
 	private int cantidadPieza;
+	public ItemReporte(){//No tiene vectores a inicializar
+		
+	}
 	public ItemReporte(String nombre, Integer cantidad) {
 		this.cantidadPieza=cantidad;
 		this.nombrePieza=nombre;
