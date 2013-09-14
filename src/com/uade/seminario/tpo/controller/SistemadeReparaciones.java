@@ -5,7 +5,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Vector;
+import java.util.List;
 
 import com.uade.seminario.tpo.service.ClienteDataService;
 import com.uade.seminario.tpo.service.EmpleadoDataService;
@@ -49,26 +49,26 @@ import com.uade.seminario.tpo.model.TareaReparacion;
 
 public class SistemadeReparaciones {
 	private static SistemadeReparaciones instancia;
-	private Vector<Remito> remitos;
-	private Vector<Garantia> garantias;
-	private Vector<Modelo> modelos;
-	private Vector<Pieza> piezas;
-	private Vector<OrdenReparacion> ordReparacion;
-	private Vector<Equipo> equipos;
+	private List<Remito> remitos;
+	private List<Garantia> garantias;
+	private List<Modelo> modelos;
+	private List<Pieza> piezas;
+	private List<OrdenReparacion> ordReparacion;
+	private List<Equipo> equipos;
 	private ArrayList<Cliente> clientes;
 	private ArrayList<Empleado> empleados;
-	private Vector<Reporte> reportes;
+	private List<Reporte> reportes;
 	
 	private SistemadeReparaciones(){
-		this.remitos=new Vector<Remito>();
-		this.garantias=new Vector<Garantia>();
-		this.modelos=new Vector<Modelo>();
-		this.piezas=new Vector<Pieza>();
-		this.ordReparacion=new Vector<OrdenReparacion>();
+		this.remitos=new ArrayList<Remito>();
+		this.garantias=new ArrayList<Garantia>();
+		this.modelos=new ArrayList<Modelo>();
+		this.piezas=new ArrayList<Pieza>();
+		this.ordReparacion=new ArrayList<OrdenReparacion>();
 		this.empleados=new ArrayList<Empleado>();
-		this.equipos=new Vector<Equipo>();
+		this.equipos=new ArrayList<Equipo>();
 		this.clientes= new ArrayList<Cliente>();
-		this.reportes=new Vector<Reporte>();
+		this.reportes=new ArrayList<Reporte>();
 		
 		/* CLASES PARA TEST */
 		Pieza pieza= new Pieza(1, "tornillo", "es un tornillo");
@@ -113,7 +113,7 @@ public class SistemadeReparaciones {
 		ordReparacion.add(orden);
 		Empleado empleado=new Empleado();
 		empleado.setLegajo(1);
-		empleado.setaReparar(new Vector<OrdenReparacion>());
+		empleado.setaReparar(new ArrayList<OrdenReparacion>());
 		empleados.add(empleado);
 		
 		OrdenReparacion orden1=new OrdenReparacion(2);
@@ -303,7 +303,7 @@ public class SistemadeReparaciones {
 			return null;		
 	}
 
-	public OrdenReparacion buscarOrdenReparacionPrioridad() { //SE supone que el vector esta ordenado de mayor a menor segun el numero de prioridad!
+	public OrdenReparacion buscarOrdenReparacionPrioridad() { //SE supone que el List esta ordenado de mayor a menor segun el numero de prioridad!
 		/*Collections.sort(ordReparacion, new Comparator<OrdenReparacion>() {
 		    public int compare(OrdenReparacion o1, OrdenReparacion o2) {
 		        return String.valueOf(o1.getPrioridad()).compareTo(String.valueOf(o1.getPrioridad()));
@@ -331,7 +331,7 @@ public class SistemadeReparaciones {
 	}
 	
 	
-	public Vector<TareaReparacionView> listarTareasReparacion(int nroReparacion){
+	public List<TareaReparacionView> listarTareasReparacion(int nroReparacion){
 		OrdenReparacion orden=buscarOrdenReparacion(nroReparacion);
 		if(orden!=null){
 			return orden.listarTareasView();
@@ -342,26 +342,26 @@ public class SistemadeReparaciones {
 	
 	public Reporte emitirReportePiezas(Date desde,Date hasta){
 		Reporte reporte=new Reporte(desde,hasta);
-		Vector<ItemReporte> itemsReporte=new Vector<ItemReporte>();
-		Vector<OrdenReparacion> ordenes=buscarOrdenesReporte(desde,hasta);
+		List<ItemReporte> itemsReporte=new ArrayList<ItemReporte>();
+		List<OrdenReparacion> ordenes=buscarOrdenesReporte(desde,hasta);
 		itemsReporte=generarListaPiezas(ordenes);
 		reporte.setItemsReporte(itemsReporte);
 		reportes.add(reporte);
 		return reporte;
 	}
 
-	public Vector<ItemReporte> generarListaPiezas(Vector<OrdenReparacion> ordenes) {
-		Vector<String> piezas=new Vector<String>();
+	public List<ItemReporte> generarListaPiezas(List<OrdenReparacion> ordenes) {
+		List<String> piezas=new ArrayList<String>();
 		List<String> nombrePiezas=new ArrayList<String>();
-		Vector<Integer> cantidad=new Vector<Integer>();
-		Vector<ItemReporte> itemsReporte=new Vector<ItemReporte>();
+		List<Integer> cantidad=new ArrayList<Integer>();
+		List<ItemReporte> itemsReporte=new ArrayList<ItemReporte>();
 		for (OrdenReparacion ordenReparacion : ordenes) {
 			nombrePiezas=ordenReparacion.listaPiezas();
 			
 			for (String nombre : nombrePiezas) {
 				if(piezas.contains(nombre)){
 					int posicion=piezas.indexOf(nombre);
-					cantidad.set(posicion, cantidad.elementAt(posicion).intValue()+1);
+					cantidad.set(posicion, cantidad.get(posicion).intValue()+1);
 				}
 				else{
 					piezas.add(nombre);
@@ -371,15 +371,15 @@ public class SistemadeReparaciones {
 		}
 		int i=0;
 		while(cantidad.size()>i){
-			ItemReporte item= new ItemReporte(piezas.elementAt(i),cantidad.elementAt(i));
+			ItemReporte item= new ItemReporte(piezas.get(i),cantidad.get(i));
 			itemsReporte.add(item);
 			i++;
 		}
 		return itemsReporte;
 	}
 
-	public Vector<OrdenReparacion> buscarOrdenesReporte(Date desde, Date hasta) {
-		Vector<OrdenReparacion> ordenes=new Vector<OrdenReparacion>();
+	public List<OrdenReparacion> buscarOrdenesReporte(Date desde, Date hasta) {
+		List<OrdenReparacion> ordenes=new ArrayList<OrdenReparacion>();
 		for (OrdenReparacion orden : ordReparacion) {
 			if(orden.getFecha().after(desde)&&orden.getFecha().before(hasta) && (orden.getEstado().equals("Reparado")||orden.getEstado().equals("Entregado"))){
 				ordenes.add(orden);
@@ -504,8 +504,8 @@ public class SistemadeReparaciones {
 			return null;
 	}
 
-	public Vector<PiezaView> buscarPiezaXModeloView(int codModelo) {
-		 Vector<PiezaView> piezasview=new Vector<PiezaView>();
+	public List<PiezaView> buscarPiezaXModeloView(int codModelo) {
+		 List<PiezaView> piezasview=new ArrayList<PiezaView>();
 		 Modelo modelo=buscarModelo(codModelo);
 		 if(modelo!=null){
 			 List<Pieza> piezas=modelo.getPiezas();
@@ -598,8 +598,8 @@ public class SistemadeReparaciones {
 		return (ordReparacion.size()+1);
 	}
 
-	public Vector<TareaReparacionView> buscarTareasXOrdenReparacionView(int nroOrdenReparacion) {
-		Vector<TareaReparacionView> tareasview=new Vector<TareaReparacionView>();
+	public List<TareaReparacionView> buscarTareasXOrdenReparacionView(int nroOrdenReparacion) {
+		List<TareaReparacionView> tareasview=new ArrayList<TareaReparacionView>();
 		 OrdenReparacion orden=buscarOrdenReparacion(nroOrdenReparacion);
 		 if(orden!=null){
 			 List<TareaReparacion> tareas=orden.getItemsReparacion();
@@ -635,8 +635,8 @@ public class SistemadeReparaciones {
 		return orden.getItemsReparacion().size()+1;
 	}
 
-	public Vector<PiezaView> buscarPiezasXTareaView(int nroOrden, int nroTarea) {
-		Vector<PiezaView> piezas=new Vector<PiezaView>();
+	public List<PiezaView> buscarPiezasXTareaView(int nroOrden, int nroTarea) {
+		List<PiezaView> piezas=new ArrayList<PiezaView>();
 		OrdenReparacion orden=buscarOrdenReparacion(nroOrden);
 		if(orden!=null){
 			TareaReparacion tarea=orden.obtenerTarea(nroTarea);

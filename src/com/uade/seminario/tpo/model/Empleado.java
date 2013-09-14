@@ -1,5 +1,6 @@
 package com.uade.seminario.tpo.model;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Vector;
@@ -101,8 +102,8 @@ public class Empleado {
 		return aReparar;
 	}
 
-	public void setaReparar(Vector<OrdenReparacion> aReparar) {
-		this.aReparar = aReparar;
+	public void setaReparar(ArrayList<OrdenReparacion> arrayList) {
+		this.aReparar = arrayList;
 	}
 
 	public boolean hayOrdenReparacion() {
