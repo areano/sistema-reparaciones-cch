@@ -18,6 +18,9 @@ public class OrdenDeReparacionDataService {
 		}
 		return cs;
 	}
+	public void save(OrdenReparacion entidad){
+		dao.save(entidad);
+	}
 	public OrdenReparacion findByNroOrden(int nroOrden){
 		return dao.findByNroOrden(nroOrden);
 	}

@@ -20,6 +20,12 @@ public class TareaReparacionDataService {
 		}
 		return cs;
 	}
+	public void save(TareaReparacion entity){
+		dao.save(entity);
+	}
+	public TareaReparacion findByNroSerie(int nroItemReparacion){
+		return dao.findByNroSerie(nroItemReparacion);
+	}
 	public List<TareaReparacion> todosLasTareas(){
 		return dao.findAll();
 	}
