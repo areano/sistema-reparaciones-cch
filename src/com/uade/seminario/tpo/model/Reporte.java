@@ -1,6 +1,8 @@
 package com.uade.seminario.tpo.model;
 
 import java.sql.Date;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Vector;
 //
 //
@@ -17,15 +19,20 @@ import java.util.Vector;
 
 
 public class Reporte {
-	private Vector<ItemReporte> itemsReporte;
+	private List<ItemReporte> itemsReporte;
 	private Date fechaDesde;
 	private Date fechaHasta;
 	public Reporte(Date desde, Date hasta) {
-		this.itemsReporte=new Vector<ItemReporte>();
+		this.itemsReporte=new ArrayList<ItemReporte>();
 		this.fechaDesde=desde;
 		this.fechaHasta=hasta;
 	}
-	public Vector<ItemReporte> getItemsReporte() {
+	public Reporte(){
+		
+		this.itemsReporte=new ArrayList<ItemReporte>();
+		
+	}
+	public List<ItemReporte> getItemsReporte() {
 		return itemsReporte;
 	}
 	public void setItemsReporte(Vector<ItemReporte> itemsReporte) {

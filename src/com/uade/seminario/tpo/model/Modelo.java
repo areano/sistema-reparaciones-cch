@@ -33,11 +33,14 @@ public class Modelo {
 	public void setDescripcion(String descripcion) {
 		this.descripcion = descripcion;
 	}
+	public Modelo(){
+		this.piezas=new ArrayList<Pieza>();
+	}
 	public Modelo(String nombre2, String descripcion, int codigo) {
 		this.nombre=nombre2;
 		this.descripcion=descripcion;
 		this.nroModelo=codigo;
-		this.piezas=new ArrayList<>();
+		this.piezas=new ArrayList<Pieza>();
 		this.estado="inactivo";
 	}
 	public int getNroModelo() {

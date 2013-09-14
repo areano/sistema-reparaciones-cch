@@ -2,8 +2,8 @@ package com.uade.seminario.tpo.model;
 
 import java.io.Serializable;
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Vector;
 
 import javax.persistence.*;
 
@@ -23,6 +23,11 @@ public class Remito implements Serializable{
 	private Cliente cliente;
 	@Transient
 	private Empleado empleado;
+	
+	public Remito(){
+		this.itemsRemito=new ArrayList<ItemRemito>();
+	}
+	
 	public int getNroRemito() {
 		return nroRemito;
 	}
@@ -38,7 +43,7 @@ public class Remito implements Serializable{
 	public List<ItemRemito> getItemsRemito() {
 		return itemsRemito;
 	}
-	public void setItemsRemito(Vector<ItemRemito> itemsRemito) {
+	public void setItemsRemito(ArrayList<ItemRemito> itemsRemito) {
 		this.itemsRemito = itemsRemito;
 	}
 	public Cliente getCliente() {

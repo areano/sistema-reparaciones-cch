@@ -31,6 +31,9 @@ public class TareaReparacion {
 		this.detalle=descripcion;
 		estado="inactivo";
 	}
+	public TareaReparacion(){
+		this.piezas= new ArrayList<Pieza>();
+	}
 	public int getNroItemReparacion() {
 		return nroItemReparacion;
 	}
