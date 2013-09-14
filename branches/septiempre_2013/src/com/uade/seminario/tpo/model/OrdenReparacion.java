@@ -1,7 +1,10 @@
 package com.uade.seminario.tpo.model;
 
 import java.sql.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Vector;
 
@@ -47,6 +50,17 @@ public class OrdenReparacion {
 	public OrdenReparacion(){
 		
 		this.itemsReparacion=new ArrayList<TareaReparacion>();
+		java.util.Date date;
+		java.sql.Date sqlDate;
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/mm/yyyy");
+		String timeStamp = new SimpleDateFormat("dd/mm/yyyy").format(Calendar.getInstance().getTime());
+		try {
+			date = sdf.parse(timeStamp);
+			sqlDate = new Date(date.getTime());	
+			this.fecha=sqlDate;//new Date());
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
 		
 	}
 	

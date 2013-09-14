@@ -44,13 +44,6 @@ public class EmpleadoDAOImpl extends GenericDAOImpl<Empleado>{
     public List<Empleado> findAll() throws DataAccessLayerException{
         return super.findAll(Empleado.class);
     }
-//	public List<Empleado> todosLosEmpleados() {
-//		Session session = HibernateUtil.getSessionFactory().openSession();
-//		String hql = "from Empleado";
-//		Query query = session.createQuery(hql);
-//		List<Empleado> retorno =  query.list();
-//		session.close();
-//		return retorno;
-//	}		
+
 
 }

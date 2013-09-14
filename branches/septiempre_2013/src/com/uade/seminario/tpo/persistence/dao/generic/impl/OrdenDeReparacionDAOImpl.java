@@ -33,13 +33,5 @@ public class OrdenDeReparacionDAOImpl extends GenericDAOImpl<OrdenReparacion>{
     public List<OrdenReparacion> findAll() throws DataAccessLayerException{
         return super.findAll(OrdenReparacion.class);
     }
-//	public List<OrdenReparacion> todasLasOrdenReparacion() {
-//		Session session = HibernateUtil.getSessionFactory().openSession();
-//		String hql = "from OrdenReparacion";
-//		Query query = session.createQuery(hql);
-//		List<OrdenReparacion> retorno =  query.list();
-//		session.close();
-//		return retorno;
-//	}	
 
 }

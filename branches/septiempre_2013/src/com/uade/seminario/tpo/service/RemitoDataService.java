@@ -1,6 +1,7 @@
 package com.uade.seminario.tpo.service;
 
 import com.uade.seminario.tpo.persistence.dao.generic.impl.RemitoDAOImpl;
+import com.uade.seminario.tpo.model.Equipo;
 import com.uade.seminario.tpo.model.Remito;
 import java.util.List;
 public class RemitoDataService {
@@ -23,5 +24,8 @@ public class RemitoDataService {
 	}
 	public List<Remito> todosLosRemitos(){
 		return dao.findAll();
+	}
+	public void update(Remito entidad){
+		dao.update(entidad);
 	}
 }

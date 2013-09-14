@@ -36,13 +36,6 @@ public class ClienteDAOImpl extends GenericDAOImpl<Cliente>{
     public List<Cliente> findAll() throws DataAccessLayerException{
         return super.findAll(Cliente.class);
     }
-//	public List<Cliente> todosLosClientes() {
-//		Session session = HibernateUtil.getSessionFactory().openSession();
-//		String hql = "from Cliente";
-//		Query query = session.createQuery(hql);
-//		List<Cliente> retorno =  query.list();
-//		session.close();
-//		return retorno;
-//	}	
+
 
 }

@@ -17,7 +17,7 @@ public class Equipo {
 	@ManyToOne
 	@JoinColumns({@JoinColumn(name="nro_doc", nullable=false), @JoinColumn(name="tipo_doc", nullable=false)})
 	private Cliente cliente;
-	@OneToOne
+	@OneToOne(cascade=CascadeType.ALL)
 	@JoinColumn(name="nro_garantia", nullable=false)
 	private Garantia garantia;
 	@Column(name="e_estado", columnDefinition="varchar(20)", nullable=false)

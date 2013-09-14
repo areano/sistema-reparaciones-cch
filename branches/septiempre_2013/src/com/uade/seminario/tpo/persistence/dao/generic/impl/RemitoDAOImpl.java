@@ -33,13 +33,6 @@ public class RemitoDAOImpl extends GenericDAOImpl<Remito> {
     public List<Remito> findAll() throws DataAccessLayerException{
         return super.findAll(Remito.class);
     }
-//	public List<Remito> todosLosModelos() {
-//		Session session = HibernateUtil.getSessionFactory().openSession();
-//		String hql = "from Remito";
-//		Query query = session.createQuery(hql);
-//		List<Remito> retorno =  query.list();
-//		session.close();
-//		return retorno;
-//	}	
+
 	
 }

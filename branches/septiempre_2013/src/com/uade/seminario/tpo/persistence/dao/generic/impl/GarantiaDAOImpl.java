@@ -33,13 +33,5 @@ public class GarantiaDAOImpl extends GenericDAOImpl<Garantia> {
     public List<Garantia> findAll() throws DataAccessLayerException{
         return super.findAll(Garantia.class);
     }
-//	public List<Garantia> todasLasGarantias() {
-//		Session session = HibernateUtil.getSessionFactory().openSession();
-//		String hql = "from Garantia";
-//		Query query = session.createQuery(hql);
-//		List<Garantia> retorno =  query.list();
-//		session.close();
-//		return retorno;
-//	}	
 	
 }

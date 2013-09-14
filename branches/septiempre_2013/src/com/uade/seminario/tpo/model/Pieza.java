@@ -20,7 +20,7 @@ public class Pieza {
 	@Transient
 	private int stock;
 	
-	public Pieza(){ // No tiene vector a inicializar
+	public Pieza(){ 
 		
 	}
 	

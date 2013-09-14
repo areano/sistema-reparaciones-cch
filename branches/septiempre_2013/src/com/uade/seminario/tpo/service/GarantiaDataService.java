@@ -4,18 +4,18 @@ import com.uade.seminario.tpo.persistence.dao.generic.impl.GarantiaDAOImpl;
 import com.uade.seminario.tpo.model.Equipo;
 import com.uade.seminario.tpo.model.Garantia;
 import java.util.List;
-public class GarantiaService {
+public class GarantiaDataService {
 	private static GarantiaDAOImpl dao;
-	private static GarantiaService cs=null;
+	private static GarantiaDataService cs=null;
 	static {
 		dao = GarantiaDAOImpl.getInstancia();
 	}
-	private GarantiaService(){
+	private GarantiaDataService(){
 		
 	}
-	public static GarantiaService getInstance(){
+	public static GarantiaDataService getInstance(){
 		if (cs==null){
-			cs =  new GarantiaService();
+			cs =  new GarantiaDataService();
 		}
 		return cs;
 	}
@@ -24,6 +24,12 @@ public class GarantiaService {
 	}
 	public List<Garantia> todosLosEquipo(){
 		return dao.findAll();
+	}
+	public void save(Garantia entidad){
+		dao.save(entidad);
+	}
+	public void update(Garantia entidad){
+		dao.update(entidad);
 	}
 	
 }

@@ -1,6 +1,7 @@
 package com.uade.seminario.tpo.service;
 
 import com.uade.seminario.tpo.persistence.dao.generic.impl.ModeloDAOImpl;
+import com.uade.seminario.tpo.model.Equipo;
 import com.uade.seminario.tpo.model.Garantia;
 import com.uade.seminario.tpo.model.Modelo;
 import java.util.List;
@@ -24,5 +25,11 @@ public class ModeloDataService {
 	}
 	public List<Modelo> todosLosModelos(){
 		return dao.findAll();
+	}
+	public void save(Modelo entidad){
+		dao.save(entidad);
+	}
+	public void update(Modelo entidad){
+		dao.update(entidad);
 	}
 }

@@ -1,6 +1,7 @@
 package com.uade.seminario.tpo.view;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
 import java.util.Vector;
 import javax.swing.DefaultComboBoxModel;
 
@@ -80,7 +81,7 @@ public class ListarTareaReparacionView extends javax.swing.JFrame {
 					public void actionPerformed(ActionEvent arg0) {
 						if(!nroOrden.getText().equals("")){
 							Vector<Integer> numeros=new Vector<Integer>();
-							Vector<TareaReparacionView> tareas=SistemadeReparaciones.getInstancia().listarTareasReparacion(Integer.parseInt(nroOrden.getText()));
+							List<TareaReparacionView> tareas=SistemadeReparaciones.getInstancia().listarTareasReparacion(Integer.parseInt(nroOrden.getText()));
 							for (TareaReparacionView tareaReparacionView : tareas) {
 								numeros.add(tareaReparacionView.getNroItemReparacion());
 							}
