@@ -33,13 +33,6 @@ public class EquipoDAOImpl extends GenericDAOImpl<Equipo> {
     public List<Equipo> findAll() throws DataAccessLayerException{
         return super.findAll(Equipo.class);
     }
-//	public List<Equipo> todosLosEquipos() {
-//		Session session = HibernateUtil.getSessionFactory().openSession();
-//		String hql = "from Equipo";
-//		Query query = session.createQuery(hql);
-//		List<Equipo> retorno =  query.list();
-//		session.close();
-//		return retorno;
-//	}	
+
 	
 }

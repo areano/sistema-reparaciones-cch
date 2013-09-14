@@ -1,6 +1,7 @@
 package com.uade.seminario.tpo.service;
 
 import com.uade.seminario.tpo.persistence.dao.generic.impl.EquipoDAOImpl;
+import com.uade.seminario.tpo.model.Cliente;
 import com.uade.seminario.tpo.model.Equipo;
 import java.util.List;
 public class EquipoService {
@@ -23,5 +24,11 @@ public class EquipoService {
 	}
 	public List<Equipo> todosLosEquipos(){
 		return dao.findAll();
+	}
+	public void save(Equipo entidad) {
+		dao.save(entidad);		
+	}
+	public void update(Equipo entidad){
+		dao.update(entidad);
 	}
 }

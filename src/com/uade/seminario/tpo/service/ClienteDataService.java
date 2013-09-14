@@ -29,4 +29,7 @@ public class ClienteDataService {
 	public List<Cliente> todosLosClientes(){
 		return dao.findAll();
 	}
+	public void update(Cliente entidad){
+		dao.update(entidad);
+	}
 }

@@ -33,13 +33,6 @@ public class ModeloDAOImpl extends GenericDAOImpl<Modelo> {
     public List<Modelo> findAll() throws DataAccessLayerException{
         return super.findAll(Modelo.class);
     }
-//	public List<Modelo> todosLosModelos() {
-//		Session session = HibernateUtil.getSessionFactory().openSession();
-//		String hql = "from Modelo";
-//		Query query = session.createQuery(hql);
-//		List<Modelo> retorno =  query.list();
-//		session.close();
-//		return retorno;
-//	}	
+
 	
 }

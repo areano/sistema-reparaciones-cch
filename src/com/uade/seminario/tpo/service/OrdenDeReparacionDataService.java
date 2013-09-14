@@ -1,6 +1,7 @@
 package com.uade.seminario.tpo.service;
 
 import com.uade.seminario.tpo.persistence.dao.generic.impl.OrdenDeReparacionDAOImpl;
+import com.uade.seminario.tpo.model.Equipo;
 import com.uade.seminario.tpo.model.OrdenReparacion;
 import java.util.List;
 public class OrdenDeReparacionDataService {
@@ -26,6 +27,9 @@ public class OrdenDeReparacionDataService {
 	}
 	public List<OrdenReparacion> todasLasOrdenes(){
 		return dao.findAll();
+	}
+	public void update(OrdenReparacion entidad){
+		dao.update(entidad);
 	}
 	
 }

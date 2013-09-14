@@ -33,4 +33,7 @@ public class EmpleadoDataService {
 	public List<Empleado> todosLosEmpleados(){
 		return dao.findAll();
 	}
+    public void update(Empleado entidad){
+    	dao.update(entidad);
+    }	
 }

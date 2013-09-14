@@ -33,13 +33,6 @@ public class TareaReparacionDAOImpl extends GenericDAOImpl<TareaReparacion> {
     public List<TareaReparacion> findAll() throws DataAccessLayerException{
         return super.findAll(TareaReparacion.class);
     }
-//	public List<TareaReparacion> todasLasTareas() {
-//		Session session = HibernateUtil.getSessionFactory().openSession();
-//		String hql = "from TareaReparacion";
-//		Query query = session.createQuery(hql);
-//		List<TareaReparacion> retorno =  query.list();
-//		session.close();
-//		return retorno;
-//	}	
+	
 	
 }

@@ -3,6 +3,7 @@ package com.uade.seminario.tpo.service;
 import java.util.List;
 
 import com.uade.seminario.tpo.persistence.dao.generic.impl.TareaReparacionDAOImpl;
+import com.uade.seminario.tpo.model.Equipo;
 import com.uade.seminario.tpo.model.TareaReparacion;
 
 public class TareaReparacionDataService {
@@ -29,5 +30,7 @@ public class TareaReparacionDataService {
 	public List<TareaReparacion> todosLasTareas(){
 		return dao.findAll();
 	}
-	
+	public void update(TareaReparacion entidad){
+		dao.update(entidad);
+	}
 }
