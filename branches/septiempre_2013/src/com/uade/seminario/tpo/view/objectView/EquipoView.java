@@ -6,15 +6,17 @@ import com.uade.seminario.tpo.model.Modelo;
 
 public class EquipoView {
 	private int nroSerie;
-	private Modelo modelo;
-	private Cliente cliente;
-	private Garantia garantia;
+	private ModeloView modelo;
+	private ClienteView cliente;
+	private GarantiaView garantia;
 	private String estado;
 	
 	
-	
-	public EquipoView(int nroSerie, Modelo modelo, Cliente cliente,
-			Garantia garantia, String estado) {
+	public EquipoView(){
+		
+	}
+	public EquipoView(int nroSerie, ModeloView modelo, ClienteView cliente,
+			GarantiaView garantia, String estado) {
 		super();
 		this.nroSerie = nroSerie;
 		this.modelo = modelo;
@@ -28,22 +30,22 @@ public class EquipoView {
 	public void setNroSerie(int nroSerie) {
 		this.nroSerie = nroSerie;
 	}
-	public Modelo getModelo() {
+	public ModeloView getModelo() {
 		return modelo;
 	}
-	public void setModelo(Modelo modelo) {
+	public void setModelo(ModeloView modelo) {
 		this.modelo = modelo;
 	}
-	public Cliente getCliente() {
+	public ClienteView getCliente() {
 		return cliente;
 	}
-	public void setCliente(Cliente cliente) {
+	public void setCliente(ClienteView cliente) {
 		this.cliente = cliente;
 	}
-	public Garantia getGarantia() {
+	public GarantiaView getGarantia() {
 		return garantia;
 	}
-	public void setGarantia(Garantia garantia) {
+	public void setGarantia(GarantiaView garantia) {
 		this.garantia = garantia;
 	}
 	public String getEstado() {

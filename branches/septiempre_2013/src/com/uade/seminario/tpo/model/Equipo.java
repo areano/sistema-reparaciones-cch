@@ -67,7 +67,12 @@ public class Equipo {
 		this.estado = estado;
 	}
 	public EquipoView getView() {
-		EquipoView equipoV= new EquipoView(getNroSerie(), getModelo(), getCliente(), getGarantia(), getEstado());
+		EquipoView equipoV= new EquipoView();
+		equipoV.setCliente(cliente.getView());
+		equipoV.setEstado(estado);
+		equipoV.setGarantia(garantia.getView());
+		equipoV.setModelo(modelo.getView());
+		equipoV.setNroSerie(nroSerie);
 		return equipoV;
 	}
 	public boolean estaActivo() {

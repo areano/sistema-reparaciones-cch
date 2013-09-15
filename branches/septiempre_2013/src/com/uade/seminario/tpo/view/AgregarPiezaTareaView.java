@@ -17,6 +17,7 @@ import com.uade.seminario.tpo.model.OrdenReparacion;
 import com.uade.seminario.tpo.model.Pieza;
 import com.uade.seminario.tpo.view.objectView.OrdenReparacionView;
 import com.uade.seminario.tpo.view.objectView.PiezaView;
+import com.uade.seminario.tpo.view.objectView.TareaReparacionView;
 
 
 /**
@@ -40,27 +41,41 @@ public class AgregarPiezaTareaView extends javax.swing.JFrame {
 	private JTextField nroOrden;
 	private JScrollPane jScrollPane1;
 	private JList piezas;
-
+	private TareaReparacionView tarea;
 	/**
 	* Auto-generated main method to display this JFrame
 	*/
 	public static void main(String[] args) {
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
-				AgregarPiezaTareaView inst = new AgregarPiezaTareaView("", "");
-				inst.setLocationRelativeTo(null);
-				inst.setVisible(true);
+				//AgregarPiezaTareaView inst = new AgregarPiezaTareaView("", "");
+				//inst.setLocationRelativeTo(null);
+				//inst.setVisible(true);
 			}
 		});
 	}
 	
-	public AgregarPiezaTareaView(String numeroTarea, String numeroOrden) {
+	public class AgregarPiezaTareaListener2 implements ActionListener {
+		javax.swing.JFrame frame;
+		public AgregarPiezaTareaListener2(javax.swing.JFrame frame){
+			this.frame = frame;
+		}
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			tarea.addPieza((PiezaView)piezas.getSelectedValue());	
+			frame.dispose();
+		}
+
+	}
+
+	public AgregarPiezaTareaView(OrdenReparacionView orden, TareaReparacionView tarea) {
 		super();
-		initGUI(numeroOrden,numeroTarea);
+		this.tarea = tarea;
+		initGUI(orden, this.tarea);
 		
 	}
-	
-	private void initGUI(String numeroOrden, String numeroTarea) {
+	//private void initGUI(String numeroOrden, String numeroTarea) {
+	private void initGUI(OrdenReparacionView orden, TareaReparacionView tarea) {
 		try {
 			setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 			getContentPane().setLayout(null);
@@ -81,14 +96,14 @@ public class AgregarPiezaTareaView extends javax.swing.JFrame {
 				nroOrden = new JTextField();
 				getContentPane().add(nroOrden);
 				nroOrden.setBounds(132, 9, 198, 23);
-				nroOrden.setText(numeroOrden);
+				//nroOrden.setText(numeroOrden);
 				nroOrden.setEditable(false);
 			}
 			{
 				nroTarea = new JTextField();
 				getContentPane().add(nroTarea);
 				nroTarea.setBounds(132, 43, 198, 23);
-				nroTarea.setText(numeroTarea);
+				//nroTarea.setText(numeroTarea);
 				nroTarea.setEditable(false);
 			}
 			{
@@ -108,13 +123,17 @@ public class AgregarPiezaTareaView extends javax.swing.JFrame {
 					
 					DefaultListModel piezasModelo=new DefaultListModel();
 					
-					OrdenReparacionView ordenv= SistemadeReparaciones.getInstancia().buscarOrdenReparacionView(Integer.parseInt(nroOrden.getText()));
-					int nroModelo=ordenv.getEquipo().getModelo().getNroModelo();
-					if(!nroOrden.getText().equals("") && !nroTarea.getText().equals("")){
-						for(PiezaView p: sist.buscarPiezaXModeloView(nroModelo)){
+					//OrdenReparacionView ordenv= SistemadeReparaciones.getInstancia().buscarOrdenReparacionView(Integer.parseInt(nroOrden.getText()));
+					//int nroModelo=ordenv.getEquipo().getModelo().getNroModelo();
+					int nroModelo= orden.getEquipo().getModelo().getNroModelo();
+					//if(!nroOrden.getText().equals("") && !nroTarea.getText().equals("")){
+						//for(PiezaView p: sist.buscarPiezaXModeloView(nroModelo)){
+						//	piezasModelo.addElement(p);
+						//}
+						for(PiezaView p:  orden.getEquipo().getModelo().getPiezas()){
 							piezasModelo.addElement(p);
 						}
-					}				
+					//}				
 					piezas = new JList();
 					jScrollPane1.setViewportView(piezas);
 					piezas.setModel(piezasModelo);
@@ -129,17 +148,23 @@ public class AgregarPiezaTareaView extends javax.swing.JFrame {
 				getContentPane().add(agregar);
 				agregar.setText("Agregar Pieza");
 				agregar.setBounds(123, 247, 116, 23);
-				agregar.addActionListener(new ActionListener() {
-					
-					public void actionPerformed(ActionEvent arg0) {
-						PiezaView pieza=((PiezaView)piezas.getSelectedValue());
-						if(pieza!=null){
-							SistemadeReparaciones.getInstancia().agregarPiezaTarea(Integer.parseInt(nroOrden.getText()),Integer.parseInt(nroTarea.getText()),pieza.getNroPieza());
-						}
-						
-						
-					}
-				});
+				agregar.addActionListener(new AgregarPiezaTareaListener2(this));
+
+//				agregar.addActionListener(new ActionListener() {
+//					
+//					public void actionPerformed(ActionEvent arg0) {
+//						PiezaView pieza=((PiezaView)piezas.getSelectedValue());
+//						if(pieza!=null){
+//							//SistemadeReparaciones.getInstancia().agregarPiezaTarea(Integer.parseInt(nroOrden.getText()),Integer.parseInt(nroTarea.getText()),pieza.getNroPieza());
+//							//tarea.addPieza(pieza);
+//						}
+//						
+//						
+//					}
+//					
+//				});
+
+				
 			}
 			pack();
 			this.setSize(400, 320);

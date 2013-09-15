@@ -1,6 +1,7 @@
 package com.uade.seminario.tpo.view.objectView;
 
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
 
@@ -9,8 +10,8 @@ import com.uade.seminario.tpo.model.TareaReparacion;
 
 public class OrdenReparacionView {
 	private int nroOrden;
-	private List<TareaReparacion> itemsReparacion;
-	private Equipo equipo;
+	private List<TareaReparacionView> itemsReparacion;
+	private EquipoView equipo;
 	private Date fecha;
 	private String estado;
 	private String descripcionFallas;
@@ -19,10 +20,12 @@ public class OrdenReparacionView {
 	private int prioridad;
 	
 
-	
+	public OrdenReparacionView(){
+		this.itemsReparacion =  new ArrayList<TareaReparacionView>();
+	}
 	public OrdenReparacionView(int nroOrden2, String descripcionFallas2,
-			Equipo equipo2, String estado2, Date fecha2,
-			List<TareaReparacion> itemsReparacion2, int prioridad2,boolean repararDeTodos,boolean garantiaFisica) {
+			EquipoView equipo2, String estado2, Date fecha2,
+			List<TareaReparacionView> itemsReparacion2, int prioridad2,boolean repararDeTodos,boolean garantiaFisica) {
 		this.nroOrden=nroOrden2;
 		this.descripcionFallas=descripcionFallas2;
 		this.equipo=equipo2;
@@ -39,16 +42,16 @@ public class OrdenReparacionView {
 	public void setNroOrden(int nroOrden) {
 		this.nroOrden = nroOrden;
 	}
-	public List<TareaReparacion> getItemsReparacion() {
+	public List<TareaReparacionView> getItemsReparacion() {
 		return itemsReparacion;
 	}
-	public void setItemsReparacion(List<TareaReparacion> itemsReparacion) {
+	public void setItemsReparacion(List<TareaReparacionView> itemsReparacion) {
 		this.itemsReparacion = itemsReparacion;
 	}
-	public Equipo getEquipo() {
+	public EquipoView getEquipo() {
 		return equipo;
 	}
-	public void setEquipo(Equipo equipo) {
+	public void setEquipo(EquipoView equipo) {
 		this.equipo = equipo;
 	}
 	public Date getFecha() {
@@ -86,6 +89,9 @@ public class OrdenReparacionView {
 	}
 	public void setPrioridad(int prioridad) {
 		this.prioridad = prioridad;
+	}
+	public void addTareaReparacion(TareaReparacionView tarea){
+		this.itemsReparacion.add(tarea);
 	}
 	
 }

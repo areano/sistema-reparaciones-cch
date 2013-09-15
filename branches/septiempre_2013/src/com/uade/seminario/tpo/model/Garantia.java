@@ -1,14 +1,17 @@
 package com.uade.seminario.tpo.model;
 
 import java.sql.Date;
+import java.util.Calendar;
 
 import javax.persistence.*;
+
+import com.uade.seminario.tpo.view.objectView.GarantiaView;
 
 @Entity
 @Table(name="garantia")
 public class Garantia {
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	//@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="nro_garantia")
 	private int nroGarantia;
 	@Column(name="fecha_venc")
@@ -37,7 +40,15 @@ public class Garantia {
 	}
 	public boolean estasEnGarantia() {
 		return false;
-		// TODO Auto-generated method stub
-		
+//		long date = Calendar.getInstance()).getTime();
+//		If (fechaVencimiento >= (new Date())) {
+//			
+//		}
+
 	}
+	public GarantiaView getView(){
+		return new GarantiaView(new Integer(nroGarantia).toString(),
+								fechaVencimiento.toString(), estasEnGarantia());
+	}
+	
 }

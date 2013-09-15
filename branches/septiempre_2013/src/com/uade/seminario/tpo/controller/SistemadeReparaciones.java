@@ -280,14 +280,14 @@ public class SistemadeReparaciones {
 		return null;
 	}
 
-	public Equipo buscarEquipo(int nroSerieEquipo) {
+	private Equipo buscarEquipo(int nroSerieEquipo) {
 		for (Equipo equipo : equipos) {
 			if(equipo.getNroSerie()==nroSerieEquipo)
 				return equipo;
 		}
 		return null;
 	}
-	
+
 	public OrdenReparacionView misReparaciones(String legajo){
 		Empleado empleado=buscarEmpleado(legajo);
 		if(empleado!=null){
@@ -685,7 +685,39 @@ public class SistemadeReparaciones {
 		}
 		
 	}
-
+	public void confirmarOrdenReparacion(OrdenReparacionView orden ){
+		OrdenReparacion ordenReparacion = new OrdenReparacion();
+		Equipo equipo = buscarEquipo(orden.getEquipo().getNroSerie());
+		List<TareaReparacion> tareasReparacion = new ArrayList<TareaReparacion>();
+		List<Pieza> piezasReparacion = new ArrayList<Pieza>();
+		Pieza piezaToAdd;
+		TareaReparacion tareaReparacion;
+		for(TareaReparacionView tarea:orden.getItemsReparacion()){
+			tareaReparacion = new TareaReparacion();
+			
+			tareaReparacion.setDetalle(tarea.getDetalle());
+			tareaReparacion.setEstado(tarea.getEstado());
+			
+			for(PiezaView pieza: tarea.getPiezas()){
+				piezaToAdd = buscarPieza(pieza.getNroPieza());
+				piezasReparacion.add(piezaToAdd);
+			}
+			tareaReparacion.setPiezas(piezasReparacion);
+			tareasReparacion.add(tareaReparacion);			
+		}
+		
+		ordenReparacion.setDescripcionFallas(orden.getDescripcionFallas());
+		ordenReparacion.setEstado(orden.getEstado());
+		ordenReparacion.setEstaEnGarantiaFisica(orden.isEstaEnGarantiaFisica());
+		ordenReparacion.setFecha(orden.getFecha());
+		ordenReparacion.setPrioridad(orden.getPrioridad());
+		ordenReparacion.setRepararDeTodosModos(orden.isRepararDeTodosModos());
+		ordenReparacion.setEquipo(equipo);
+		ordenReparacion.setItemsReparacion(tareasReparacion);		
+		
+		
+		
+	}
 	public void confirmarOrdenReparacion(int nroOrden, String fallas, boolean estaEnGarantiaFisica,boolean repararDeTodosModos, int prioridad1) {
 		OrdenReparacion orden=buscarOrdenReparacion(nroOrden);
 		if(orden!=null){
