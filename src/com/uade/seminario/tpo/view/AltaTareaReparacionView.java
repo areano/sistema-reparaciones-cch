@@ -16,6 +16,7 @@ import javax.swing.WindowConstants;
 import com.uade.seminario.tpo.controller.SistemadeReparaciones;
 import com.uade.seminario.tpo.view.objectView.OrdenReparacionView;
 import com.uade.seminario.tpo.view.objectView.PiezaView;
+import com.uade.seminario.tpo.view.objectView.TareaReparacionView;
 
 
 /**
@@ -45,29 +46,57 @@ public class AltaTareaReparacionView extends javax.swing.JFrame {
 	private JLabel jLabel3;
 	private JScrollPane jScrollPane1;
 	private JList piezas;
-
+	private TareaReparacionView  tarea;
+	private SistemadeReparaciones sistema;
+	private OrdenReparacionView orden;
 	/**
 	* Auto-generated main method to display this JFrame
 	*/
 	public static void main(String[] args) {
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
-				AltaTareaReparacionView inst = new AltaTareaReparacionView("");
-				inst.setLocationRelativeTo(null);
-				inst.setVisible(true);
+				//AltaTareaReparacionView inst = new AltaTareaReparacionView("");
+				//inst.setLocationRelativeTo(null);
+				//inst.setVisible(true);
+				
 			}
 		});
 	}
 	
-	public AltaTareaReparacionView(String nroOrdenReparacion) {
+	public class AgregarPiezaListener2 implements ActionListener {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			AgregarPiezaTareaView view =new AgregarPiezaTareaView(orden,tarea);
+			view.setVisible(true);		
+		}
+
+	}
+
+	public class ConfirmarTarea implements ActionListener {
+		javax.swing.JFrame frame;
+		public ConfirmarTarea(javax.swing.JFrame frame){
+			this.frame = frame;
+		}
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			orden.addTareaReparacion(tarea);
+			frame.dispose();
+		}
+
+	}	
+	
+	public AltaTareaReparacionView(OrdenReparacionView orden) {
 		super();
-		initGUI();
-		nroOrden.setText(nroOrdenReparacion);
+		tarea = null;
+		sistema = SistemadeReparaciones.getInstancia();
+		this.orden = orden;
+		initGUI(orden);
+		//nroOrden.setText(orden);
 		nroOrden.setEditable(false);
 
 	}
 	
-	private void initGUI() {
+	private void initGUI(OrdenReparacionView orden) {
 		try {
 			setTitle("Alta Tarea de Reparacion");
 			setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
@@ -114,17 +143,22 @@ public class AltaTareaReparacionView extends javax.swing.JFrame {
 					
 					SistemadeReparaciones sist=SistemadeReparaciones.getInstancia();
 					
-					DefaultListModel piezasModelo=new DefaultListModel();
-					if(!nroOrden.getText().equals("") && !nroTarea.getText().equals("")){
-						for(PiezaView p: sist.buscarPiezasXTareaView(Integer.parseInt(nroOrden.getText()),Integer.parseInt(nroTarea.getText()))){
-							piezasModelo.addElement(p);
-						}
-					}				
-					piezas = new JList();
-					jScrollPane1.setViewportView(piezas);
-					piezas.setModel(piezasModelo);
-					piezas.setBounds(12, 160, 225, 119);
-					piezas.setVisible(false);
+//					DefaultListModel piezasModelo=new DefaultListModel();
+//					if(!nroOrden.getText().equals("") && !nroTarea.getText().equals("")){
+//						for(PiezaView p: sist.buscarPiezasXTareaView(Integer.parseInt(nroOrden.getText()),Integer.parseInt(nroTarea.getText()))){
+//							piezasModelo.addElement(p);
+//						}
+//						for (PiezaView p : orden.getItemsReparacion()){
+//							
+//						}
+//						
+//					}
+					
+//					piezas = new JList();
+//					jScrollPane1.setViewportView(piezas);
+//					piezas.setModel(piezasModelo);
+//					piezas.setBounds(12, 160, 225, 119);
+//					piezas.setVisible(false);
 					
 					
 				}
@@ -137,16 +171,19 @@ public class AltaTareaReparacionView extends javax.swing.JFrame {
 				crearTarea.addActionListener(new ActionListener() {
 					
 					public void actionPerformed(ActionEvent arg0) {
-						int numeroOrden=Integer.parseInt(nroOrden.getText());
-						int numeroTarea=SistemadeReparaciones.getInstancia().crearTareaReparacion(detalle.getText(), numeroOrden);
-						if(numeroTarea!=0){
-							nroTarea.setText(String.valueOf(numeroTarea));
+						//int numeroOrden=Integer.parseInt(nroOrden.getText());
+						//int numeroTarea=SistemadeReparaciones.getInstancia().crearTareaReparacion(detalle.getText(), numeroOrden);
+						tarea = new TareaReparacionView(); 
+						tarea.setDetalle(detalle.getText());
+						
+						//if(numeroTarea!=0){
+							//nroTarea.setText(String.valueOf(numeroTarea));
 							jScrollPane1.setVisible(true);
 							agregarPieza.setVisible(true);
 							quitarPieza.setVisible(true);
 							jLabel3.setVisible(true);
 							actualizar.setVisible(true);
-						}
+						//}
 												
 					}
 				});
@@ -157,14 +194,16 @@ public class AltaTareaReparacionView extends javax.swing.JFrame {
 				agregarPieza.setText("Agregar Pieza");
 				agregarPieza.setVisible(false);
 				agregarPieza.setBounds(254, 211, 132, 23);
-				agregarPieza.addActionListener(new ActionListener() {
-					
-					public void actionPerformed(ActionEvent e) {
-						AgregarPiezaTareaView view =new AgregarPiezaTareaView(nroTarea.getText(),nroOrden.getText());
-						view.setVisible(true);
-						
-					}
-				});
+				
+				agregarPieza.addActionListener(new AgregarPiezaListener2());
+//				agregarPieza.addActionListener(new ActionListener() {
+//					
+//					public void actionPerformed(ActionEvent e) {
+//						AgregarPiezaTareaView view =new AgregarPiezaTareaView(orden,tarea);
+//						view.setVisible(true);
+//						
+//					}
+//				});
 			}
 			{
 				quitarPieza = new JButton();
@@ -229,16 +268,17 @@ public class AltaTareaReparacionView extends javax.swing.JFrame {
 				getContentPane().add(confirmar);
 				confirmar.setText("Confirmar");
 				confirmar.setBounds(157, 332, 97, 23);
-				confirmar.addActionListener(new ActionListener() {
-					
-					public void actionPerformed(ActionEvent e) {
-						if(!nroTarea.getText().equals("") && !nroOrden.getText().equals("")){
-							SistemadeReparaciones.getInstancia().confirmarTarea(Integer.parseInt(nroTarea.getText()),Integer.parseInt(nroOrden.getText()));
-							dispose();
-						}
-						
-					}
-				});
+				confirmar.addActionListener(new ConfirmarTarea(this));
+//				confirmar.addActionListener(new ActionListener() {
+//					
+//					public void actionPerformed(ActionEvent e) {
+//						if(!nroTarea.getText().equals("") && !nroOrden.getText().equals("")){
+//							SistemadeReparaciones.getInstancia().confirmarTarea(Integer.parseInt(nroTarea.getText()),Integer.parseInt(nroOrden.getText()));
+//							
+//						}
+//						
+//					}
+//				});
 			}
 
 		} catch (Exception e) {

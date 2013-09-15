@@ -1,5 +1,7 @@
 package com.uade.seminario.tpo.view.objectView;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Vector;
 
 import com.uade.seminario.tpo.model.Pieza;
@@ -7,7 +9,7 @@ import com.uade.seminario.tpo.model.Pieza;
 public class ModeloView {
 	private int nroModelo;
 	private String nombre;
-	private Vector<Pieza> piezas;
+	private List<PiezaView> piezas;
 	private String estado;
 	private String descripcion;
 	
@@ -16,7 +18,7 @@ public class ModeloView {
 		this.nombre=nombre2;
 		this.descripcion=descripcion;
 		this.nroModelo=codigo;
-		this.piezas=new Vector<Pieza>();
+		this.piezas=new ArrayList<PiezaView>();
 		this.estado="activo";
 	}
 
@@ -41,12 +43,12 @@ public class ModeloView {
 	}
 
 
-	public Vector<Pieza> getPiezas() {
+	public List<PiezaView> getPiezas() {
 		return piezas;
 	}
 
 
-	public void setPiezas(Vector<Pieza> piezas) {
+	public void setPiezas(List<PiezaView> piezas) {
 		this.piezas = piezas;
 	}
 

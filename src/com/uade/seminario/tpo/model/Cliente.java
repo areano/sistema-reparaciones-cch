@@ -101,8 +101,16 @@ public class Cliente {
 	}
 
 	public ClienteView getView() {
-		// TODO Auto-generated method stub
-		return null;
+		ClienteView c = new ClienteView();
+		c.setApellido(apellido);
+		c.setDireccion(direccion);
+		c.setEmail(email);
+		c.setFechaNac(fechaNac);
+		c.setNombre(nombre);
+		c.setNroDoc(id.getNroDoc());
+		c.setTelefono(telefono);
+		c.setTipoDoc(id.getTipoDoc());
+		return c;
 	}
 	public String getDireccion() {
 		return direccion;

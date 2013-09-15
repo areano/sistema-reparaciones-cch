@@ -18,7 +18,6 @@ import javax.swing.SwingUtilities;
 import javax.swing.WindowConstants;
 
 import com.uade.seminario.tpo.controller.SistemadeReparaciones;
-import com.uade.seminario.tpo.model.Equipo;
 import com.uade.seminario.tpo.view.objectView.EquipoView;
 import com.uade.seminario.tpo.view.objectView.OrdenReparacionView;
 import com.uade.seminario.tpo.view.objectView.TareaReparacionView;
@@ -60,8 +59,8 @@ public class AltaOrdenReparacionView extends javax.swing.JFrame {
 	private JCheckBox jCheckBox1;
 	private JTextField nombreEquipo;
 	private JTextField nroSerie;
-	
-
+	private OrdenReparacionView orden;
+	private SistemadeReparaciones sistema;
 	/**
 	* Auto-generated main method to display this JFrame
 	*/
@@ -77,6 +76,8 @@ public class AltaOrdenReparacionView extends javax.swing.JFrame {
 	
 	public AltaOrdenReparacionView() {
 		super();
+		sistema = SistemadeReparaciones.getInstancia();
+		orden =  new OrdenReparacionView();
 		initGUI();
 	}
 	
@@ -105,10 +106,11 @@ public class AltaOrdenReparacionView extends javax.swing.JFrame {
 					
 					public void actionPerformed(ActionEvent arg0) {
 						if(!nroSerie.getText().equals("")){
-							Equipo equipo=SistemadeReparaciones.getInstancia().buscarEquipo(Integer.parseInt(nroSerie.getText()));
+							//Equipo equipo=SistemadeReparaciones.getInstancia().buscarEquipo(Integer.parseInt(nroSerie.getText()));
+							EquipoView equipo = sistema.buscarEquipoView(Integer.parseInt(nroSerie.getText()));
 							if(equipo!=null ){
 								nombreEquipo.setText(equipo.getCliente().getNombre());
-								if(equipo.getGarantia().estasEnGarantia())
+								if(equipo.getGarantia().isEstasEnGarantia())
 									garantiaPapel.setSelected(true);
 								
 							}
@@ -185,7 +187,7 @@ public class AltaOrdenReparacionView extends javax.swing.JFrame {
 				agregar.addActionListener(new ActionListener() {
 					
 					public void actionPerformed(ActionEvent arg0) {
-						AltaTareaReparacionView view = new AltaTareaReparacionView(nroOrdenReparacion.getText());
+						AltaTareaReparacionView view = new AltaTareaReparacionView(orden);
 						view.setVisible(true);
 						
 					}
@@ -224,11 +226,17 @@ public class AltaOrdenReparacionView extends javax.swing.JFrame {
 						SistemadeReparaciones sist=SistemadeReparaciones.getInstancia();
 						
 						DefaultListModel reparacionesModelo=new DefaultListModel();
-						if(!nroOrdenReparacion.getText().equals("")){
-							for(TareaReparacionView p: sist.buscarTareasXOrdenReparacionView(Integer.parseInt(nroOrdenReparacion.getText()))){
+						
+//						if(!nroOrdenReparacion.getText().equals("")){
+//							for(TareaReparacionView p: sist.buscarTareasXOrdenReparacionView(Integer.parseInt(nroOrdenReparacion.getText()))){
+//								reparacionesModelo.addElement(p);
+//							}
+//						}
+						if(orden.getItemsReparacion().size()>0){
+							for(TareaReparacionView p: orden.getItemsReparacion()){
 								reparacionesModelo.addElement(p);
 							}
-						}				
+						}
 						tareas = new JList();
 						jScrollPane1.setViewportView(tareas);
 						tareas.setModel(reparacionesModelo);
@@ -258,7 +266,8 @@ public class AltaOrdenReparacionView extends javax.swing.JFrame {
 						if(repararTodas.isSelected())
 							repararDeTodosModos=true;
 						int prioridad1=Integer.parseInt(prioridad.getSelectedItem().toString()); 
-						SistemadeReparaciones.getInstancia().confirmarOrdenReparacion(Integer.parseInt(nroOrdenReparacion.getText()),fallas.getText(),estaEnGarantiaFisica,repararDeTodosModos,prioridad1);
+						SistemadeReparaciones.getInstancia().confirmarOrdenReparacion(orden);
+						//SistemadeReparaciones.getInstancia().confirmarOrdenReparacion(Integer.parseInt(nroOrdenReparacion.getText()),fallas.getText(),estaEnGarantiaFisica,repararDeTodosModos,prioridad1);
 
 					}
 				});
@@ -288,18 +297,20 @@ public class AltaOrdenReparacionView extends javax.swing.JFrame {
 					
 					public void actionPerformed(ActionEvent arg0) {
 						if(!nroSerie.getText().equals("")){
-							Equipo equipo=SistemadeReparaciones.getInstancia().buscarEquipo(Integer.parseInt(nroSerie.getText()));
+							//Equipo equipo=SistemadeReparaciones.getInstancia().buscarEquipo(Integer.parseInt(nroSerie.getText()));
+							EquipoView equipo = sistema.buscarEquipoView(Integer.parseInt(nroSerie.getText()));
 							OrdenReparacionView ordenView= SistemadeReparaciones.getInstancia().buscarOrdenConEquipoARepararView(Integer.parseInt(nroSerie.getText()));
 							if(equipo!=null && ordenView==null){
-								int nroOrden=SistemadeReparaciones.getInstancia().altaOrdenReparacion(Integer.parseInt(nroSerie.getText()));
-								if(nroOrden!=0){
-								ordenView=SistemadeReparaciones.getInstancia().buscarOrdenReparacionView(nroOrden);
-								String nro= String.valueOf(ordenView.getNroOrden());
-								nroOrdenReparacion.setText(nro);
+								//int nroOrden=SistemadeReparaciones.getInstancia().altaOrdenReparacion(Integer.parseInt(nroSerie.getText()));
+								orden.setEquipo(equipo);
+								//if(nroOrden!=0){
+								//ordenView=SistemadeReparaciones.getInstancia().buscarOrdenReparacionView(nroOrden);
+								//String nro= String.valueOf(ordenView.getNroOrden());
+								//nroOrdenReparacion.setText(nro);
 								agregar.setEnabled(true);
 								quitarTarea.setEnabled(true);
 								actualizar.setEnabled(true);}
-							}
+							//}
 							
 						}
 						

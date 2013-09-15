@@ -6,6 +6,7 @@ import java.util.List;
 import javax.persistence.*;
 
 import com.uade.seminario.tpo.view.objectView.ModeloView;
+import com.uade.seminario.tpo.view.objectView.PiezaView;
 
 @Entity
 @Table(name="modelo")
@@ -84,6 +85,12 @@ public class Modelo {
 	}
 	public ModeloView getView() {
 		ModeloView mod=new ModeloView(getNombre(),getDescripcion(), getNroModelo());
+		List<PiezaView> piezasView = new ArrayList<PiezaView>();
+		for (Pieza p : piezas) {
+			piezasView.add(p.getView());
+		}
+		mod.setEstado(estado);
+		mod.setPiezas(piezasView);
 		return mod;
 	}
 	public void eliminar() { //Borra de la base de datos

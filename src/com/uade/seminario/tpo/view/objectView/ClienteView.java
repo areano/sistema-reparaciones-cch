@@ -5,7 +5,7 @@ import java.sql.Date;
 public class ClienteView {
 	private String nombre;
 	private String apellido;
-	private int nroDoc;
+	private String nroDoc;
 	private String tipoDoc;
 	private Date fechaNac;
 	private String direccion;
@@ -24,11 +24,11 @@ public class ClienteView {
 	public void setApellido(String apellido) {
 		this.apellido = apellido;
 	}
-	public int getNroDoc() {
+	public String getNroDoc() {
 		return nroDoc;
 	}
-	public void setNroDoc(int nroDoc) {
-		this.nroDoc = nroDoc;
+	public void setNroDoc(String string) {
+		this.nroDoc = string;
 	}
 	public String getTipoDoc() {
 		return tipoDoc;

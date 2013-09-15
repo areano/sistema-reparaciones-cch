@@ -65,6 +65,8 @@ public class Pieza {
 	}
 	public PiezaView getView() {
 		PiezaView piezaview=new PiezaView(getNroPieza(), getNombrePieza(), getDescripcion());
+		piezaview.setStock(stock);
+		piezaview.setEstado(estado);
 		return piezaview;
 		
 	}

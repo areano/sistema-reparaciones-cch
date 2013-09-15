@@ -21,7 +21,7 @@ public class OrdenReparacion {
 	@Column(name="nro_orden_reparacion")
 	private int nroOrden;
 	
-	@OneToMany
+	@OneToMany(cascade = CascadeType.ALL)
 	@JoinColumn(name="nro_orden_reparacion",referencedColumnName="nro_orden_reparacion")
 	private List<TareaReparacion> itemsReparacion;
 	
@@ -80,7 +80,7 @@ public class OrdenReparacion {
 	public List<TareaReparacion> getItemsReparacion() {
 		return itemsReparacion;
 	}
-	public void setItemsReparacion(Vector<TareaReparacion> itemsReparacion) {
+	public void setItemsReparacion(List<TareaReparacion> itemsReparacion) {
 		this.itemsReparacion = itemsReparacion;
 	}
 	public Equipo getEquipo() {
@@ -108,7 +108,12 @@ public class OrdenReparacion {
 		return estado.equals("A reparar");
 	}
 	public OrdenReparacionView getView() {
-		return new OrdenReparacionView(getNroOrden(),getDescripcionFallas(),getEquipo(),getEstado(),getFecha(),getItemsReparacion(),getPrioridad(),isRepararDeTodosModos(),isEstaEnGarantiaFisica());
+		List<TareaReparacionView> tareasView =  new ArrayList<TareaReparacionView>();
+		for (TareaReparacion tarea : itemsReparacion) {
+			tareasView.add(tarea.getView());
+		}
+		return new OrdenReparacionView(  nroOrden,descripcionFallas,equipo.getView(),
+				getEstado(),getFecha(),tareasView,getPrioridad(),repararDeTodosModos,estaEnGarantiaFisica);
 	}
 	public Vector<TareaReparacionView> listarTareasView() {
 		Vector<TareaReparacionView> tareas=new Vector<TareaReparacionView>();

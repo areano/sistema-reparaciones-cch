@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.persistence.*;
 
+import com.uade.seminario.tpo.view.objectView.PiezaView;
 import com.uade.seminario.tpo.view.objectView.TareaReparacionView;
 
 @Entity
@@ -62,7 +63,11 @@ public class TareaReparacion {
 		return estado.equals("activo");
 	}
 	public TareaReparacionView getView() {
-		TareaReparacionView tareaView=new TareaReparacionView(nroItemReparacion,detalle,piezas,estado);
+		List<PiezaView> pView =  new ArrayList<PiezaView>();
+		for(Pieza p: piezas){
+			pView.add(p.getView());
+		}
+		TareaReparacionView tareaView=new TareaReparacionView(nroItemReparacion,detalle,pView,estado);
 		return tareaView;
 	}
 	public List<String> listaPiezas() {
