@@ -11,6 +11,7 @@ import com.uade.seminario.tpo.service.ClienteDataService;
 import com.uade.seminario.tpo.service.EmpleadoDataService;
 import com.uade.seminario.tpo.service.EquipoService;
 import com.uade.seminario.tpo.service.ModeloDataService;
+import com.uade.seminario.tpo.service.ReporteDataService;
 import com.uade.seminario.tpo.view.objectView.ClienteView;
 import com.uade.seminario.tpo.view.objectView.EquipoView;
 import com.uade.seminario.tpo.view.objectView.ModeloView;
@@ -305,53 +306,13 @@ public class SistemadeReparaciones {
 	}
 	
 	public Reporte emitirReportePiezas(Date desde,Date hasta){
-		Reporte reporte=new Reporte(desde,hasta);
-		List<ItemReporte> itemsReporte=new ArrayList<ItemReporte>();
-		List<OrdenReparacion> ordenes=buscarOrdenesReporte(desde,hasta);
-		itemsReporte=generarListaPiezas(ordenes);
-		reporte.setItemsReporte(itemsReporte);
+		ReporteDataService reporteDataService = ReporteDataService.getInstance();
+		Reporte reporte = reporteDataService.findByDate(desde, desde);
 		reportes.add(reporte);
 		return reporte;
 	}
 
-	public List<ItemReporte> generarListaPiezas(List<OrdenReparacion> ordenes) {
-		List<String> piezas=new ArrayList<String>();
-		List<String> nombrePiezas=new ArrayList<String>();
-		List<Integer> cantidad=new ArrayList<Integer>();
-		List<ItemReporte> itemsReporte=new ArrayList<ItemReporte>();
-		for (OrdenReparacion ordenReparacion : ordenes) {
-			nombrePiezas=ordenReparacion.listaPiezas();
-			
-			for (String nombre : nombrePiezas) {
-				if(piezas.contains(nombre)){
-					int posicion=piezas.indexOf(nombre);
-					cantidad.set(posicion, cantidad.get(posicion).intValue()+1);
-				}
-				else{
-					piezas.add(nombre);
-					cantidad.add(1);
-				}
-			}
-		}
-		int i=0;
-		while(cantidad.size()>i){
-			ItemReporte item= new ItemReporte(piezas.get(i),cantidad.get(i));
-			itemsReporte.add(item);
-			i++;
-		}
-		return itemsReporte;
-	}
-
-	public List<OrdenReparacion> buscarOrdenesReporte(Date desde, Date hasta) {
-		List<OrdenReparacion> ordenes=new ArrayList<OrdenReparacion>();
-		for (OrdenReparacion orden : ordReparacion) {
-			if(orden.getFecha().after(desde)&&orden.getFecha().before(hasta) && (orden.getEstado().equals("Reparado")||orden.getEstado().equals("Entregado"))){
-				ordenes.add(orden);
-			}
-		}
-		return ordenes;
-	}
-
+	
 	public void altaCliente(String nroDoc, String tipoDoc, String nombre, String apellido,
 			String direccion, String mail, String fechaNac, String tel) {
 		Cliente cliente;
