@@ -71,7 +71,7 @@ public class MainFrame extends javax.swing.JFrame {
 
 				inst.setExtendedState(JFrame.MAXIMIZED_BOTH);
 				inst.setVisible(true);
-				inst.setResizable(false);
+				inst.setResizable(true);
 				inst.setLocationRelativeTo(null);
 			}
 		});
