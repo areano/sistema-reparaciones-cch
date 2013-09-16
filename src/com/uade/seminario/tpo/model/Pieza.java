@@ -8,7 +8,7 @@ import com.uade.seminario.tpo.view.objectView.PiezaView;
 @Table(name="pieza")
 public class Pieza {
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	//@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="nro_pieza")
 	private int nroPieza;
 	@Transient
