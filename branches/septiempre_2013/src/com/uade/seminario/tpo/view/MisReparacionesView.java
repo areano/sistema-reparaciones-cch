@@ -77,7 +77,7 @@ public class MisReparacionesView extends javax.swing.JFrame {
 					
 					public void actionPerformed(ActionEvent arg0) {
 						if(!legajo.getText().equals("")){
-							OrdenReparacionView orden=SistemadeReparaciones.getInstancia().misReparaciones(legajo.getText());
+							OrdenReparacionView orden=SistemadeReparaciones.getInstancia().misReparaciones(Integer.parseInt(legajo.getText()));
 							nroOrden.setText(String.valueOf(orden.getNroOrden()));
 							mostrarOrden.setVisible(true);
 						}

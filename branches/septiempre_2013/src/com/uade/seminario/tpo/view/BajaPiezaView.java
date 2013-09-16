@@ -101,7 +101,7 @@ public class BajaPiezaView extends javax.swing.JInternalFrame {
 					
 					public void actionPerformed(ActionEvent arg0) {
 						if(!codigo.getText().equals("")){
-							SistemadeReparaciones.getInstancia().BajaPieza(Integer.parseInt(codigo.getText()));
+							SistemadeReparaciones.getInstancia().bajaPieza(Integer.parseInt(codigo.getText()));
 						}						
 					}
 				});

@@ -103,5 +103,12 @@ public class OrdenReparacionView {
 		}
 		return nombrePiezas;
 	}
+	public TareaReparacionView obtenerTareaView(int nroTarea) {
+		for (TareaReparacionView tareaReparacion : itemsReparacion) {
+			if  (tareaReparacion.getNroItemReparacion() == nroTarea) return tareaReparacion;
+			
+		}
+		return  new TareaReparacionView(-1,"Tarea no existe",null,"vacio");
+	}
 	
 }

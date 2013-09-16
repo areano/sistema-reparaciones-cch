@@ -35,25 +35,27 @@ public class ModificarPiezaView extends javax.swing.JInternalFrame {
 	private JTextArea descripcion;
 	private JTextField codigo;
 	private JTextField nombre;
+	private PiezaView pieza;
 
-	/**
-	* Auto-generated main method to display this JFrame
-	*/
-//	public static void main(String[] args) {
-//		SwingUtilities.invokeLater(new Runnable() {
-//			public void run() {
-//				ModificarPiezaView inst = new ModificarPiezaView();
-//				inst.setLocationRelativeTo(null);
-//				inst.setVisible(true);
-//			}
-//		});
-//	}
-	
 	public ModificarPiezaView() {
 		super();
 		initGUI();
 	}
-	
+	private class ModificarPiezaLiestener implements ActionListener{
+		private javax.swing.JInternalFrame frame;
+		public ModificarPiezaLiestener(javax.swing.JInternalFrame frame){
+			this.frame = frame;
+		}
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			pieza.setNombrePieza(nombre.getText());
+			pieza.setDescripcion(descripcion.getText());
+			SistemadeReparaciones.getInstancia().modificarPieza(pieza);
+			frame.dispose();
+			
+		}
+		
+	}
 	private void initGUI() {
 		try {
 			setTitle("Modificar Pieza");
@@ -100,7 +102,8 @@ public class ModificarPiezaView extends javax.swing.JInternalFrame {
 				ok.addActionListener(new ActionListener() {
 					
 					public void actionPerformed(ActionEvent arg0) {
-						SistemadeReparaciones.getInstancia().modificarPieza(nombre.getText(),Integer.parseInt(codigo.getText()),descripcion.getText());
+						
+
 					}
 				});
 			}
@@ -109,15 +112,7 @@ public class ModificarPiezaView extends javax.swing.JInternalFrame {
 				getContentPane().add(buscar);
 				buscar.setText("Buscar Pieza");
 				buscar.setBounds(244, 49, 121, 23);
-				buscar.addActionListener(new ActionListener() {
-					
-					public void actionPerformed(ActionEvent arg0) {
-						PiezaView pieza=SistemadeReparaciones.getInstancia().buscarPiezaView(Integer.parseInt(codigo.getText()));
-						nombre.setText(pieza.getNombrePieza());
-						descripcion.setText(pieza.getDescripcion());
-						
-					}
-				});
+				buscar.addActionListener(new ModificarPiezaLiestener(this));
 			}
 			pack();
 			this.setSize(400, 314);

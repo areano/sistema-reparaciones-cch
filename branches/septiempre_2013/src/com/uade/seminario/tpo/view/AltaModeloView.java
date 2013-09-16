@@ -114,23 +114,15 @@ public class AltaModeloView extends javax.swing.JInternalFrame {
 					
 					public void actionPerformed(ActionEvent arg0) {
 						if(!codigo.getText().equals("")){
-							ModeloView modelo=SistemadeReparaciones.getInstancia().buscarModeloView(Integer.parseInt(codigo.getText()));
-							if(modelo!=null){
-								codigo.setText("");
-								nombre.setText("");
-								descri.setText("");
-							}
-							else{
-								SistemadeReparaciones.getInstancia().altaModelo(nombre.getText(), Integer.parseInt(codigo.getText()), descri.getText());
+								ModeloView modelo = new ModeloView(nombre.getText(), descri.getText(), Integer.parseInt(codigo.getText()) );
+								SistemadeReparaciones.getInstancia().altaModelo(modelo);
 								jScrollPane1.setVisible(true);
 								agregar.setVisible(true);
 								actualizar.setVisible(true);
 								confirmar.setVisible(true);
 								cancelar.setVisible(true);
 								jLabel4.setVisible(true);
-								quitarPieza.setVisible(true);
-							}								
-								
+								quitarPieza.setVisible(true);							
 							
 						}
 						
