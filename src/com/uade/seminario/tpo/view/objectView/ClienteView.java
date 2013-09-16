@@ -7,7 +7,7 @@ public class ClienteView {
 	private String apellido;
 	private String nroDoc;
 	private String tipoDoc;
-	private Date fechaNac;
+	private String fechaNac;
 	private String direccion;
 	private String email;
 	private String telefono;
@@ -36,10 +36,10 @@ public class ClienteView {
 	public void setTipoDoc(String tipoDoc) {
 		this.tipoDoc = tipoDoc;
 	}
-	public Date getFechaNac() {
+	public String getFechaNac() {
 		return fechaNac;
 	}
-	public void setFechaNac(Date fechaNac) {
+	public void setFechaNac(String fechaNac) {
 		this.fechaNac = fechaNac;
 	}
 	public String getDireccion() {

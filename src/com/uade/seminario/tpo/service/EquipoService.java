@@ -3,6 +3,8 @@ package com.uade.seminario.tpo.service;
 import com.uade.seminario.tpo.persistence.dao.generic.impl.EquipoDAOImpl;
 import com.uade.seminario.tpo.model.Cliente;
 import com.uade.seminario.tpo.model.Equipo;
+import com.uade.seminario.tpo.model.Modelo;
+
 import java.util.List;
 public class EquipoService {
 	private static EquipoDAOImpl dao;
@@ -30,5 +32,14 @@ public class EquipoService {
 	}
 	public void update(Equipo entidad){
 		dao.update(entidad);
+	}
+	public List<Equipo>  existeElModeloEnUnEquipo(Modelo modelo) {
+		
+		return dao.existeElModeloEnUnEquipo(modelo);
+		
+	}
+	public void merge(Equipo entidad) {
+		dao.merge(entidad);
+		
 	}
 }

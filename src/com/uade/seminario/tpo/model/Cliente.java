@@ -105,7 +105,7 @@ public class Cliente {
 		c.setApellido(apellido);
 		c.setDireccion(direccion);
 		c.setEmail(email);
-		c.setFechaNac(fechaNac);
+		c.setFechaNac(fechaNac.toString());
 		c.setNombre(nombre);
 		c.setNroDoc(id.getNroDoc());
 		c.setTelefono(telefono);

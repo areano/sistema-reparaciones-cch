@@ -31,4 +31,8 @@ public class PiezaDataService {
 	public void update(Pieza entidad){
 		dao.update(entidad);
 	}
+	public void merge(Pieza pieza) {
+		dao.merge(pieza);
+		
+	}
 }

@@ -7,6 +7,8 @@ import java.util.Vector;
 
 import javax.persistence.*;
 
+import com.uade.seminario.tpo.view.objectView.EmpleadoView;
+
 @Entity
 @Table(name = "empleado")
 public class Empleado {
@@ -114,5 +116,10 @@ public class Empleado {
 	public void addAReparar(OrdenReparacion orden) {
 		this.aReparar.add(orden);
 
+	}
+
+	public EmpleadoView getView() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }
