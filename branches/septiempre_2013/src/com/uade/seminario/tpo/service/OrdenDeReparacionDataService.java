@@ -1,8 +1,11 @@
 package com.uade.seminario.tpo.service;
 
 import com.uade.seminario.tpo.persistence.dao.generic.impl.OrdenDeReparacionDAOImpl;
+import com.uade.seminario.tpo.view.objectView.OrdenReparacionView;
 import com.uade.seminario.tpo.model.Equipo;
 import com.uade.seminario.tpo.model.OrdenReparacion;
+
+import java.sql.Date;
 import java.util.List;
 public class OrdenDeReparacionDataService {
 	private static OrdenDeReparacionDAOImpl dao;
@@ -30,6 +33,26 @@ public class OrdenDeReparacionDataService {
 	}
 	public void update(OrdenReparacion entidad){
 		dao.update(entidad);
+	}
+	public void merge(OrdenReparacion entidad) {
+		dao.merge(entidad);
+		
+	}
+	public OrdenReparacion buscarEquipoxOrdenRepAConfirmar(Equipo equipo) {
+		return dao.buscarEquipoxOrdenRepAConfirmar(equipo);
+	}
+	public OrdenReparacion buscarOrdenConEquipoARepararView(Equipo equipo) {
+		return dao.buscarOrdenConEquipoARepararView(equipo);
+	}
+	public OrdenReparacion buscarOrdenReparacion(int nroReparacion) {
+		return dao.findByNroOrden(nroReparacion);
+	}
+	public OrdenReparacion buscarOrdenReparacionPrioridad() {
+		return dao.buscarOrdenReparacionPrioridad();
+	}
+	public List<OrdenReparacion> ordenesPorFecha(Date desde, Date hasta) {
+		// TODO Auto-generated method stub
+		return dao.ordenesPorFecha(desde, hasta);
 	}
 	
 }

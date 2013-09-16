@@ -3,6 +3,8 @@ package com.uade.seminario.tpo.view.objectView;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.uade.seminario.tpo.model.Pieza;
+
 public class TareaReparacionView {
 	private int nroItemReparacion;
 	private String detalle;
@@ -45,6 +47,13 @@ public class TareaReparacionView {
 	}
 	public void addPieza(PiezaView pieza){
 		piezas.add(pieza);
+	}
+	public List<String> listaPiezas() {
+		List<String> nombrePiezas=new ArrayList<String>();
+		for (PiezaView pieza : piezas) {
+			nombrePiezas.add(pieza.getNombrePieza());
+		}
+		return nombrePiezas;
 	}
 	
 

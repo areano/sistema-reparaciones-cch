@@ -19,8 +19,8 @@ public class GarantiaDataService {
 		}
 		return cs;
 	}
-	public Garantia findByNroSerie(int nroSerie){
-		return dao.findByNroSerie(nroSerie);
+	public Garantia findByNroGarantia(int nroGarantia){
+		return dao.findByNroGarantia(nroGarantia);
 	}
 	public List<Garantia> todosLosEquipo(){
 		return dao.findAll();

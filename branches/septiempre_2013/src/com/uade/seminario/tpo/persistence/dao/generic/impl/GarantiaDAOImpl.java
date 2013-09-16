@@ -21,7 +21,7 @@ public class GarantiaDAOImpl extends GenericDAOImpl<Garantia> {
 		return instancia;
 	}
 
-	public Garantia findByNroSerie(int nroGarantia) {
+	public Garantia findByNroGarantia(int nroGarantia) {
 		Session session = sf.openSession();
 		String hql = "from Garantia g where g.nroGarantia = :nroGarantia";
 		Query query = session.createQuery(hql);

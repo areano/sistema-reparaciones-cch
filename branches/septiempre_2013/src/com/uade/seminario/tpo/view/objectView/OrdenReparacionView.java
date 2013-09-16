@@ -93,5 +93,15 @@ public class OrdenReparacionView {
 	public void addTareaReparacion(TareaReparacionView tarea){
 		this.itemsReparacion.add(tarea);
 	}
+	public List<String> listaPiezas() {
+		List<String> nombrePiezas= new ArrayList<String>();
+		for (TareaReparacionView tareaReparacion : itemsReparacion) {
+			List<String> nombrePiezasTarea=tareaReparacion.listaPiezas();
+			for (String nombre : nombrePiezasTarea) {
+				nombrePiezas.add(nombre);
+			}
+		}
+		return nombrePiezas;
+	}
 	
 }
