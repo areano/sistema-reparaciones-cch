@@ -79,6 +79,7 @@ public class AltaTareaReparacionView extends javax.swing.JFrame {
 		}
 		@Override
 		public void actionPerformed(ActionEvent e) {
+			tarea.setEstado("activo");
 			orden.addTareaReparacion(tarea);
 			frame.dispose();
 		}

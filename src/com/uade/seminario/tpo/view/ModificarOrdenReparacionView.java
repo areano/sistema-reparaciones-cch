@@ -19,7 +19,9 @@ import javax.swing.SwingUtilities;
 
 import com.uade.seminario.tpo.controller.SistemadeReparaciones;
 import com.uade.seminario.tpo.model.Equipo;
+import com.uade.seminario.tpo.model.OrdenReparacion;
 import com.uade.seminario.tpo.model.TareaReparacion;
+import com.uade.seminario.tpo.view.objectView.EquipoView;
 import com.uade.seminario.tpo.view.objectView.OrdenReparacionView;
 import com.uade.seminario.tpo.view.objectView.PiezaView;
 import com.uade.seminario.tpo.view.objectView.TareaReparacionView;
@@ -65,6 +67,7 @@ public class ModificarOrdenReparacionView extends javax.swing.JFrame {
 	private JCheckBox jCheckBox1;
 	private JTextField nombreEquipo;
 	private JTextField nroSerie;
+	private OrdenReparacionView ordenview;
 
 	public static void main(String[] args) {
 		SwingUtilities.invokeLater(new Runnable() {
@@ -80,6 +83,61 @@ public class ModificarOrdenReparacionView extends javax.swing.JFrame {
 		super();
 		initGUI();
 	}
+	
+	public class ModificarOrdenListener implements ActionListener {
+		javax.swing.JFrame frame;
+		public ModificarOrdenListener(javax.swing.JFrame frame){
+			this.frame = frame;
+		}
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			ordenview.setDescripcionFallas(fallas.getText());
+			ordenview.setPrioridad(Integer.parseInt(prioridad.getSelectedItem().toString()));
+			SistemadeReparaciones.getInstancia().modificarOrdenReparacion(ordenview);
+			frame.dispose();
+		}
+
+	}
+	private String avanzarEtapaOrden() {
+		if(ordenview.getEstado().equals("A reparar")){
+			ordenview.setEstado("Reparado");
+			return ordenview.getEstado();
+		}
+		else{
+			if(ordenview.getEstado().equals("Reparado")){
+				ordenview.setEstado("Entregado");
+				return ordenview.getEstado();
+			}
+			else{
+				if(ordenview.getEstado().equals("Presupuestar")){
+					ordenview.setEstado("A reparar");
+					return ordenview.getEstado();
+				}
+			}
+		}
+		return "";
+	}
+	private String retrocederEtapaOrden() {
+		if(ordenview.getEstado().equals("A reparar")){
+			ordenview.setEstado("Presupuestar");
+			return ordenview.getEstado();
+		}
+		else{
+			if(ordenview.getEstado().equals("Reparado")){
+				ordenview.setEstado("A reparar");
+				return ordenview.getEstado();
+			}
+			else{
+				if(ordenview.getEstado().equals("Entregado")){
+					ordenview.setEstado("Reparado");
+					return ordenview.getEstado();
+				}
+			}
+		}
+		return "";
+		
+	}
+	
 	
 	private void initGUI() {
 		try {
@@ -168,7 +226,7 @@ public class ModificarOrdenReparacionView extends javax.swing.JFrame {
 				agregar.addActionListener(new ActionListener() {
 					
 					public void actionPerformed(ActionEvent arg0) {
-						AltaTareaReparacionView view = new AltaTareaReparacionView(nroOrdenReparacion.getText());
+						AltaTareaReparacionView view = new AltaTareaReparacionView(ordenview);
 						view.setVisible(true);
 						
 					}
@@ -230,14 +288,7 @@ public class ModificarOrdenReparacionView extends javax.swing.JFrame {
 				getContentPane().add(modificarOrden);
 				modificarOrden.setText("Modificar Orden");
 				modificarOrden.setBounds(375, 339, 135, 23);
-				modificarOrden.addActionListener(new ActionListener() {
-					
-					public void actionPerformed(ActionEvent e) {
-						if(!nroOrdenReparacion.getText().equals(""))
-							SistemadeReparaciones.getInstancia().modificarOrdenReparacion(Integer.parseInt(nroOrdenReparacion.getText()),fallas.getText(),Integer.parseInt(prioridad.getSelectedItem().toString()));						
-						
-					}
-				});
+				modificarOrden.addActionListener(new ModificarOrdenListener(this));
 			}
 			{			
 				SistemadeReparaciones sist=SistemadeReparaciones.getInstancia();
@@ -264,11 +315,11 @@ public class ModificarOrdenReparacionView extends javax.swing.JFrame {
 					
 					public void actionPerformed(ActionEvent arg0) {
 						if(!nroOrdenReparacion.getText().equals("")){
-							OrdenReparacionView ordenview=SistemadeReparaciones.getInstancia().buscarOrdenReparacionView(Integer.parseInt(nroOrdenReparacion.getText()));
-							Equipo equipo=ordenview.getEquipo();
+							ordenview=SistemadeReparaciones.getInstancia().buscarOrdenReparacionView(Integer.parseInt(nroOrdenReparacion.getText()));
+							EquipoView equipo=ordenview.getEquipo();
 							if(equipo!=null && ordenview!=null){
 								nombreEquipo.setText(equipo.getCliente().getNombre());
-								if(equipo.getGarantia().estasEnGarantia())
+								if(equipo.getGarantia().isEstasEnGarantia())
 									garantiaPapel.setSelected(true);
 								nroSerie.setText(String.valueOf(equipo.getNroSerie()));
 								if(ordenview.isEstaEnGarantiaFisica())
@@ -279,12 +330,16 @@ public class ModificarOrdenReparacionView extends javax.swing.JFrame {
 								estado.setText(ordenview.getEstado());
 								prioridad.setSelectedIndex(ordenview.getPrioridad()-1);
 								actualizar.doClick();
-								retroceder.setVisible(true);
-								avanzar.setVisible(true);	
-								agregar.setEnabled(true);
-								quitarTarea.setEnabled(true);
-								actualizar.setEnabled(true);
 								
+								if (!ordenview.getEstado().equals("Entregado")) {
+									if (!ordenview.getEstado().equals("A Confirmar")) {
+										retroceder.setVisible(true);
+									}
+									agregar.setEnabled(true);
+									quitarTarea.setEnabled(true);
+									avanzar.setVisible(true);						
+									actualizar.setEnabled(true);
+								}
 							}
 						}
 						
@@ -335,7 +390,7 @@ public class ModificarOrdenReparacionView extends javax.swing.JFrame {
 					
 					public void actionPerformed(ActionEvent e) {
 						if(!nroOrdenReparacion.equals("")){
-						String etapa=SistemadeReparaciones.getInstancia().retrocederEtapaOrden(Integer.parseInt(nroOrdenReparacion.getText()));
+						String etapa= retrocederEtapaOrden();
 						if (!etapa.equals(""))
 						estado.setText(etapa);}
 						
@@ -352,7 +407,7 @@ public class ModificarOrdenReparacionView extends javax.swing.JFrame {
 					
 					public void actionPerformed(ActionEvent e) {
 						if(!nroOrdenReparacion.equals("")){
-						String etapa=SistemadeReparaciones.getInstancia().avanzarEtapaOrden((Integer.parseInt(nroOrdenReparacion.getText())));
+						String etapa=avanzarEtapaOrden();
 						if (!etapa.equals(""))
 						estado.setText(etapa);}
 					}
