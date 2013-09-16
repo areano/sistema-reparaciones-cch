@@ -12,7 +12,7 @@ import com.uade.seminario.tpo.view.objectView.PiezaView;
 @Table(name="modelo")
 public class Modelo {
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	//@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="nro_modelo")
 	private int nroModelo;
 	@Column(name="nombre_mod", columnDefinition="varchar(50)")
