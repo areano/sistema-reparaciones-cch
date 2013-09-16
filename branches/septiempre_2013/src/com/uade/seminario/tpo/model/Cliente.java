@@ -105,7 +105,10 @@ public class Cliente {
 		c.setApellido(apellido);
 		c.setDireccion(direccion);
 		c.setEmail(email);
-		c.setFechaNac(fechaNac.toString());
+		
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/mm/yyyy");
+		
+		c.setFechaNac(sdf.format(fechaNac));
 		c.setNombre(nombre);
 		c.setNroDoc(id.getNroDoc());
 		c.setTelefono(telefono);
