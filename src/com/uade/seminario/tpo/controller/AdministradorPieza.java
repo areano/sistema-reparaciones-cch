@@ -24,8 +24,8 @@ class AdministradorPieza {
 	private Pieza fromDTOtoClassTransformer(PiezaView piezaView){
 		Pieza pieza = new Pieza();
 		pieza.setDescripcion(piezaView.getDescripcion() );
-		pieza.setNombrePieza(piezaView.getNombrePieza() );
 		pieza.setNroPieza(piezaView.getNroPieza());
+		pieza.setEstado(piezaView.getEstado());
 		return pieza ;
 	}
 

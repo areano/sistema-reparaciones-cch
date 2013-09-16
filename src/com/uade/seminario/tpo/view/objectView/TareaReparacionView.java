@@ -51,7 +51,7 @@ public class TareaReparacionView {
 	public List<String> listaPiezas() {
 		List<String> nombrePiezas=new ArrayList<String>();
 		for (PiezaView pieza : piezas) {
-			nombrePiezas.add(pieza.getNombrePieza());
+			nombrePiezas.add(String.valueOf(pieza.getNroPieza()));
 		}
 		return nombrePiezas;
 	}

@@ -29,6 +29,7 @@ import com.uade.seminario.tpo.exceptions.ExceptionNoExisteModelo;
 import com.uade.seminario.tpo.exceptions.GarantiaNoExisteException;
 import com.uade.seminario.tpo.exceptions.ModeloExisteException;
 import com.uade.seminario.tpo.exceptions.OrdenNoExisteException;
+import com.uade.seminario.tpo.exceptions.PiezaNoExisteException;
 import com.uade.seminario.tpo.model.Cliente;
 import com.uade.seminario.tpo.model.ClienteId;
 import com.uade.seminario.tpo.model.Empleado;
@@ -80,11 +81,11 @@ public class SistemadeReparaciones {
 		this.reportes=new ArrayList<Reporte>();
 		
 		/* CLASES PARA TEST */
-		Pieza pieza= new Pieza(1, "tornillo", "es un tornillo");
+		Pieza pieza= new Pieza(1,  "es un tornillo");
 		pieza.setEstado("activo");
 		piezas.add(pieza);
 		
-		Pieza pieza2= new Pieza(2, "tuerca", "es una tuerca");
+		Pieza pieza2= new Pieza(2,  "es una tuerca");
 		pieza2.setEstado("activo");
 		piezas.add(pieza2);
 		
@@ -296,7 +297,7 @@ public class SistemadeReparaciones {
 	private Pieza buscarPieza(int codPieza) {
 		Pieza pieza = AdministradorPieza.getInstancia().buscarPieza(codPieza);
 		if (pieza!=null) return pieza;
-		throw new ExceptionNoExisteModelo(codPieza);	
+		throw new PiezaNoExisteException(codPieza);	
 		
 	}
 
@@ -330,7 +331,7 @@ public class SistemadeReparaciones {
 		Modelo modelo=buscarModelo(codModelo);
 		Pieza pieza=buscarPieza(codPieza);
 		if(modelo!=null && pieza==null){
-			pieza=new Pieza(codPieza,nombre,descripcion);
+			pieza=new Pieza(codPieza,descripcion);
 			modelo.addPieza(pieza);
 			piezas.add(pieza);
 		}
@@ -341,8 +342,10 @@ public class SistemadeReparaciones {
 	}
 
 
-	public PiezaView buscarPiezaView(int codigoPieza) {
-		return AdministradorPieza.getInstancia().buscarPiezaView( codigoPieza);
+	public PiezaView buscarPiezaView(int codigoPieza) throws PiezaNoExisteException{
+
+		Pieza pieza = buscarPieza(codigoPieza); 
+		return pieza.getView();
 	}
 
 	public void modificarPieza(PiezaView pieza) {
