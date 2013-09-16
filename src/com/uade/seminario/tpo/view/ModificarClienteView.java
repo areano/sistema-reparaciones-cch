@@ -1,4 +1,5 @@
 package com.uade.seminario.tpo.view;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -11,26 +12,13 @@ import javax.swing.WindowConstants;
 import com.uade.seminario.tpo.controller.SistemadeReparaciones;
 import com.uade.seminario.tpo.view.objectView.ClienteView;
 
-
-/**
-* This code was edited or generated using CloudGarden's Jigloo
-* SWT/Swing GUI Builder, which is free for non-commercial
-* use. If Jigloo is being used commercially (ie, by a corporation,
-* company or business for any purpose whatever) then you
-* should purchase a license for each developer using Jigloo.
-* Please visit www.cloudgarden.com for details.
-* Use of Jigloo implies acceptance of these licensing terms.
-* A COMMERCIAL LICENSE HAS NOT BEEN PURCHASED FOR
-* THIS MACHINE, SO JIGLOO OR THIS CODE CANNOT BE USED
-* LEGALLY FOR ANY CORPORATE OR COMMERCIAL PURPOSE.
-*/
 public class ModificarClienteView extends JInternalFrame {
 	private JLabel jLabel1;
 	private JLabel jLabel2;
 	private JLabel jLabel4;
 	private JLabel jLabel8;
 	private JTextField tipoDoc;
-	private JButton ok;
+	private JButton modificarCliente;
 	private JTextField email;
 	private JTextField telefono;
 	private JTextField direccion;
@@ -39,8 +27,10 @@ public class ModificarClienteView extends JInternalFrame {
 	private JLabel jLabel6;
 	private JLabel jLabel5;
 	private JLabel jLabel3;
-	private JButton jButton1;
+	private JButton buscarCliente;
 	private JTextField nroDoc;
+	
+	private ClienteView cliente;
 
 	/**
 	* Auto-generated main method to display this JFrame
@@ -83,23 +73,23 @@ public class ModificarClienteView extends JInternalFrame {
 				nroDoc.setBounds(167, 37, 232, 23);
 			}
 			{
-				jButton1 = new JButton();
-				getContentPane().add(jButton1);
-				jButton1.setText("Buscar");
-				jButton1.setBounds(248, 97, 98, 23);
-				jButton1.addActionListener(new ActionListener() {
+				buscarCliente = new JButton();
+				getContentPane().add(buscarCliente);
+				buscarCliente.setText("Buscar");
+				buscarCliente.setBounds(248, 97, 98, 23);
+				buscarCliente.addActionListener(new ActionListener() {
 					
 					public void actionPerformed(ActionEvent arg0) {
-						ClienteView cliente=SistemadeReparaciones.getInstancia().obtenerClienteView(nroDoc.getText(),tipoDoc.getText());
+						cliente=SistemadeReparaciones.getInstancia().obtenerClienteView(nroDoc.getText(),tipoDoc.getText());
 						if(cliente!=null){
 							nombre.setText(cliente.getNombre());
 							direccion.setText(cliente.getDireccion());
 							telefono.setText(cliente.getTelefono());
 							email.setText(cliente.getEmail());
 						}
-						else
+						else{							
 							nroDoc.setText("");
-						
+						}
 					}
 				});
 			}
@@ -154,28 +144,30 @@ public class ModificarClienteView extends JInternalFrame {
 				email.setBounds(123, 240, 232, 23);
 			}
 			{
-				ok = new JButton();
-				getContentPane().add(ok);
-				ok.setText("Modificar Cliente");
-				ok.setBounds(211, 282, 144, 23);
-				ok.addActionListener(new ActionListener() {
+				modificarCliente = new JButton();
+				getContentPane().add(modificarCliente);
+				modificarCliente.setText("Modificar Cliente");
+				modificarCliente.setBounds(211, 282, 144, 23);
+				modificarCliente.addActionListener(new ActionListener() {
 					
 					public void actionPerformed(ActionEvent e) {
 						String nombre1=nombre.getText();
 						String dir=direccion.getText();
 						String tel=telefono.getText();
 						String mail=email.getText();
-						if(nombre1!=null && dir!=null && tel!=null && mail!=null){
-							SistemadeReparaciones.getInstancia().modificarCliente(nroDoc.getText(),tipoDoc.getText(),nombre1,dir,tel,mail);
-						}
-						else
-						{
-							nombre.setText("");
-							direccion.setText("");
-							telefono.setText("");
-							email.setText("");
-						}
 						
+						if (nombre1 != null && dir != null && tel != null && mail != null) {							
+							cliente.setNombre(nombre1);
+							cliente.setDireccion(dir);
+							cliente.setTelefono(tel);
+							cliente.setEmail(mail);
+
+							SistemadeReparaciones.getInstancia().modificarCliente(cliente);
+							cliente = null;
+						}
+						else{
+							limpiarCampos();
+						}
 					}
 				});
 			}
@@ -197,4 +189,10 @@ public class ModificarClienteView extends JInternalFrame {
 		}
 	}
 
+	private void limpiarCampos() {
+		nombre.setText("");
+		direccion.setText("");
+		telefono.setText("");
+		email.setText("");
+	}
 }
