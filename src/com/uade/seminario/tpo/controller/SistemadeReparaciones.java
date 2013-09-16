@@ -166,7 +166,7 @@ public class SistemadeReparaciones {
 	
 	public void altaModelo(ModeloView modeloView)throws ModeloExisteException{  
 		try{
-			Modelo modelo = AdministradorModelo.getInstancia().buscarModelo(modeloView.getNroModelo());
+			buscarModelo(modeloView.getNroModelo());
 			throw new ModeloExisteException(modeloView.getNroModelo());
 		}catch (ExceptionNoExisteModelo e){
 			AdministradorModelo.getInstancia().altaModelo(modeloView);
