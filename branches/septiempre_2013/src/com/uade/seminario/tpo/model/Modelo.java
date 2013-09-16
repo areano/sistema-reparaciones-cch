@@ -59,7 +59,7 @@ public class Modelo {
 	public List<Pieza> getPiezas() {
 		return piezas;
 	}
-	public void setPiezas(ArrayList<Pieza> piezas) {
+	public void setPiezas(List<Pieza> piezas) {
 		this.piezas = piezas;
 	}
 	public String getEstado() {

@@ -13,6 +13,8 @@ import javax.swing.WindowConstants;
 import javax.swing.SwingUtilities;
 
 import com.uade.seminario.tpo.controller.SistemadeReparaciones;
+import com.uade.seminario.tpo.view.objectView.ClienteView;
+import com.uade.seminario.tpo.view.objectView.PiezaView;
 
 
 /**
@@ -59,7 +61,27 @@ public class AltaClienteView extends JInternalFrame {
 //			}
 //		});
 //	}
-	
+	public class AgregarClienteListener implements ActionListener {
+		JInternalFrame frame;
+		public AgregarClienteListener(JInternalFrame frame){
+			this.frame = frame;
+		}
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			ClienteView cliente = new ClienteView();
+			cliente.setApellido(apellido.getText());
+			cliente.setDireccion(direccion.getText());
+			cliente.setEmail(mail.getText());
+			cliente.setFechaNac(fechaNac.getText());
+			cliente.setNombre(nombre.getText());
+			cliente.setNroDoc(nroDoc.getText());
+			cliente.setTelefono(tel.getText());
+			cliente.setTipoDoc(jComboBox1.getSelectedItem().toString());
+			SistemadeReparaciones.getInstancia().altaCliente(cliente);			
+			frame.dispose();
+		}
+
+	}
 	public AltaClienteView() {
 		super();
 		initGUI();
@@ -136,15 +158,7 @@ public class AltaClienteView extends JInternalFrame {
 				getContentPane().add(ok);
 				ok.setText("Agregar Cliente");
 				ok.setBounds(153, 274, 140, 23);
-				ok.addActionListener(new ActionListener() {
-					
-					public void actionPerformed(ActionEvent arg0) {
-						if(nroDoc.getText()!=null){
-							SistemadeReparaciones.getInstancia().altaCliente(nroDoc.getText(),jComboBox1.getSelectedItem().toString(),nombre.getText(),apellido.getText(),direccion.getText(),mail.getText(),fechaNac.getText(),tel.getText());
-							dispose();
-						}					
-					}
-				});
+				ok.addActionListener(new AgregarClienteListener(this));
 			}
 			{
 				jLabel7 = new JLabel();

@@ -32,4 +32,7 @@ public class ClienteDataService {
 	public void update(Cliente entidad){
 		dao.update(entidad);
 	}
+	public void merge(Cliente  entidad){
+		dao.merge(entidad);
+	}
 }

@@ -4,6 +4,8 @@ import com.uade.seminario.tpo.persistence.dao.generic.impl.ModeloDAOImpl;
 import com.uade.seminario.tpo.model.Equipo;
 import com.uade.seminario.tpo.model.Garantia;
 import com.uade.seminario.tpo.model.Modelo;
+import com.uade.seminario.tpo.model.Pieza;
+
 import java.util.List;
 public class ModeloDataService {
 	private static ModeloDAOImpl dao;
@@ -31,5 +33,12 @@ public class ModeloDataService {
 	}
 	public void update(Modelo entidad){
 		dao.update(entidad);
+	}
+	public List<Modelo> hayModelosConPieza(Pieza pieza){
+		return dao.hayModelosConPieza(pieza);
+	}
+	public void merge(Modelo entidad) {
+		dao.merge(entidad);
+		
 	}
 }

@@ -9,6 +9,8 @@ import java.util.List;
 
 import com.uade.seminario.tpo.service.ClienteDataService;
 import com.uade.seminario.tpo.service.EmpleadoDataService;
+import com.uade.seminario.tpo.service.EquipoService;
+import com.uade.seminario.tpo.service.ModeloDataService;
 import com.uade.seminario.tpo.view.objectView.ClienteView;
 import com.uade.seminario.tpo.view.objectView.EquipoView;
 import com.uade.seminario.tpo.view.objectView.ModeloView;
@@ -155,29 +157,16 @@ public class SistemadeReparaciones {
 		return instancia;
 	}
 	
-	public void altaModelo(String nombre,int codigo,String descripcion){   
-		Modelo modelo=buscarModelo(codigo);
-		if(modelo==null){
-			modelo=new Modelo(nombre,descripcion,codigo);
-			modelos.add(modelo);
-		}
-		else
-			throw new ExceptionExisteModelo(codigo);
+	public void altaModelo(ModeloView modeloView){   
+		AdministradorModelo.getInstancia().altaModelo(modeloView);
 	}
 	
-	public void modificarModelo(int codigo, String nombre, String descripcion){							
-		Modelo modelo=this.buscarModelo(codigo);
-		if(modelo!=null && modelo.modeloActivo()){
-			modelo.setDescripcion(descripcion);
-			modelo.setNombre(nombre);
-		}
-		else
-			throw new ExceptionNoExisteModelo(codigo);
-		
+	public void modificarModelo(ModeloView modelo){	
+		AdministradorModelo.getInstancia().modificarModelo(modelo);	
 	}
 	
 	public void bajaModelo(int codigo) throws ExceptionModeloInactivo{
-		Modelo modelo=this.buscarModelo(codigo);
+		Modelo modelo =  AdministradorModelo.getInstancia().buscarModelo(codigo);
 		if(modelo!=null && modelo.modeloActivo()){
 			if(!existeElModeloEnUnEquipo(codigo)){
 				modelo.darBajaModelo();
@@ -208,6 +197,7 @@ public class SistemadeReparaciones {
 	
 
 	public boolean existeElModeloEnUnEquipo(int codigo) {
+		
 		for (Equipo equipo : equipos) {
 			if(equipo.getModelo().getNroModelo()==codigo)
 				return true;
@@ -215,15 +205,7 @@ public class SistemadeReparaciones {
 		return false;
 	}
 
-	public Modelo buscarModelo(int codigo) {
-		for (Modelo modelo : modelos) {
-			if(modelo.getNroModelo()==codigo){
-				return modelo;
-			}
-		}
-		return null;
-	}
-	
+
 	
 	public int altaOrdenReparacion(int nroSerieEquipo){
 		Equipo equipo=buscarEquipo(nroSerieEquipo);
@@ -280,13 +262,7 @@ public class SistemadeReparaciones {
 		return null;
 	}
 
-	private Equipo buscarEquipo(int nroSerieEquipo) {
-		for (Equipo equipo : equipos) {
-			if(equipo.getNroSerie()==nroSerieEquipo)
-				return equipo;
-		}
-		return null;
-	}
+
 
 	public OrdenReparacionView misReparaciones(String legajo){
 		Empleado empleado=buscarEmpleado(legajo);
@@ -316,19 +292,7 @@ public class SistemadeReparaciones {
 		return null;
 	}
 
-	private Empleado buscarEmpleado(String legajo) {
-		EmpleadoDataService empleadoDataService = EmpleadoDataService.getInstance();
-		for (Empleado empleado : empleados) {
-			if(empleado.getLegajo()==Integer.parseInt(legajo)) 
-				return empleado;
-		}
-		
-		Empleado empleado=empleadoDataService.findByLegajo(Integer.parseInt(legajo));
-		if (empleado != null){
-			empleados.add(empleado);//bring the client to memory for future reference
-		}
-		return empleado;
-	}
+
 	
 	
 	public List<TareaReparacionView> listarTareasReparacion(int nroReparacion){
@@ -388,48 +352,64 @@ public class SistemadeReparaciones {
 		return ordenes;
 	}
 
-	
-
-
 	public void altaCliente(String nroDoc, String tipoDoc, String nombre, String apellido,
 			String direccion, String mail, String fechaNac, String tel) {
 		Cliente cliente;
 		ClienteDataService clienteDataService = ClienteDataService.getInstance();
 		cliente =  buscarCliente(nroDoc, tipoDoc);
-		if(cliente==null){//if client is not in memory, search into the DB
-			cliente=clienteDataService.findByDNI(nroDoc, tipoDoc);			
-		}
 		if(cliente==null){// client not exist in the system
 			cliente=new Cliente(nroDoc,tipoDoc,nombre,apellido,direccion,mail,fechaNac,tel);
-			clientes.add(cliente);
+			//clientes.add(cliente);
 			clienteDataService.save(cliente);
 		}else {
 			throw new ExceptionExisteCliente(nroDoc);
 		}
 		
 	}
-
+	public void altaCliente(ClienteView cliente){
+		AdministradorCliente.getInstancia().AltaCliente(cliente);
+	}
+	
 	private Cliente buscarCliente(String nroDoc, String tipoDoc) {
-		ClienteId id= new ClienteId(nroDoc, tipoDoc);
-		ClienteDataService clienteDataService = ClienteDataService.getInstance();
-		for (Cliente cliente : clientes) {
-			if(cliente.getId().equals(id)) 
-				return cliente;
+		return AdministradorCliente.getInstancia().buscarCliente(nroDoc, tipoDoc);
+	}
+	private Empleado buscarEmpleado(String legajo) {
+		EmpleadoDataService empleadoDataService = EmpleadoDataService.getInstance();
+		for (Empleado empleado : empleados) {
+			if(empleado.getLegajo()==Integer.parseInt(legajo)) 
+				return empleado;
 		}
 		
-		Cliente cliente=clienteDataService.findByDNI(nroDoc, tipoDoc);
-		if (cliente != null){
-			clientes.add(cliente);//bring the client to memory for future reference
+		Empleado empleado=empleadoDataService.findByLegajo(Integer.parseInt(legajo));
+		if (empleado != null){
+			empleados.add(empleado);//bring the client to memory for future reference
 		}
-		return cliente;
+		return empleado;
+	}
+	private Equipo buscarEquipo(int nroSerieEquipo) {
+		EquipoService equipoService =  EquipoService.getInstance();
+		Equipo	equipo = equipoService.findByNroSerie(nroSerieEquipo);
+		
+		return equipo;
+	}
+	public Modelo buscarModelo(int codigo) {
+		return ModeloDataService.getInstance().findByNroSerie(codigo);
+	}
+	private Pieza buscarPieza(int codPieza) {
+		return AdministradorPieza.getInstancia().buscarPieza(codPieza);
 	}
 
+	private Garantia buscarGarantia(int nroGarantia) {
+		for (Garantia garantia : garantias) {
+			if(garantia.getNroGarantia()==nroGarantia)
+				return garantia;			
+		}
+		return null;
+	}
+	
 	public ClienteView obtenerClienteView(String nroDoc,String tipoDoc) {
-		Cliente cliente=buscarCliente(nroDoc,tipoDoc);
-		if(cliente!=null)
-			return cliente.getView();
-		else
-			return null;
+		return AdministradorCliente.getInstancia().
+				obtenerClienteView(nroDoc, tipoDoc);
 	}
 
 	public void modificarCliente(String nroDoc, String tipoDoc,String nombre1, String dir, String tel,
@@ -440,7 +420,9 @@ public class SistemadeReparaciones {
 		cliente.setTelefono(tel);
 		cliente.setEmail(mail);		
 	}
-
+	public void modificarCliente(ClienteView cliente){
+		AdministradorCliente.getInstancia().modificarCliente(cliente);
+	}
 	public void altaPieza(String nombre, int codPieza, int codModelo, String descripcion) {
 		Modelo modelo=buscarModelo(codModelo);
 		Pieza pieza=buscarPieza(codPieza);
@@ -451,69 +433,39 @@ public class SistemadeReparaciones {
 		}
 		
 	}
-
-	private Pieza buscarPieza(int codPieza) {
-		for (Pieza pieza : piezas) {
-			if(pieza.getNroPieza()==codPieza)
-				return pieza;
-		}
-		return null;
+	public void altaPieza(PiezaView pieza){
+		AdministradorPieza.getInstancia().altaPieza(pieza);
 	}
+
 
 	public PiezaView buscarPiezaView(int codigoPieza) {
-		Pieza pieza=buscarPieza(codigoPieza);
-		if(pieza!=null)
-			return pieza.getView();
-		else
-			return null;
+		return AdministradorPieza.getInstancia().buscarPiezaView( codigoPieza);
 	}
 
-	public void modificarPieza(String nombre, int codPieza,
-			String descripcion) {
-		Pieza pieza=buscarPieza(codPieza);
-		if(pieza!=null){
-			pieza.setNombrePieza(nombre);
-			pieza.setDescripcion(descripcion);
-		}
+	public void modificarPieza(PiezaView pieza) {
+		AdministradorPieza.getInstancia().modificarPieza(pieza);
 		
 	}
 
-	public void BajaPieza(int codigoPieza) {
-		Pieza pieza=buscarPieza(codigoPieza);
-		if(pieza!=null && !hayModelosConPieza(codigoPieza) && pieza.estaActiva()){
-			pieza.darBajaPieza();
-		}
-		
-		
+	public void bajaPieza(int codigoPieza) {
+		 if (!hayModelosConPieza(codigoPieza))
+			 AdministradorPieza.getInstancia().bajaPieza(codigoPieza);
 	}
 
 	private boolean hayModelosConPieza(int codigoPieza) {
-		Pieza pieza=buscarPieza(codigoPieza);
-		for (Modelo modelo : modelos) {
-			if(modelo.getPiezas().contains(pieza))
-				return true;
-		}
-		return false;
+		Pieza pieza=AdministradorPieza.getInstancia().buscarPieza(codigoPieza);
+		return AdministradorModelo.getInstancia().hayModelosConPieza(pieza);
 	}
 
 	public ModeloView buscarModeloView(int codModelo) {
-		Modelo modelo=buscarModelo(codModelo);
-		if(modelo!=null)
-			return modelo.getView();
-		else
-			return null;
+		return AdministradorModelo.getInstancia().buscarModeloView(codModelo);
 	}
 
 	public List<PiezaView> buscarPiezaXModeloView(int codModelo) {
-		 List<PiezaView> piezasview=new ArrayList<PiezaView>();
-		 Modelo modelo=buscarModelo(codModelo);
-		 if(modelo!=null){
-			 List<Pieza> piezas=modelo.getPiezas();
-			 for (Pieza p : piezas) {
-				piezasview.add(p.getView());				
-			}
-		 }
-		 return piezasview;
+		ModeloView modelo = AdministradorModelo.getInstancia().buscarModeloView(codModelo);
+		if (modelo != null)
+			return modelo.getPiezas();
+		return null;
 	}
 
 	public void confirmarModelo(int codigo) {
@@ -537,13 +489,6 @@ public class SistemadeReparaciones {
 		
 	}
 
-	private Garantia buscarGarantia(int nroGarantia) {
-		for (Garantia garantia : garantias) {
-			if(garantia.getNroGarantia()==nroGarantia)
-				return garantia;			
-		}
-		return null;
-	}
 
 	public void altaGarantia(int nroGarantia, Date fecha1) {
 		Garantia garantia=buscarGarantia(nroGarantia);

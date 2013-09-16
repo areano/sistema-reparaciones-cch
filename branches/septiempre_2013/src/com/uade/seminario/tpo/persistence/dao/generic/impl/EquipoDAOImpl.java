@@ -8,6 +8,7 @@ import org.hibernate.SessionFactory;
 
 import com.uade.seminario.tpo.exceptions.DataAccessLayerException;
 import com.uade.seminario.tpo.model.Equipo;
+import com.uade.seminario.tpo.model.Modelo;
 import com.uade.seminario.tpo.persistence.hbt.HibernateUtil;
 
 public class EquipoDAOImpl extends GenericDAOImpl<Equipo> {
@@ -33,6 +34,16 @@ public class EquipoDAOImpl extends GenericDAOImpl<Equipo> {
     public List<Equipo> findAll() throws DataAccessLayerException{
         return super.findAll(Equipo.class);
     }
+
+	public List<Equipo> existeElModeloEnUnEquipo(Modelo modelo) {
+		Session session = sf.openSession();
+		String hql = "from Equipo e inner join e.modelo m where m = :modelo";
+		Query query = session.createQuery(hql);
+		query.setParameter("modelo", modelo);
+		List<Equipo> retorno =  (List)query.list();
+		session.close();
+		return retorno;
+	}
 
 	
 }

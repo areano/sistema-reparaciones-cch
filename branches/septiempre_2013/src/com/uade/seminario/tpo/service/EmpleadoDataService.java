@@ -35,5 +35,9 @@ public class EmpleadoDataService {
 	}
     public void update(Empleado entidad){
     	dao.update(entidad);
-    }	
+    }
+	public void merge(Empleado empleado) {
+		dao.merge(empleado);
+		
+	}	
 }
