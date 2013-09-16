@@ -164,7 +164,7 @@ public class ModificarModeloView extends javax.swing.JInternalFrame {
 				agregar.addActionListener(new ActionListener() {
 					
 					public void actionPerformed(ActionEvent e) {
-						AltaPiezaView view= new AltaPiezaView(codigo.getText());
+						AltaPiezaView view= new AltaPiezaView(modelo);
 						view.setVisible(true);							
 					}
 

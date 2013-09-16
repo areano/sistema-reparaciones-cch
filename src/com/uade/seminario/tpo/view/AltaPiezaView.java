@@ -11,6 +11,7 @@ import javax.swing.WindowConstants;
 import javax.swing.SwingUtilities;
 
 import com.uade.seminario.tpo.controller.SistemadeReparaciones;
+import com.uade.seminario.tpo.view.objectView.ModeloView;
 import com.uade.seminario.tpo.view.objectView.PiezaView;
 
 
@@ -37,6 +38,7 @@ public class AltaPiezaView extends javax.swing.JInternalFrame {
 	private JTextField codigo;
 	private JTextField nombre;
 	private JLabel jLabel3;
+	private ModeloView modelo;
 
 	/**
 	* Auto-generated main method to display this JFrame
@@ -52,12 +54,14 @@ public class AltaPiezaView extends javax.swing.JInternalFrame {
 //	}
 	
 	public AltaPiezaView() {
-		this("");
-	}
-	public AltaPiezaView(String codigo) {
 		super();
 		initGUI();
-		codModelo.setText(codigo);
+	}
+	public AltaPiezaView(ModeloView modelo) {
+		super();
+		this.modelo = modelo;
+		initGUI();
+		codModelo.setText(String.valueOf(modelo.getNroModelo()));
 		codModelo.setEditable(false);
 	}
 	

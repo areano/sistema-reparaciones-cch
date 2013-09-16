@@ -177,7 +177,7 @@ public class SistemadeReparaciones {
 			buscarModelo(modeloView.getNroModelo());
 			return true;
 		}catch (ExceptionNoExisteModelo e){
-			AdministradorModelo.getInstancia().altaModelo(modeloView);
+			//AdministradorModelo.getInstancia().altaModelo(modeloView);
 			return false;
 		}
 	}
@@ -371,13 +371,13 @@ public class SistemadeReparaciones {
 		return null;
 	}
 
-	public void confirmarModelo(int codigo) {
-		Modelo modelo= buscarModelo(codigo);
-		if(modelo!=null)
-			modelo.activar();
-		else
-			throw new ExceptionNoExisteModelo(codigo);
-		
+	public void confirmarModelo(ModeloView modeloView) {
+		try{
+			Modelo modelo= buscarModelo(modeloView.getNroModelo());
+		}catch(ExceptionNoExisteModelo e){
+			modeloView.setEstado("activo");
+			AdministradorModelo.getInstancia().altaModelo(modeloView);
+		}
 	}
 	public void altaEquipo(int nroEquipo,int nroModelo,String tipoDoc,String nroDoc,Date fecha,String nroGarantia,boolean repararDeTodosModos){
 		Equipo equipo=buscarEquipo(nroEquipo);

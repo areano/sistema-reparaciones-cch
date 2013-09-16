@@ -48,20 +48,20 @@ public class AltaModeloView extends javax.swing.JInternalFrame {
 	private JTextField nombre;
 	private JLabel jLabel3;
 	private JScrollPane jScrollPane1;
+	private ModeloView modelo ;
 
-	/**
-	* Auto-generated main method to display this JFrame
-	*/
-//	public static void main(String[] args) {
-//		SwingUtilities.invokeLater(new Runnable() {
-//			public void run() {
-//				AltaModeloView inst = new AltaModeloView();
-//				inst.setLocationRelativeTo(null);
-//				inst.setVisible(true);
-//			}
-//		});
-//	}
-	
+	private class AgregarPiezaListener implements ActionListener{
+		public AgregarPiezaListener(){
+			
+		}
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			AltaPiezaView view= new AltaPiezaView(modelo);
+			view.setVisible(true);	
+			
+		}
+		
+	}
 	public AltaModeloView() {
 		super();
 		initGUI();
@@ -114,15 +114,20 @@ public class AltaModeloView extends javax.swing.JInternalFrame {
 					
 					public void actionPerformed(ActionEvent arg0) {
 						if(!codigo.getText().equals("")){
-								ModeloView modelo = new ModeloView(nombre.getText(), descri.getText(), Integer.parseInt(codigo.getText()) );
-								SistemadeReparaciones.getInstancia().altaModelo(modelo);
-								jScrollPane1.setVisible(true);
-								agregar.setVisible(true);
-								actualizar.setVisible(true);
-								confirmar.setVisible(true);
-								cancelar.setVisible(true);
-								jLabel4.setVisible(true);
-								quitarPieza.setVisible(true);							
+								modelo = new ModeloView(nombre.getText(), descri.getText(), Integer.parseInt(codigo.getText()) );
+								
+								if (!SistemadeReparaciones.getInstancia().verificarExistenciaModelo(modelo)){								
+									jScrollPane1.setVisible(true);
+									agregar.setVisible(true);
+									actualizar.setVisible(true);
+									confirmar.setVisible(true);
+									cancelar.setVisible(true);
+									jLabel4.setVisible(true);
+									quitarPieza.setVisible(true);
+								}else {
+									MensajeErrorFrame mensaje = new MensajeErrorFrame("Modelo con numero de serie "+codigo.getText()+" ya existe");
+									mensaje.setVisible(true);
+								}
 							
 						}
 						
@@ -166,15 +171,16 @@ public class AltaModeloView extends javax.swing.JInternalFrame {
 				agregar.setText("Agregar Pieza");
 				agregar.setBounds(249, 181, 123, 23);
 				agregar.setVisible(false);
-				agregar.addActionListener(new ActionListener() {
-					
-					public void actionPerformed(ActionEvent e) {
-						AltaPiezaView view= new AltaPiezaView(codigo.getText());
-						view.setVisible(true);							
-					}
-
-					
-				});
+				agregar.addActionListener(new AgregarPiezaListener());
+//				agregar.addActionListener(new ActionListener() {
+//					
+//					public void actionPerformed(ActionEvent e) {
+//						AltaPiezaView view= new AltaPiezaView(codigo.getText());
+//						view.setVisible(true);							
+//					}
+//
+//					
+//				});
 			}
 			{
 				confirmar = new JButton();
@@ -186,7 +192,7 @@ public class AltaModeloView extends javax.swing.JInternalFrame {
 					
 					public void actionPerformed(ActionEvent arg0) {
 						if(!codigo.getText().equals("")){
-							SistemadeReparaciones.getInstancia().confirmarModelo(Integer.parseInt(codigo.getText()));
+							SistemadeReparaciones.getInstancia().confirmarModelo(modelo);
 							dispose();
 						}							
 					}
