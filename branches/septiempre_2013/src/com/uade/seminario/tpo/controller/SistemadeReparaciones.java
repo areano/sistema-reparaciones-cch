@@ -172,7 +172,15 @@ public class SistemadeReparaciones {
 			AdministradorModelo.getInstancia().altaModelo(modeloView);
 		}
 	}
-	
+	public boolean verificarExistenciaModelo(ModeloView modeloView){
+		try{
+			buscarModelo(modeloView.getNroModelo());
+			return true;
+		}catch (ExceptionNoExisteModelo e){
+			AdministradorModelo.getInstancia().altaModelo(modeloView);
+			return false;
+		}
+	}
 	public void modificarModelo(ModeloView modelo){	
 		AdministradorModelo.getInstancia().modificarModelo(modelo);	
 	}
