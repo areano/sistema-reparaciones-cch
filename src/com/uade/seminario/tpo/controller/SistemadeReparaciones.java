@@ -27,6 +27,8 @@ import com.uade.seminario.tpo.exceptions.ExceptionModeloInactivo;
 import com.uade.seminario.tpo.exceptions.ExceptionModeloPerteneceEquipo;
 import com.uade.seminario.tpo.exceptions.ExceptionNoExisteModelo;
 import com.uade.seminario.tpo.exceptions.GarantiaNoExisteException;
+import com.uade.seminario.tpo.exceptions.ModeloExisteException;
+import com.uade.seminario.tpo.exceptions.OrdenNoExisteException;
 import com.uade.seminario.tpo.model.Cliente;
 import com.uade.seminario.tpo.model.ClienteId;
 import com.uade.seminario.tpo.model.Empleado;
@@ -162,8 +164,13 @@ public class SistemadeReparaciones {
 		return instancia;
 	}
 	
-	public void altaModelo(ModeloView modeloView){   
-		AdministradorModelo.getInstancia().altaModelo(modeloView);
+	public void altaModelo(ModeloView modeloView)throws ModeloExisteException{  
+		try{
+			Modelo modelo = AdministradorModelo.getInstancia().buscarModelo(modeloView.getNroModelo());
+			throw new ModeloExisteException(modeloView.getNroModelo());
+		}catch (ExceptionNoExisteModelo e){
+			AdministradorModelo.getInstancia().altaModelo(modeloView);
+		}
 	}
 	
 	public void modificarModelo(ModeloView modelo){	
@@ -202,9 +209,6 @@ public class SistemadeReparaciones {
 			AdministradorOrdenReparacion.getInstancia().modificarOrdenReparacion(orden);		
 	}
 	
-	private  OrdenReparacion buscarOrdenReparacion(int nroReparacion) {
-		return AdministradorOrdenReparacion.getInstancia().buscarOrdenReparacion(nroReparacion);
-	}
 
 	
 
@@ -250,23 +254,14 @@ public class SistemadeReparaciones {
 //	}
 
 	
-	
-	public void altaCliente(String nroDoc, String tipoDoc, String nombre, String apellido,
-			String direccion, String mail, String fechaNac, String tel) {
-		Cliente cliente;
-		ClienteDataService clienteDataService = ClienteDataService.getInstance();
-		cliente =  buscarCliente(nroDoc, tipoDoc);
-		if(cliente==null){// client not exist in the system
-			cliente=new Cliente(nroDoc,tipoDoc,nombre,apellido,direccion,mail,fechaNac,tel);
-			//clientes.add(cliente);
-			clienteDataService.save(cliente);
-		}else {
-			throw new ExceptionExisteCliente(nroDoc);
+	public void altaCliente(ClienteView clienteView){
+		try{
+			Cliente cliente =  buscarCliente(clienteView.getNroDoc(), clienteView.getTipoDoc());
+			throw new ExceptionExisteCliente(clienteView.getNroDoc());
+		}catch (ClienteNoExisteException e){
+			AdministradorCliente.getInstancia().AltaCliente(clienteView);
+			
 		}
-		
-	}
-	public void altaCliente(ClienteView cliente){
-		AdministradorCliente.getInstancia().AltaCliente(cliente);
 	}
 	
 	private Cliente buscarCliente(String nroDoc, String tipoDoc) throws ClienteNoExisteException{
@@ -302,7 +297,12 @@ public class SistemadeReparaciones {
 		if (garantia!=null) return garantia;
 		throw new GarantiaNoExisteException(nroGarantia);
 	}
-	
+	private  OrdenReparacion buscarOrdenReparacion(int nroReparacion) {
+		OrdenReparacion ordenReparacion = AdministradorOrdenReparacion.getInstancia().
+				buscarOrdenReparacion(nroReparacion);
+		if (ordenReparacion!=null) return ordenReparacion;
+		throw new OrdenNoExisteException(nroReparacion);
+	}
 	public ClienteView obtenerClienteView(String nroDoc,String tipoDoc) {
 		return buscarCliente(nroDoc, tipoDoc).getView();
 	}
@@ -446,7 +446,7 @@ public class SistemadeReparaciones {
 	}
 
 	public OrdenReparacionView buscarOrdenReparacionView(int nroOrden) {
-		OrdenReparacion orden=this.buscarOrdenReparacion(nroOrden);
+		OrdenReparacion orden=buscarOrdenReparacion(nroOrden);
 		if(orden!=null){
 			return orden.getView();			
 		}

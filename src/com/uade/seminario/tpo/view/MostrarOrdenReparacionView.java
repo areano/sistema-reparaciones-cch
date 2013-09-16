@@ -19,6 +19,7 @@ import javax.swing.SwingUtilities;
 
 import com.uade.seminario.tpo.controller.SistemadeReparaciones;
 import com.uade.seminario.tpo.model.Equipo;
+import com.uade.seminario.tpo.view.objectView.EquipoView;
 import com.uade.seminario.tpo.view.objectView.OrdenReparacionView;
 import com.uade.seminario.tpo.view.objectView.TareaReparacionView;
 
@@ -263,10 +264,10 @@ public class MostrarOrdenReparacionView extends javax.swing.JFrame {
 					public void actionPerformed(ActionEvent arg0) {
 						if(!nroOrdenReparacion.getText().equals("")){
 							OrdenReparacionView ordenview=SistemadeReparaciones.getInstancia().buscarOrdenReparacionView(Integer.parseInt(nroOrdenReparacion.getText()));
-							Equipo equipo=ordenview.getEquipo();
+							EquipoView equipo=ordenview.getEquipo();
 							if(equipo!=null && ordenview!=null){
 								nombreEquipo.setText(equipo.getCliente().getNombre());
-								if(equipo.getGarantia().estasEnGarantia())
+								if(equipo.getGarantia().isEstasEnGarantia())
 									garantiaPapel.setSelected(true);
 								nroSerie.setText(String.valueOf(equipo.getNroSerie()));
 								if(ordenview.isEstaEnGarantiaFisica())

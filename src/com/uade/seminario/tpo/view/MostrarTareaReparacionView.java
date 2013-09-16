@@ -154,7 +154,7 @@ public class MostrarTareaReparacionView extends javax.swing.JFrame {
 					
 					public void actionPerformed(ActionEvent arg0) {
 						if(!nroOrden.getText().equals("") && !nroTarea.getText().equals("")){
-						OrdenReparacion orden=SistemadeReparaciones.getInstancia().buscarOrdenReparacion(Integer.parseInt(nroOrden.getText()));
+						OrdenReparacionView orden=SistemadeReparaciones.getInstancia().buscarOrdenReparacionView(Integer.parseInt(nroOrden.getText()));
 						TareaReparacionView tarea=orden.obtenerTareaView(Integer.parseInt(nroTarea.getText()));
 						detalle.setText(tarea.getDetalle());
 						

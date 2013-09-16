@@ -46,7 +46,7 @@ public class ModificarModeloView extends javax.swing.JInternalFrame {
 	private JTextField nombre;
 	private JLabel jLabel3;
 	private JScrollPane jScrollPane1;
-
+	private ModeloView modelo;
 	/**
 	* Auto-generated main method to display this JFrame
 	*/
@@ -112,7 +112,7 @@ public class ModificarModeloView extends javax.swing.JInternalFrame {
 					
 					public void actionPerformed(ActionEvent arg0) {
 						if(!codigo.getText().equals("")){
-							ModeloView modelo=SistemadeReparaciones.getInstancia().buscarModeloView(Integer.parseInt(codigo.getText()));
+							modelo=SistemadeReparaciones.getInstancia().buscarModeloView(Integer.parseInt(codigo.getText()));
 							if(modelo!=null){
 								nombre.setText(modelo.getNombre());
 								descri.setText(modelo.getDescripcion());
@@ -180,7 +180,9 @@ public class ModificarModeloView extends javax.swing.JInternalFrame {
 					
 					public void actionPerformed(ActionEvent arg0) {
 						if(!codigo.getText().equals("")){
-							SistemadeReparaciones.getInstancia().modificarModelo(Integer.parseInt(codigo.getText()),nombre.getText(),descri.getText());
+							modelo.setDescripcion(descri.getText());
+							modelo.setNombre(nombre.getText());
+							SistemadeReparaciones.getInstancia().modificarModelo(modelo);
 							dispose();
 						}							
 					}
