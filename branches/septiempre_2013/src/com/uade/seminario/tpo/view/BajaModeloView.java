@@ -189,7 +189,7 @@ public class BajaModeloView extends javax.swing.JInternalFrame {
 		DefaultListModel piezasModelo=new DefaultListModel();
 		if(!codigo.getText().equals("")){
 			for(PiezaView p: sist.buscarPiezaXModeloView(Integer.parseInt(codigo.getText()))){
-				piezasModelo.addElement(p.getNombrePieza());
+				piezasModelo.addElement(p.getNroPieza());
 			}
 		}				
 		piezas = new JList();

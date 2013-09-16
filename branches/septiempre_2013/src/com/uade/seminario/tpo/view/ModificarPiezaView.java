@@ -34,7 +34,6 @@ public class ModificarPiezaView extends javax.swing.JInternalFrame {
 	private JButton ok;
 	private JTextArea descripcion;
 	private JTextField codigo;
-	private JTextField nombre;
 	private PiezaView pieza;
 
 	public ModificarPiezaView() {
@@ -48,11 +47,20 @@ public class ModificarPiezaView extends javax.swing.JInternalFrame {
 		}
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			pieza.setNombrePieza(nombre.getText());
 			pieza.setDescripcion(descripcion.getText());
 			SistemadeReparaciones.getInstancia().modificarPieza(pieza);
 			frame.dispose();
 			
+		}
+		
+	}
+	private class BuscarPiezaLiestener implements ActionListener{
+		private javax.swing.JInternalFrame frame;
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			pieza = SistemadeReparaciones.getInstancia().buscarPiezaView(Integer.parseInt(codigo.getText()));
+			
+
 		}
 		
 	}
@@ -61,12 +69,7 @@ public class ModificarPiezaView extends javax.swing.JInternalFrame {
 			setTitle("Modificar Pieza");
 			setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 			getContentPane().setLayout(null);
-			{
-				jLabel1 = new JLabel();
-				getContentPane().add(jLabel1);
-				jLabel1.setText("Nombre Pieza : ");
-				jLabel1.setBounds(20, 95, 115, 16);
-			}
+
 			{
 				jLabel2 = new JLabel();
 				getContentPane().add(jLabel2);
@@ -79,11 +82,7 @@ public class ModificarPiezaView extends javax.swing.JInternalFrame {
 				jLabel4.setText("Descripcion : ");
 				jLabel4.setBounds(20, 127, 115, 16);
 			}
-			{
-				nombre = new JTextField();
-				getContentPane().add(nombre);
-				nombre.setBounds(141, 92, 224, 23);
-			}
+
 			{
 				codigo = new JTextField();
 				getContentPane().add(codigo);
@@ -93,26 +92,22 @@ public class ModificarPiezaView extends javax.swing.JInternalFrame {
 				descripcion = new JTextArea();
 				getContentPane().add(descripcion);
 				descripcion.setBounds(141, 127, 224, 87);
+				descripcion.setEditable(false);
 			}
 			{
 				ok = new JButton();
 				getContentPane().add(ok);
-				ok.setText("Agregar Pieza");
+				ok.setText("Modificar Pieza");
 				ok.setBounds(141, 241, 122, 23);
-				ok.addActionListener(new ActionListener() {
-					
-					public void actionPerformed(ActionEvent arg0) {
-						
-
-					}
-				});
+				ok.setEnabled(false);
+				ok.addActionListener(new ModificarPiezaLiestener(this));
 			}
 			{
 				buscar = new JButton();
 				getContentPane().add(buscar);
 				buscar.setText("Buscar Pieza");
 				buscar.setBounds(244, 49, 121, 23);
-				buscar.addActionListener(new ModificarPiezaLiestener(this));
+				buscar.addActionListener(new BuscarPiezaLiestener());
 			}
 			pack();
 			this.setSize(400, 314);

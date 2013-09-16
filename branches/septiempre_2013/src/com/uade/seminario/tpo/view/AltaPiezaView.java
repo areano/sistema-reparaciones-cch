@@ -1,6 +1,7 @@
 package com.uade.seminario.tpo.view;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -28,7 +29,6 @@ import com.uade.seminario.tpo.view.objectView.PiezaView;
 * LEGALLY FOR ANY CORPORATE OR COMMERCIAL PURPOSE.
 */
 public class AltaPiezaView extends javax.swing.JInternalFrame {
-	private JLabel jLabel1;
 	private JLabel jLabel2;
 	private JLabel jLabel4;
 	private JButton buscarPieza;
@@ -36,9 +36,9 @@ public class AltaPiezaView extends javax.swing.JInternalFrame {
 	private JTextArea descripcion;
 	private JTextField codModelo;
 	private JTextField codigo;
-	private JTextField nombre;
 	private JLabel jLabel3;
 	private ModeloView modelo;
+	private PiezaView pieza;
 
 	/**
 	* Auto-generated main method to display this JFrame
@@ -52,15 +52,60 @@ public class AltaPiezaView extends javax.swing.JInternalFrame {
 //			}
 //		});
 //	}
-	
+	private class AgregarPiezaListener implements ActionListener{
+		private javax.swing.JInternalFrame frame;
+		public AgregarPiezaListener(javax.swing.JInternalFrame frame){
+			this.frame = frame;
+		}
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			PiezaView piezaV=SistemadeReparaciones.getInstancia().buscarPiezaView(Integer.parseInt(codigo.getText()));
+			if(piezaV!=null){
+				if (!piezaV.getEstado().equalsIgnoreCase("activo")){
+					piezaV.setDescripcion(descripcion.getText());
+					piezaV.setEstado("activo");
+					SistemadeReparaciones.getInstancia().modificarPieza(piezaV);
+				}
+				List<PiezaView> piezas = modelo.getPiezas();
+				piezas.add(piezaV);
+				modelo.setPiezas(piezas);	
+				
+				frame.dispose();
+				
+			}
+			else{
+				if(!codigo.getText().isEmpty()){
+					pieza.setDescripcion(descripcion.getText());
+					pieza.setEstado("activo");
+					List<PiezaView> piezas = modelo.getPiezas();
+					piezas.add(pieza);
+					modelo.setPiezas(piezas);
+					SistemadeReparaciones.getInstancia().altaPieza(pieza);
+					frame.dispose();
+				}else{
+					MensajeErrorFrame mensaje = new MensajeErrorFrame("Codigo de pieza son Mandatorios");
+					mensaje.setVisible(true);
+					
+					if  (codigo.getText().isEmpty()) codigo.setBackground(new java.awt.Color(255,0,0));
+					
+				}
+			}
+			frame.dispose();
+			
+		}
+		
+	}
 	public AltaPiezaView() {
 		super();
+		pieza = null;		
 		initGUI();
+		codModelo.setEditable(false);
 	}
 	public AltaPiezaView(ModeloView modelo) {
 		super();
 		this.modelo = modelo;
-		initGUI();
+		pieza = null;
+		initGUI();		
 		codModelo.setText(String.valueOf(modelo.getNroModelo()));
 		codModelo.setEditable(false);
 	}
@@ -71,91 +116,78 @@ public class AltaPiezaView extends javax.swing.JInternalFrame {
 			setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 			getContentPane().setLayout(null);
 			{
-				jLabel1 = new JLabel();
-				getContentPane().add(jLabel1);
-				jLabel1.setText("Nombre Pieza : ");
-				jLabel1.setBounds(26, 39, 115, 16);
-			}
-			{
 				jLabel2 = new JLabel();
 				getContentPane().add(jLabel2);
 				jLabel2.setText("Codigo Pieza : ");
-				jLabel2.setBounds(26, 67, 115, 16);
+				jLabel2.setBounds(12, 39, 115, 23);
 			}
 			{
 				jLabel3 = new JLabel();
 				getContentPane().add(jLabel3);
 				jLabel3.setText("Codigo Modelo : ");
-				jLabel3.setBounds(26, 95, 115, 16);
+				jLabel3.setBounds(12, 67, 115, 23);
 			}
 			{
 				jLabel4 = new JLabel();
 				getContentPane().add(jLabel4);
 				jLabel4.setText("Descripcion : ");
-				jLabel4.setBounds(26, 123, 115, 16);
-			}
-			{
-				nombre = new JTextField();
-				getContentPane().add(nombre);
-				nombre.setBounds(141, 36, 224, 23);
+				jLabel4.setBounds(12, 95, 117, 23);
 			}
 			{
 				codigo = new JTextField();
 				getContentPane().add(codigo);
-				codigo.setBounds(141, 64, 224, 23);
+				codigo.setBounds(127, 36, 224, 23);
 			}
 			{
 				codModelo = new JTextField();
 				getContentPane().add(codModelo);
-				codModelo.setBounds(141, 92, 224, 23);
+				codModelo.setBounds(127, 64, 224, 23);
 			}
 			{
 				descripcion = new JTextArea();
 				getContentPane().add(descripcion);
-				descripcion.setBounds(141, 121, 224, 87);
+				descripcion.setBounds(128, 93, 225, 89);
 			}
 			{
 				ok = new JButton();
 				getContentPane().add(ok);
 				ok.setText("Agregar Pieza");
-				ok.setBounds(118, 227, 122, 23);
-				ok.addActionListener(new ActionListener() {
-					
-					public void actionPerformed(ActionEvent arg0) {
-						PiezaView piezaV=SistemadeReparaciones.getInstancia().buscarPiezaView(Integer.parseInt(codigo.getText()));
-						if(piezaV!=null){
-							SistemadeReparaciones.getInstancia().agregarPiezaModelo(piezaV,Integer.parseInt(codModelo.getText()));
-							dispose();
-						}
-						else{
-							if(!codigo.getText().equals("") && !codModelo.getText().equals("")){
-								SistemadeReparaciones.getInstancia().altaPieza(nombre.getText(),Integer.parseInt(codigo.getText()),Integer.parseInt(codModelo.getText()),descripcion.getText());
-								dispose();
-							}
-						}
-						
-						
-					}
-				});
+				ok.setBounds(190, 210, 122, 23);
+				ok.addActionListener(new AgregarPiezaListener(this));
+				
 			}
 			{
 				buscarPieza = new JButton();
 				getContentPane().add(buscarPieza);
 				buscarPieza.setText("Buscar Pieza");
-				buscarPieza.setBounds(377, 64, 125, 23);
+				buscarPieza.setBounds(363, 36, 112, 23);
 				buscarPieza.addActionListener(new ActionListener() {
 					
 					public void actionPerformed(ActionEvent e) {
-						PiezaView piezaV=SistemadeReparaciones.getInstancia().buscarPiezaView(Integer.parseInt(codigo.getText()));
-						if(piezaV!=null){
-							nombre.setText(piezaV.getNombrePieza());
-							descripcion.setText(piezaV.getDescripcion());
+						pieza=SistemadeReparaciones.getInstancia().buscarPiezaView(Integer.parseInt(codigo.getText()));
+						if(pieza!=null ){
+							if(pieza.getEstado().equalsIgnoreCase("activo")){
+								descripcion.setText(pieza.getDescripcion());
+								descripcion.setEditable(false);
+								codigo.setEditable(false);
+							}else{
+								codigo.setEditable(false);
+								descripcion.setText(pieza.getDescripcion());
+							}
+						}else{
+							
+							MensajeFrame mensaje = new MensajeFrame("No existe la pieza ["+codigo.getText()
+									+"] por lo que sera creada s continua");
+							mensaje.setVisible(true);
+							pieza = new PiezaView(Integer.parseInt(codigo.getText()),descripcion.getText());
 						}
 					}
 				});
 			}
 			pack();
 			this.setSize(530, 300);
+			this.setPreferredSize(new java.awt.Dimension(488, 282));
+			this.setBounds(0, 0, 488, 282);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

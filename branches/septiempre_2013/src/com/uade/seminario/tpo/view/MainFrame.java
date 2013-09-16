@@ -149,7 +149,7 @@ public class MainFrame extends javax.swing.JFrame {
 							jmModelo.add(jmiAltaModelo);
 							jmiAltaModelo.addActionListener(new ActionListener() {
 								public void actionPerformed(ActionEvent arg0) {
-									cargarInternalFrame(new AltaModeloView());
+									cargarInternalFrame(new AltaModeloView(jdEscritorio));
 								}
 							});
 						}

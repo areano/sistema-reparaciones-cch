@@ -1,10 +1,14 @@
 package com.uade.seminario.tpo.view;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.beans.PropertyVetoException;
+
 import javax.swing.DefaultComboBoxModel;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
+import javax.swing.JDesktopPane;
+import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JScrollPane;
@@ -49,22 +53,31 @@ public class AltaModeloView extends javax.swing.JInternalFrame {
 	private JLabel jLabel3;
 	private JScrollPane jScrollPane1;
 	private ModeloView modelo ;
+	private JDesktopPane jdEscritorio;
 
 	private class AgregarPiezaListener implements ActionListener{
-		public AgregarPiezaListener(){
-			
-		}
+		public AgregarPiezaListener(){}
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			AltaPiezaView view= new AltaPiezaView(modelo);
-			view.setVisible(true);	
-			
-		}
-		
+			InternalFrameLoader.getInstance().loadFrame(jdEscritorio, view);
+
+		}	
 	}
-	public AltaModeloView() {
+	private class CancelarListener implements ActionListener{
+		private JInternalFrame frame;
+		public CancelarListener(javax.swing.JInternalFrame frame){
+			this.frame = frame;
+		}
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			frame.dispose();				
+		}	
+	}
+	public AltaModeloView(JDesktopPane jdEscritorio) {
 		super();
 		initGUI();
+		this.jdEscritorio =jdEscritorio;
 	}
 	
 	private void initGUI() {
@@ -152,8 +165,8 @@ public class AltaModeloView extends javax.swing.JInternalFrame {
 					
 					DefaultListModel piezasModelo=new DefaultListModel();
 					if(!codigo.getText().equals("")){
-						for(PiezaView p: sist.buscarPiezaXModeloView(Integer.parseInt(codigo.getText()))){
-							piezasModelo.addElement(p);
+						for(PiezaView p: modelo.getPiezas()){
+							piezasModelo.addElement(p.getNroPieza());
 						}
 					}				
 					piezas = new JList();
@@ -172,15 +185,6 @@ public class AltaModeloView extends javax.swing.JInternalFrame {
 				agregar.setBounds(249, 181, 123, 23);
 				agregar.setVisible(false);
 				agregar.addActionListener(new AgregarPiezaListener());
-//				agregar.addActionListener(new ActionListener() {
-//					
-//					public void actionPerformed(ActionEvent e) {
-//						AltaPiezaView view= new AltaPiezaView(codigo.getText());
-//						view.setVisible(true);							
-//					}
-//
-//					
-//				});
 			}
 			{
 				confirmar = new JButton();
@@ -215,8 +219,8 @@ public class AltaModeloView extends javax.swing.JInternalFrame {
 						
 						DefaultListModel piezasModelo=new DefaultListModel();
 						if(!codigo.getText().equals("")){
-							for(PiezaView p: sist.buscarPiezaXModeloView(Integer.parseInt(codigo.getText()))){
-								piezasModelo.addElement(p.getNombrePieza());
+							for(PiezaView p: modelo.getPiezas()){
+								piezasModelo.addElement(p.getNroPieza());
 							}
 						}				
 						piezas = new JList();
@@ -233,19 +237,8 @@ public class AltaModeloView extends javax.swing.JInternalFrame {
 				cancelar.setText("Cancelar");
 				cancelar.setVisible(false);
 				cancelar.setBounds(223, 289, 125, 23);
-				cancelar.addActionListener(new ActionListener() {
-					
-					public void actionPerformed(ActionEvent arg0) {
-						try {
-							SistemadeReparaciones.getInstancia().eliminarModelo(Integer.parseInt(codigo.getText()));
-							dispose();
-						} catch (NumberFormatException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
-						
-					}
-				});
+				cancelar.addActionListener(new CancelarListener(this));
+
 			}
 			{
 				quitarPieza = new JButton();

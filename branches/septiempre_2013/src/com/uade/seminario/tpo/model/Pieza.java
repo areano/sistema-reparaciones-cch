@@ -11,25 +11,21 @@ public class Pieza {
 	//@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="nro_pieza")
 	private int nroPieza;
-	@Transient
-	private String nombrePieza;
+
 	@Column(name="p_descripcion",columnDefinition="varchar(20)")
 	private String descripcion;
 	@Column(name="p_estado",columnDefinition="varchar(20)")
 	private String estado;
-	@Transient
-	private int stock;
+
 	
 	public Pieza(){ 
 		
 	}
 	
-	public Pieza(int codPieza, String nombre, String descripcion2) {
+	public Pieza(int codPieza, String descripcion2) {
 		this.nroPieza=codPieza;
-		this.nombrePieza=nombre;
 		this.descripcion=descripcion2;
 		this.estado="activo";
-		this.stock=0;
 	}
 	public int getNroPieza() {
 		return nroPieza;
@@ -37,12 +33,7 @@ public class Pieza {
 	public void setNroPieza(int nroPieza) {
 		this.nroPieza = nroPieza;
 	}
-	public String getNombrePieza() {
-		return nombrePieza;
-	}
-	public void setNombrePieza(String nombrePieza) {
-		this.nombrePieza = nombrePieza;
-	}
+
 	public String getDescripcion() {
 		return descripcion;
 	}
@@ -64,17 +55,10 @@ public class Pieza {
 		
 	}
 	public PiezaView getView() {
-		PiezaView piezaview=new PiezaView(getNroPieza(), getNombrePieza(), getDescripcion());
-		piezaview.setStock(stock);
+		PiezaView piezaview=new PiezaView(getNroPieza(), getDescripcion());
 		piezaview.setEstado(estado);
 		return piezaview;
 		
-	}
-	public int getStock() {
-		return stock;
-	}
-	public void setStock(int stock) {
-		this.stock = stock;
 	}
 	public boolean estaActiva() {
 		
