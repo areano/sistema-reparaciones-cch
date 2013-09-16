@@ -6,11 +6,12 @@ import java.util.List;
 
 import com.uade.seminario.tpo.model.ItemReporte;
 import com.uade.seminario.tpo.model.Reporte;
+import com.uade.seminario.tpo.service.ReporteDataService;
 import com.uade.seminario.tpo.view.objectView.OrdenReparacionView;
 
 class AdministradorReporte {
 	private static AdministradorReporte instancia;
-
+	private ReporteDataService reporteDataService;
 	private AdministradorReporte(){
 
 	}
@@ -54,5 +55,7 @@ class AdministradorReporte {
 		return reporte;
 		
 	}
-	
+	protected Reporte generarReportePiezas(Date desde, Date hasta){
+		return  reporteDataService.findByDate(desde, desde);
+	}
 }

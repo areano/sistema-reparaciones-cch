@@ -18,11 +18,15 @@ import com.uade.seminario.tpo.view.objectView.ModeloView;
 import com.uade.seminario.tpo.view.objectView.OrdenReparacionView;
 import com.uade.seminario.tpo.view.objectView.PiezaView;
 import com.uade.seminario.tpo.view.objectView.TareaReparacionView;
+import com.uade.seminario.tpo.exceptions.ClienteNoExisteException;
+import com.uade.seminario.tpo.exceptions.EmpleadoNoExisteException;
+import com.uade.seminario.tpo.exceptions.EquipoNoExisteException;
 import com.uade.seminario.tpo.exceptions.ExceptionExisteCliente;
 import com.uade.seminario.tpo.exceptions.ExceptionExisteModelo;
 import com.uade.seminario.tpo.exceptions.ExceptionModeloInactivo;
 import com.uade.seminario.tpo.exceptions.ExceptionModeloPerteneceEquipo;
 import com.uade.seminario.tpo.exceptions.ExceptionNoExisteModelo;
+import com.uade.seminario.tpo.exceptions.GarantiaNoExisteException;
 import com.uade.seminario.tpo.model.Cliente;
 import com.uade.seminario.tpo.model.ClienteId;
 import com.uade.seminario.tpo.model.Empleado;
@@ -168,20 +172,14 @@ public class SistemadeReparaciones {
 	
 	public void bajaModelo(int codigo) throws ExceptionModeloInactivo{
 		Modelo modelo =  AdministradorModelo.getInstancia().buscarModelo(codigo);
+		
 		if(modelo!=null && modelo.modeloActivo()){
-			if(!existeElModeloEnUnEquipo(codigo)){
-				modelo.darBajaModelo();
-			}
-			else{
-				throw new ExceptionModeloPerteneceEquipo(codigo);
-			}
+			if(!AdministradorEquipo.getInstancia().existeElModeloEnUnEquipo(modelo)) modelo.darBajaModelo();
+			else throw new ExceptionModeloPerteneceEquipo(codigo);
 		}
 		else{
-			if(modelo==null)
-				throw new ExceptionNoExisteModelo(codigo);
-			else
-				throw new ExceptionModeloInactivo(codigo);
-			
+			if(modelo==null) throw new ExceptionNoExisteModelo(codigo);
+			else throw new ExceptionModeloInactivo(codigo);			
 		}
 		
 	}
@@ -194,62 +192,18 @@ public class SistemadeReparaciones {
 		}
 		
 	}
-	
-	
 
-	public boolean existeElModeloEnUnEquipo(int codigo) {
-		
-		for (Equipo equipo : equipos) {
-			if(equipo.getModelo().getNroModelo()==codigo)
-				return true;
-		}
-		return false;
+	private OrdenReparacion buscarEquipoxOrdenRepAConfirmar(int nroSerieEquipo) {
+		Equipo equipo = AdministradorEquipo.getInstancia().buscarEquipo(nroSerieEquipo);
+		return AdministradorOrdenReparacion.getInstancia().buscarEquipoxOrdenRepAConfirmar(equipo);
 	}
 
-
-	
-	public int altaOrdenReparacion(int nroSerieEquipo){
-		Equipo equipo=buscarEquipo(nroSerieEquipo);
-		OrdenReparacion or=BuscarEquipoxOrdenRep(nroSerieEquipo);
-		OrdenReparacion or1=BuscarEquipoxOrdenRepAConfirmar(nroSerieEquipo);
-		if(equipo!=null && or==null && or1==null){
-			int nroOrden=this.obtenerNroOrdenReparacion();
-			OrdenReparacion orden=new OrdenReparacion(nroOrden);
-			orden.setEquipo(equipo);
-			orden.setEstado("A Confirmar");
-			ordReparacion.add(orden);
-			return nroOrden;
-		}
-		else
-			return 0;
-		
-	}
-
-	private OrdenReparacion BuscarEquipoxOrdenRepAConfirmar(int nroSerieEquipo) {
-		for (OrdenReparacion or : ordReparacion) {
-			if(or.esTuEquipo(nroSerieEquipo) && or.estadoAConfirmar()){
-				return or;
-			}
-		}
-		return null;
-	}
-
-	public void modificarOrdenReparacion(int nroReparacion, String fallas, int prioridad){
-		OrdenReparacion orden=buscarOrdenReparacion(nroReparacion);
-		if(orden!=null && !orden.getEstado().equals("Reparado")){
-			orden.setDescripcionFallas(fallas);
-			orden.setPrioridad(prioridad);
-		}
-			
-		
+	public void modificarOrdenReparacion(OrdenReparacionView orden){
+			AdministradorOrdenReparacion.getInstancia().modificarOrdenReparacion(orden);		
 	}
 	
-	public OrdenReparacion buscarOrdenReparacion(int nroReparacion) {
-		for (OrdenReparacion orden : ordReparacion) {
-			if(orden.getNroOrden()==nroReparacion)
-				return orden;
-		}
-		return null;
+	private  OrdenReparacion buscarOrdenReparacion(int nroReparacion) {
+		return AdministradorOrdenReparacion.getInstancia().buscarOrdenReparacion(nroReparacion);
 	}
 
 	
@@ -265,53 +219,37 @@ public class SistemadeReparaciones {
 
 
 
-	public OrdenReparacionView misReparaciones(String legajo){
-		Empleado empleado=buscarEmpleado(legajo);
+	public OrdenReparacionView misReparaciones(int legajo) throws EmpleadoNoExisteException {
+		Empleado empleado=AdministradorEmpleado.getInstancia().buscarEmpleado(legajo);
 		if(empleado!=null){
-			if(!empleado.hayOrdenReparacion()){
-				OrdenReparacion orden= this.buscarOrdenReparacionPrioridad();
-				empleado.addAReparar(orden);
-				return orden.getView();
-			}
-			else
-				return empleado.getaReparar().get(0).getView();
+			return AdministradorOrdenReparacion.getInstancia().asignarSiguienteOrdenReparacion(empleado);
 		}
-		else
-			return null;		
+		else throw new EmpleadoNoExisteException(String.valueOf(legajo));		
 	}
 
-	public OrdenReparacion buscarOrdenReparacionPrioridad() { //SE supone que el List esta ordenado de mayor a menor segun el numero de prioridad!
-		/*Collections.sort(ordReparacion, new Comparator<OrdenReparacion>() {
-		    public int compare(OrdenReparacion o1, OrdenReparacion o2) {
-		        return String.valueOf(o1.getPrioridad()).compareTo(String.valueOf(o1.getPrioridad()));
-		    }
-		});*/
-		for (OrdenReparacion orden : ordReparacion) {
-			if(orden.estadoAReparar())
-				return orden;
-		}		
-		return null;
+	private OrdenReparacion buscarOrdenReparacionPrioridad() { 
+		return AdministradorOrdenReparacion.getInstancia().buscarOrdenReparacionPrioridad();
 	}
 
-
-	
-	
 	public List<TareaReparacionView> listarTareasReparacion(int nroReparacion){
-		OrdenReparacion orden=buscarOrdenReparacion(nroReparacion);
-		if(orden!=null){
-			return orden.listarTareasView();
-		}
-		return null;
+		return AdministradorOrdenReparacion.getInstancia().listarTareas(nroReparacion);
 		
 	}
 	
 	public Reporte emitirReportePiezas(Date desde,Date hasta){
-		ReporteDataService reporteDataService = ReporteDataService.getInstance();
-		Reporte reporte = reporteDataService.findByDate(desde, desde);
-		reportes.add(reporte);
-		return reporte;
+		return AdministradorReporte.getInstancia().generarReportePiezas(desde,hasta);
 	}
 
+//	public Reporte emitirReportePiezas(Date desde,Date hasta){
+//		List<OrdenReparacionView> ordenes=buscarOrdenesReporte(desde,hasta);
+//		return AdministradorReporte.getInstancia().generarReportePiezas(desde,hasta,ordenes);
+//	}
+//
+//	public List<OrdenReparacionView> buscarOrdenesReporte(Date desde, Date hasta) {
+//		return AdministradorOrdenReparacion.getInstancia().ordenesPorFecha(desde, hasta);
+//	}
+
+	
 	
 	public void altaCliente(String nroDoc, String tipoDoc, String nombre, String apellido,
 			String direccion, String mail, String fechaNac, String tel) {
@@ -331,46 +269,42 @@ public class SistemadeReparaciones {
 		AdministradorCliente.getInstancia().AltaCliente(cliente);
 	}
 	
-	private Cliente buscarCliente(String nroDoc, String tipoDoc) {
-		return AdministradorCliente.getInstancia().buscarCliente(nroDoc, tipoDoc);
+	private Cliente buscarCliente(String nroDoc, String tipoDoc) throws ClienteNoExisteException{
+		Cliente cliente = AdministradorCliente.getInstancia().buscarCliente(nroDoc, tipoDoc); 
+		if (cliente != null) return cliente;
+		throw new ClienteNoExisteException(nroDoc, tipoDoc);
 	}
-	private Empleado buscarEmpleado(String legajo) {
-		EmpleadoDataService empleadoDataService = EmpleadoDataService.getInstance();
-		for (Empleado empleado : empleados) {
-			if(empleado.getLegajo()==Integer.parseInt(legajo)) 
-				return empleado;
-		}
-		
-		Empleado empleado=empleadoDataService.findByLegajo(Integer.parseInt(legajo));
-		if (empleado != null){
-			empleados.add(empleado);//bring the client to memory for future reference
-		}
-		return empleado;
+	private Empleado buscarEmpleado(int legajo) throws EmpleadoNoExisteException{
+		Empleado empleado = AdministradorEmpleado.getInstancia().buscarEmpleado(legajo);
+		if (empleado != null) return empleado;
+		throw new EmpleadoNoExisteException(String.valueOf(legajo));
 	}
-	private Equipo buscarEquipo(int nroSerieEquipo) {
-		EquipoService equipoService =  EquipoService.getInstance();
-		Equipo	equipo = equipoService.findByNroSerie(nroSerieEquipo);
-		
-		return equipo;
+	private Equipo buscarEquipo(int nroSerieEquipo) throws EquipoNoExisteException {
+		Equipo	equipo = AdministradorEquipo.getInstancia().buscarEquipo(nroSerieEquipo);
+		if (equipo!=null) return equipo;
+		throw new EquipoNoExisteException(String.valueOf(nroSerieEquipo));
 	}
-	public Modelo buscarModelo(int codigo) {
-		return ModeloDataService.getInstance().findByNroSerie(codigo);
+	private  Modelo buscarModelo(int codigo) throws ExceptionNoExisteModelo {
+		Modelo modelo =  AdministradorModelo.getInstancia().buscarModelo(codigo);
+		if (modelo!=null) return modelo;
+		throw new ExceptionNoExisteModelo(codigo);		
+
 	}
 	private Pieza buscarPieza(int codPieza) {
-		return AdministradorPieza.getInstancia().buscarPieza(codPieza);
+		Pieza pieza = AdministradorPieza.getInstancia().buscarPieza(codPieza);
+		if (pieza!=null) return pieza;
+		throw new ExceptionNoExisteModelo(codPieza);	
+		
 	}
 
-	private Garantia buscarGarantia(int nroGarantia) {
-		for (Garantia garantia : garantias) {
-			if(garantia.getNroGarantia()==nroGarantia)
-				return garantia;			
-		}
-		return null;
+	private Garantia buscarGarantia(int nroGarantia) throws GarantiaNoExisteException{
+		Garantia garantia = AdministradorGarantia.getInstancia().buscarGarantia(nroGarantia);
+		if (garantia!=null) return garantia;
+		throw new GarantiaNoExisteException(nroGarantia);
 	}
 	
 	public ClienteView obtenerClienteView(String nroDoc,String tipoDoc) {
-		return AdministradorCliente.getInstancia().
-				obtenerClienteView(nroDoc, tipoDoc);
+		return buscarCliente(nroDoc, tipoDoc).getView();
 	}
 
 	public void modificarCliente(String nroDoc, String tipoDoc,String nombre1, String dir, String tel,
@@ -487,16 +421,10 @@ public class SistemadeReparaciones {
 			return null;
 	}
 
-	public OrdenReparacionView buscarOrdenConEquipoARepararView(int nroSerie) {
-		Equipo equipo=buscarEquipo(nroSerie);
-		if(equipo!=null){
-			for (OrdenReparacion orden : ordReparacion) {
-				if(orden.estadoAReparar() && orden.esTuEquipo(nroSerie)){
-					return orden.getView();
-				}
-			}
-		}
-		return null;
+	public OrdenReparacionView buscarOrdenConEquipoARepararView(EquipoView equipoView) {
+		Equipo equipo=AdministradorEquipo.getInstancia().buscarEquipo(equipoView.getNroSerie());
+		return AdministradorOrdenReparacion.getInstancia().buscarOrdenConEquipoARepararView(equipo);
+		
 	}
 
 	public int obtenerNroOrdenReparacion() {
@@ -592,113 +520,7 @@ public class SistemadeReparaciones {
 		
 	}
 	public void confirmarOrdenReparacion(OrdenReparacionView orden ){
-		OrdenReparacion ordenReparacion = new OrdenReparacion();
-		Equipo equipo = buscarEquipo(orden.getEquipo().getNroSerie());
-		List<TareaReparacion> tareasReparacion = new ArrayList<TareaReparacion>();
-		List<Pieza> piezasReparacion = new ArrayList<Pieza>();
-		Pieza piezaToAdd;
-		TareaReparacion tareaReparacion;
-		for(TareaReparacionView tarea:orden.getItemsReparacion()){
-			tareaReparacion = new TareaReparacion();
-			
-			tareaReparacion.setDetalle(tarea.getDetalle());
-			tareaReparacion.setEstado(tarea.getEstado());
-			
-			for(PiezaView pieza: tarea.getPiezas()){
-				piezaToAdd = buscarPieza(pieza.getNroPieza());
-				piezasReparacion.add(piezaToAdd);
-			}
-			tareaReparacion.setPiezas(piezasReparacion);
-			tareasReparacion.add(tareaReparacion);			
-		}
-		
-		ordenReparacion.setDescripcionFallas(orden.getDescripcionFallas());
-		ordenReparacion.setEstado(orden.getEstado());
-		ordenReparacion.setEstaEnGarantiaFisica(orden.isEstaEnGarantiaFisica());
-		ordenReparacion.setFecha(orden.getFecha());
-		ordenReparacion.setPrioridad(orden.getPrioridad());
-		ordenReparacion.setRepararDeTodosModos(orden.isRepararDeTodosModos());
-		ordenReparacion.setEquipo(equipo);
-		ordenReparacion.setItemsReparacion(tareasReparacion);		
-		
-		
-		
+		AdministradorOrdenReparacion.getInstancia().confirmarOrdenReparacion(orden);
 	}
-	public void confirmarOrdenReparacion(int nroOrden, String fallas, boolean estaEnGarantiaFisica,boolean repararDeTodosModos, int prioridad1) {
-		OrdenReparacion orden=buscarOrdenReparacion(nroOrden);
-		if(orden!=null){
-			orden.setDescripcionFallas(fallas);
-			orden.setEstaEnGarantiaFisica(estaEnGarantiaFisica);
-			orden.setRepararDeTodosModos(repararDeTodosModos);
-			orden.setPrioridad(prioridad1);
-			
-			if(repararDeTodosModos||(orden.getEquipo().getGarantia().estasEnGarantia() && estaEnGarantiaFisica) ){
-				orden.setEstado("A reparar");
-			}
-			else{
-				orden.setEstado("Presupuestar");
-			}
-			
-		}
-		
-	}
-
-	public void confirmarTarea(int nroTarea, int numeroOrden) {
-		OrdenReparacion orden=buscarOrdenReparacion(numeroOrden);
-		if(orden!=null){
-			TareaReparacion tarea=orden.obtenerTarea(nroTarea);
-			if(tarea!=null)
-				tarea.setEstado("activo");
-		}
-		
-	}
-
-	public String retrocederEtapaOrden(int nroOrden) {
-		
-		OrdenReparacion orden = buscarOrdenReparacion(nroOrden);
-		if(orden.getEstado().equals("A reparar")){
-			orden.setEstado("Presupuestar");
-			return orden.getEstado();
-		}
-		else{
-			if(orden.getEstado().equals("Reparado")){
-				orden.setEstado("A reparar");
-				return orden.getEstado();
-			}
-			else{
-				if(orden.getEstado().equals("Entregado")){
-					orden.setEstado("Reparado");
-					return orden.getEstado();
-				}
-			}
-		}
-		return "";
-		
-	}
-
-	public String avanzarEtapaOrden(int nroOrden) {
-		OrdenReparacion orden = buscarOrdenReparacion(nroOrden);
-		if(orden.getEstado().equals("A reparar")){
-			orden.setEstado("Reparado");
-			return orden.getEstado();
-		}
-		else{
-			if(orden.getEstado().equals("Reparado")){
-				orden.setEstado("Entregado");
-				return orden.getEstado();
-			}
-			else{
-				if(orden.getEstado().equals("Presupuestar")){
-					orden.setEstado("A reparar");
-					return orden.getEstado();
-				}
-			}
-		}
-		return "";
-	}
-
-
-	
-
 	
 }
