@@ -17,7 +17,7 @@ public class Modelo {
 	private int nroModelo;
 	@Column(name="nombre_mod", columnDefinition="varchar(50)")
 	private String nombre;
-	@ManyToMany
+	@ManyToMany(fetch=FetchType.EAGER)
 	@JoinTable(name="pieza_modelo", 
 		joinColumns={@JoinColumn(name="nro_modelo", referencedColumnName="nro_modelo")}, 
 		inverseJoinColumns={@JoinColumn(name="nro_pieza", referencedColumnName="nro_pieza")},

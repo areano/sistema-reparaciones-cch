@@ -61,7 +61,7 @@ public class AltaModeloView extends javax.swing.JInternalFrame {
 		public void actionPerformed(ActionEvent e) {
 			AltaPiezaView view= new AltaPiezaView(modelo);
 			InternalFrameLoader.getInstance().loadFrame(jdEscritorio, view);
-
+			actualizar.doClick();
 		}	
 	}
 	private class CancelarListener implements ActionListener{
