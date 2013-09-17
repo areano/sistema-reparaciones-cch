@@ -11,13 +11,13 @@ public class Equipo {
 	@Id
 	@Column(name="nro_serie")
 	private int nroSerie;
-	@ManyToOne
+	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="nro_modelo", nullable=false)
 	private Modelo modelo;
-	@ManyToOne
+	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumns({@JoinColumn(name="nro_doc", nullable=false), @JoinColumn(name="tipo_doc", nullable=false)})
 	private Cliente cliente;
-	@OneToOne(cascade=CascadeType.ALL)
+	@OneToOne(cascade=CascadeType.ALL,fetch=FetchType.EAGER)
 	@JoinColumn(name="nro_garantia", nullable=false)
 	private Garantia garantia;
 	@Column(name="e_estado", columnDefinition="varchar(20)", nullable=false)

@@ -16,7 +16,7 @@ public class Remito implements Serializable{
 	private int nroRemito;
 	@Column(name="r_fecha")
 	private Date fecha;
-	@OneToMany()
+	@OneToMany(fetch=FetchType.EAGER)
 	@JoinColumn(name="nro_remito", referencedColumnName="nro_remito")
 	private List<ItemRemito> itemsRemito;
 	@Transient

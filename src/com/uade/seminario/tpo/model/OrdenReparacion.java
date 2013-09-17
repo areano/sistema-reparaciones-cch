@@ -21,11 +21,11 @@ public class OrdenReparacion {
 	@Column(name="nro_orden_reparacion")
 	private int nroOrden;
 	
-	@OneToMany(cascade = CascadeType.ALL)
+	@OneToMany(cascade = CascadeType.ALL,fetch=FetchType.EAGER)
 	@JoinColumn(name="nro_orden_reparacion",referencedColumnName="nro_orden_reparacion")
 	private List<TareaReparacion> itemsReparacion;
 	
-	@ManyToOne
+	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="nro_serie", referencedColumnName="nro_serie", nullable=false)
 	private Equipo equipo;
 	

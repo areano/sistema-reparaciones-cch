@@ -12,7 +12,7 @@ public class ItemRemito implements Serializable{
 	private String detalleReparacion;
 	@Column(name="ir_detalle_equipo", columnDefinition="varchar(200)")
 	private String detalleEquipo;
-	@ManyToOne
+	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="nro_serie", nullable=false)
 	private Equipo equipo;
 	@Id

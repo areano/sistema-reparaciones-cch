@@ -17,11 +17,11 @@ public class TareaReparacion {
 	private int nroItemReparacion;
 	@Column(name="nt_detalle", columnDefinition="varchar(200)")
 	private String detalle;
-	@ManyToMany
+	@ManyToMany(fetch=FetchType.EAGER)
 	@JoinTable(name="tarea_reparacion_pieza",
-	joinColumns={@JoinColumn(name="nro_tarea_reparacion")},
-	inverseJoinColumns={@JoinColumn(name="nro_pieza")},
-	uniqueConstraints=@UniqueConstraint(columnNames={"nro_tarea_reparacion","nro_pieza"}))
+		joinColumns={@JoinColumn(name="nro_tarea_reparacion")},
+		inverseJoinColumns={@JoinColumn(name="nro_pieza")},
+		uniqueConstraints=@UniqueConstraint(columnNames={"nro_tarea_reparacion","nro_pieza"}))
 	private List<Pieza> piezas;
 	@Column(name="nt_estado", columnDefinition="varchar(20)")
 	private String estado;
