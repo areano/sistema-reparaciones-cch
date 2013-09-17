@@ -32,7 +32,7 @@ public class Empleado {
 	@Column(name = "id_sector", nullable = false)
 	private String idSector;
 
-	@OneToMany(cascade=CascadeType.ALL)
+	@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
 	@JoinTable(name = "tabla_trabajos"
 			, joinColumns = {@JoinColumn(name = "nro_doc"), @JoinColumn(name = "tipo_doc") }
 			, inverseJoinColumns = { @JoinColumn(name = "nro_orden_reparacion") })
