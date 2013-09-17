@@ -12,6 +12,7 @@ import javax.swing.WindowConstants;
 import javax.swing.SwingUtilities;
 
 import com.uade.seminario.tpo.controller.SistemadeReparaciones;
+import com.uade.seminario.tpo.exceptions.PiezaNoExisteException;
 import com.uade.seminario.tpo.view.objectView.ModeloView;
 import com.uade.seminario.tpo.view.objectView.PiezaView;
 
@@ -29,6 +30,7 @@ import com.uade.seminario.tpo.view.objectView.PiezaView;
 * LEGALLY FOR ANY CORPORATE OR COMMERCIAL PURPOSE.
 */
 public class AltaPiezaView extends javax.swing.JInternalFrame {
+	private static final long serialVersionUID = -415196012386299217L;
 	private JLabel jLabel2;
 	private JLabel jLabel4;
 	private JButton buscarPieza;
@@ -40,18 +42,6 @@ public class AltaPiezaView extends javax.swing.JInternalFrame {
 	private ModeloView modelo;
 	private PiezaView pieza;
 
-	/**
-	* Auto-generated main method to display this JFrame
-	*/
-//	public static void main(String[] args) {
-//		SwingUtilities.invokeLater(new Runnable() {
-//			public void run() {
-//				AltaPiezaView inst = new AltaPiezaView("");
-//				inst.setLocationRelativeTo(null);
-//				inst.setVisible(true);
-//			}
-//		});
-//	}
 	private class AgregarPiezaListener implements ActionListener{
 		private javax.swing.JInternalFrame frame;
 		public AgregarPiezaListener(javax.swing.JInternalFrame frame){
@@ -59,8 +49,8 @@ public class AltaPiezaView extends javax.swing.JInternalFrame {
 		}
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			PiezaView piezaV=SistemadeReparaciones.getInstancia().buscarPiezaView(Integer.parseInt(codigo.getText()));
-			if(piezaV!=null){
+			try{
+				PiezaView piezaV=SistemadeReparaciones.getInstancia().buscarPiezaView(Integer.parseInt(codigo.getText()));
 				if (!piezaV.getEstado().equalsIgnoreCase("activo")){
 					piezaV.setDescripcion(descripcion.getText());
 					piezaV.setEstado("activo");
@@ -68,12 +58,9 @@ public class AltaPiezaView extends javax.swing.JInternalFrame {
 				}
 				List<PiezaView> piezas = modelo.getPiezas();
 				piezas.add(piezaV);
-				modelo.setPiezas(piezas);	
-				
+				modelo.setPiezas(piezas);					
 				frame.dispose();
-				
-			}
-			else{
+			}catch(PiezaNoExisteException e1){
 				if(!codigo.getText().isEmpty()){
 					pieza.setDescripcion(descripcion.getText());
 					pieza.setEstado("activo");
@@ -84,13 +71,12 @@ public class AltaPiezaView extends javax.swing.JInternalFrame {
 					frame.dispose();
 				}else{
 					MensajeErrorFrame mensaje = new MensajeErrorFrame("Codigo de pieza son Mandatorios");
-					mensaje.setVisible(true);
-					
-					if  (codigo.getText().isEmpty()) codigo.setBackground(new java.awt.Color(255,0,0));
-					
-				}
+					mensaje.setVisible(true);					
+					if  (codigo.getText().isEmpty()) 
+						codigo.setBackground(new java.awt.Color(255,0,0));					
+				}				
 			}
-			frame.dispose();
+
 			
 		}
 		
@@ -164,8 +150,8 @@ public class AltaPiezaView extends javax.swing.JInternalFrame {
 				buscarPieza.addActionListener(new ActionListener() {
 					
 					public void actionPerformed(ActionEvent e) {
-						pieza=SistemadeReparaciones.getInstancia().buscarPiezaView(Integer.parseInt(codigo.getText()));
-						if(pieza!=null ){
+						try{
+							pieza=SistemadeReparaciones.getInstancia().buscarPiezaView(Integer.parseInt(codigo.getText()));
 							if(pieza.getEstado().equalsIgnoreCase("activo")){
 								descripcion.setText(pieza.getDescripcion());
 								descripcion.setEditable(false);
@@ -174,13 +160,13 @@ public class AltaPiezaView extends javax.swing.JInternalFrame {
 								codigo.setEditable(false);
 								descripcion.setText(pieza.getDescripcion());
 							}
-						}else{
+						}catch(PiezaNoExisteException e1){
 							
 							MensajeFrame mensaje = new MensajeFrame("No existe la pieza ["+codigo.getText()
 									+"] por lo que sera creada s continua");
 							mensaje.setVisible(true);
 							pieza = new PiezaView(Integer.parseInt(codigo.getText()),descripcion.getText());
-						}
+						}	
 					}
 				});
 			}
