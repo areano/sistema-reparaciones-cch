@@ -5,6 +5,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
+import javax.swing.JDesktopPane;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JScrollPane;
@@ -47,22 +48,25 @@ public class ModificarModeloView extends javax.swing.JInternalFrame {
 	private JLabel jLabel3;
 	private JScrollPane jScrollPane1;
 	private ModeloView modelo;
+	private JDesktopPane jdEscritorio; 
 	/**
 	* Auto-generated main method to display this JFrame
 	*/
-//	public static void main(String[] args) {
-//		SwingUtilities.invokeLater(new Runnable() {
-//			public void run() {
-//				ModificarModeloView inst = new ModificarModeloView();
-//				inst.setLocationRelativeTo(null);
-//				inst.setVisible(true);
-//			}
-//		});
-//	}
-	
-	public ModificarModeloView() {
+
+	private class AgregarPiezaListener implements ActionListener{
+		public AgregarPiezaListener(){}
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			AltaPiezaView view= new AltaPiezaView(modelo);
+			InternalFrameLoader.getInstance().loadFrame(jdEscritorio, view);
+			actualizar.doClick();
+
+		}	
+	}	
+	public ModificarModeloView(JDesktopPane jdEscritorio) {
 		super();
 		initGUI();
+		this.jdEscritorio = jdEscritorio;
 	}
 	
 	private void initGUI() {
@@ -161,15 +165,16 @@ public class ModificarModeloView extends javax.swing.JInternalFrame {
 				getContentPane().add(agregar);
 				agregar.setText("Agregar Pieza");
 				agregar.setBounds(249, 167, 123, 23);
-				agregar.addActionListener(new ActionListener() {
-					
-					public void actionPerformed(ActionEvent e) {
-						AltaPiezaView view= new AltaPiezaView(modelo);
-						view.setVisible(true);							
-					}
-
-					
-				});
+				agregar.addActionListener(new AgregarPiezaListener());
+//				agregar.addActionListener(new ActionListener() {
+//					
+//					public void actionPerformed(ActionEvent e) {
+//						AltaPiezaView view= new AltaPiezaView(modelo);
+//						view.setVisible(true);							
+//					}
+//
+//					
+//				});
 			}
 			{
 				confirmar = new JButton();
@@ -225,7 +230,7 @@ public class ModificarModeloView extends javax.swing.JInternalFrame {
 		
 		DefaultListModel piezasModelo=new DefaultListModel();
 		if(!codigo.getText().equals("")){
-			for(PiezaView p: sist.buscarPiezaXModeloView(Integer.parseInt(codigo.getText()))){
+			for(PiezaView p: modelo.getPiezas()){
 				piezasModelo.addElement(p.getNroPieza());
 			}
 		}				

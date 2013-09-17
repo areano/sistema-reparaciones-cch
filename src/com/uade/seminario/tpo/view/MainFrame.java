@@ -158,7 +158,7 @@ public class MainFrame extends javax.swing.JFrame {
 							jmModelo.add(jmiModificarModelo);
 							jmiModificarModelo.addActionListener(new ActionListener() {
 								public void actionPerformed(ActionEvent arg0) {
-									cargarInternalFrame(new ModificarModeloView());
+									cargarInternalFrame(new ModificarModeloView(jdEscritorio));
 								}
 							});
 						}
