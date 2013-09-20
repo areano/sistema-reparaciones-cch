@@ -15,7 +15,7 @@ import com.uade.seminario.tpo.view.objectView.TareaReparacionView;
 
 @Entity
 @Table(name="orden_reparacion")
-public class OrdenReparacion {
+public class OrdenReparacion implements Comparable<OrdenReparacion>{
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="nro_orden_reparacion")
@@ -186,4 +186,11 @@ public class OrdenReparacion {
 		
 		return this.estado.equals("A Confirmar");
 	}
+
+	@Override
+	public int compareTo(OrdenReparacion o) {
+		
+		return (new Integer(prioridad)).compareTo(o.getNroOrden());
+	}
+ 
 }
