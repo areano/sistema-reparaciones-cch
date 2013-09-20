@@ -239,10 +239,17 @@ public class SistemadeReparaciones {
 		}
 		else throw new EmpleadoNoExisteException(String.valueOf(legajo));		
 	}
-
-	private OrdenReparacion buscarOrdenReparacionPrioridad() { 
-		return AdministradorOrdenReparacion.getInstancia().buscarOrdenReparacionPrioridad();
+	public OrdenReparacionView asignarOrdenDeTrabajo(int legajo) throws EmpleadoNoExisteException {
+		Empleado empleado=AdministradorEmpleado.getInstancia().buscarEmpleado(legajo);
+		if(empleado!=null){
+			return AdministradorOrdenReparacion.getInstancia().asignarSiguienteOrdenReparacion(empleado);
+		}
+		else throw new EmpleadoNoExisteException(String.valueOf(legajo));		
 	}
+	
+//	private OrdenReparacion buscarOrdenReparacionPrioridad() { 
+//		return AdministradorOrdenReparacion.getInstancia().buscarOrdenReparacionPrioridad();
+//	}
 
 	public List<TareaReparacionView> listarTareasReparacion(int nroReparacion){
 		return AdministradorOrdenReparacion.getInstancia().listarTareas(nroReparacion);

@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
+import com.uade.seminario.tpo.exceptions.NoHayOrdenesException;
 import com.uade.seminario.tpo.model.Empleado;
 import com.uade.seminario.tpo.model.Equipo;
 import com.uade.seminario.tpo.model.ItemReporte;
@@ -34,6 +35,7 @@ public class AdministradorOrdenReparacion {
 	}
 	protected void modificarOrdenReparacion(OrdenReparacionView orden ){
 		ordenReparacionDataService.merge(fromDTOtoClassTransformer(orden));
+		
 	}
 	protected void confirmarOrdenReparacion(OrdenReparacionView orden ){
 		OrdenReparacion ordenReparacion = new OrdenReparacion();
@@ -76,18 +78,19 @@ public class AdministradorOrdenReparacion {
 	protected OrdenReparacion buscarOrdenReparacion(int nroReparacion) {
 		return ordenReparacionDataService.buscarOrdenReparacion(nroReparacion);
 	}
-	protected OrdenReparacion buscarOrdenReparacionPrioridad() { 
+	protected OrdenReparacion buscarOrdenReparacionPrioridad() throws NoHayOrdenesException{ 
 		return ordenReparacionDataService.buscarOrdenReparacionPrioridad();
 	}
-	protected OrdenReparacionView asignarSiguienteOrdenReparacion(Empleado empleado){
+	protected OrdenReparacionView asignarSiguienteOrdenReparacion(Empleado empleado) 
+			throws NoHayOrdenesException{
 		OrdenReparacion orden;
-		if(!empleado.hayOrdenReparacion())
+		orden =  empleado.siguienteTarea();
+		if(orden==null)
 		{
 			orden = buscarOrdenReparacionPrioridad();
 			empleado.addAReparar(orden);
 		}
-		else
-			orden =  empleado.getaReparar().get(0);
+		
 		return orden.getView();
 	}
 	protected List<TareaReparacionView> listarTareas(int nroReparacion){

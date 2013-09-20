@@ -1,6 +1,7 @@
 package com.uade.seminario.tpo.model;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Vector;
@@ -8,6 +9,7 @@ import java.util.Vector;
 import javax.persistence.*;
 
 import com.uade.seminario.tpo.view.objectView.EmpleadoView;
+import com.uade.seminario.tpo.view.objectView.OrdenReparacionView;
 
 @Entity
 @Table(name = "empleado")
@@ -115,11 +117,27 @@ public class Empleado {
 
 	public void addAReparar(OrdenReparacion orden) {
 		this.aReparar.add(orden);
+		Collections.sort(aReparar);
 
 	}
 
 	public EmpleadoView getView() {
-		// TODO Auto-generated method stub
-		return null;
+			List<OrdenReparacionView> tareasAsignadasView =  new ArrayList<OrdenReparacionView>();
+			for (OrdenReparacion ordenReparacion : aReparar) {
+				tareasAsignadasView.add(ordenReparacion.getView());				
+			}
+			EmpleadoView view =  new EmpleadoView(nombre,apellido,id.getNroDoc(), id.getTipoDoc(),
+					fechaNac.toString(),legajo,idSector,tareasAsignadasView); 
+					
+			return view;
+	}
+
+	public OrdenReparacion siguienteTarea() {
+			for (OrdenReparacion orden : aReparar) {
+				if (orden.estadoAReparar()){
+					return orden;
+				}
+			}
+			return null;
 	}
 }
