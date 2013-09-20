@@ -24,7 +24,7 @@ public class EquipoDAOImpl extends GenericDAOImpl<Equipo> {
 
 	public Equipo findByNroSerie(int nroSerie) {
 		Session session = sf.openSession();
-		String hql = "from Equipo e where e.nroSerie = :nroSerie";
+		String hql = "from Equipo e where e.nroSerie=:nroSerie";
 		Query query = session.createQuery(hql);
 		query.setParameter("nroSerie", nroSerie);
 		Equipo retorno =  (Equipo)query.uniqueResult();
@@ -37,7 +37,7 @@ public class EquipoDAOImpl extends GenericDAOImpl<Equipo> {
 
 	public List<Equipo> existeElModeloEnUnEquipo(Modelo modelo) {
 		Session session = sf.openSession();
-		String hql = "from Equipo e inner join e.modelo m where m = :modelo";
+		String hql = "from Equipo e inner join e.modelo m where m=:modelo";
 		Query query = session.createQuery(hql);
 		query.setParameter("modelo", modelo);
 		List<Equipo> retorno =  (List)query.list();
