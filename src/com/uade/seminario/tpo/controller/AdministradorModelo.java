@@ -19,7 +19,7 @@ public class AdministradorModelo {
 			instancia=new AdministradorModelo();
 		return instancia;
 	}
-	public Modelo fromDTOtoClassTransformer(ModeloView modeloView){
+	protected Modelo fromDTOtoClassTransformer(ModeloView modeloView){
 		List<Pieza> piezas = AdministradorPieza.getInstancia().
 				getListFromDTOToClass(modeloView.getPiezas());
 		Modelo modelo = new Modelo();
@@ -45,13 +45,13 @@ public class AdministradorModelo {
 		return modeloDataService.findByNroSerie(codModelo);
 	}
 
-	public boolean hayModelosConPieza(Pieza pieza) {
+	protected boolean hayModelosConPieza(Pieza pieza) {
 		if (modeloDataService.hayModelosConPieza(pieza).size()>0)
 			return true;
 		return false;
 	}
 
-	public void modificarModelo(ModeloView modelo) {
+	protected void modificarModelo(ModeloView modelo) {
 		modeloDataService.merge( fromDTOtoClassTransformer(modelo));
 		
 	}

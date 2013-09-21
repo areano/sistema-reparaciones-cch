@@ -31,7 +31,7 @@ public class AdministradorTareaReparacion {
 		return instancia;
 	}
 	
-	public TareaReparacion fromDTOtoClassTransformer(TareaReparacionView trv){		
+	protected TareaReparacion fromDTOtoClassTransformer(TareaReparacionView trv){		
 		TareaReparacion tr = new TareaReparacion();
 		tr.setDetalle(trv.getDetalle());
 		tr.setEstado(trv.getEstado());
