@@ -33,4 +33,8 @@ public class TareaReparacionDataService {
 	public void update(TareaReparacion entidad){
 		dao.update(entidad);
 	}
+	public void merge(TareaReparacion entidad) {
+		dao.merge(entidad);
+		
+	}
 }

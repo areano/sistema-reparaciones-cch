@@ -41,7 +41,7 @@ public class AdministradorTareaReparacion {
 
 	}
 	protected void modificarTareaReparacion(TareaReparacionView tarea ){
-		//tareaReparacionDataService.merge(fromDTOtoClassTransformer(tarea));
+		tareaReparacionDataService.merge(fromDTOtoClassTransformer(tarea));
 		
 	}
 	
