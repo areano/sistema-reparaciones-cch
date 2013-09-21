@@ -114,6 +114,10 @@ public class AltaOrdenReparacionView extends javax.swing.JFrame {
 									garantiaPapel.setSelected(true);
 								
 							}
+							else {
+								MensajeErrorFrame mensaje = new MensajeErrorFrame("Equipo con numero de serie"+nroSerie.getText()+" no existe");
+								mensaje.setVisible(true);
+							}
 						}
 						
 					}
@@ -307,7 +311,15 @@ public class AltaOrdenReparacionView extends javax.swing.JFrame {
 								quitarTarea.setEnabled(true);
 								actualizar.setEnabled(true);
 							}else{
-								//TODO Mensaje no equipo o equipo ya en reparacion
+								if(equipo==null){
+									MensajeErrorFrame mensaje = new MensajeErrorFrame("Equipo con numero de serie "+nroSerie.getText()+" no existe");
+									mensaje.setVisible(true);
+								}
+								else{
+									MensajeErrorFrame mensaje = new MensajeErrorFrame("Equipo con numero de serie "+nroSerie.getText()+" ya se encuentra en una orden");
+									mensaje.setVisible(true);
+								}
+								
 							}
 							
 						}

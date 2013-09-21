@@ -81,6 +81,10 @@ public class MisReparacionesView extends javax.swing.JFrame {
 							nroOrden.setText(String.valueOf(orden.getNroOrden()));
 							mostrarOrden.setVisible(true);
 						}
+						else{
+							MensajeErrorFrame mensaje = new MensajeErrorFrame("No ingreso un numero de legajo");
+							mensaje.setVisible(true);
+						}
 						
 					}
 				});
