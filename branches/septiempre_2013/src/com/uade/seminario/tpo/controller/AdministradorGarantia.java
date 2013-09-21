@@ -2,6 +2,7 @@ package com.uade.seminario.tpo.controller;
 
 import com.uade.seminario.tpo.model.Garantia;
 import com.uade.seminario.tpo.service.GarantiaDataService;
+import com.uade.seminario.tpo.view.objectView.GarantiaView;
 
 public class AdministradorGarantia {
 	private static AdministradorGarantia instancia;
@@ -16,6 +17,12 @@ public class AdministradorGarantia {
 	}
 	public Garantia buscarGarantia(int nroGarantia) {
 		return garantiaDataService.findByNroGarantia(nroGarantia);
+	}
+	public Garantia fromDTOtoClassTransformer(GarantiaView gv) { // DIFIEREN EN TODO LA GARANTIA VIEW Y LA MODEL
+		Garantia g= new Garantia();
+		g.setFechaVencimiento(gv.getFechaVencimiento()); 
+		g.setNroGarantia(gv.getNroGarantia());
+		return g;
 	}
 	
 }

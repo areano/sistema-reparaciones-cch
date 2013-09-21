@@ -187,7 +187,7 @@ public class OrdenReparacion implements Comparable<OrdenReparacion>{
 		return this.estado.equals("A Confirmar");
 	}
 
-	@Override
+	
 	public int compareTo(OrdenReparacion o) {
 		
 		return (new Integer(prioridad)).compareTo(o.getNroOrden());

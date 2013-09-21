@@ -89,7 +89,7 @@ public class ModificarOrdenReparacionView extends javax.swing.JFrame {
 		public ModificarOrdenListener(javax.swing.JFrame frame){
 			this.frame = frame;
 		}
-		@Override
+		
 		public void actionPerformed(ActionEvent e) {
 			ordenview.setDescripcionFallas(fallas.getText());
 			ordenview.setPrioridad(Integer.parseInt(prioridad.getSelectedItem().toString()));

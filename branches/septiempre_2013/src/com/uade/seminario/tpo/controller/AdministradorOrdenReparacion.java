@@ -29,7 +29,7 @@ public class AdministradorOrdenReparacion {
 			instancia=new AdministradorOrdenReparacion();
 		return instancia;
 	}
-	private OrdenReparacion fromDTOtoClassTransformer(OrdenReparacionView orv){		
+	public OrdenReparacion fromDTOtoClassTransformer(OrdenReparacionView orv){		
 		OrdenReparacion or = new OrdenReparacion();
 		or.setEquipo(AdministradorEquipo.getInstancia().fromDTOtoClassTransformer(orv.getEquipo()));
 		or.setDescripcionFallas(orv.getDescripcionFallas());
@@ -37,8 +37,7 @@ public class AdministradorOrdenReparacion {
 		or.setEstaEnGarantiaFisica(orv.isEstaEnGarantiaFisica());
 		or.setFecha(orv.getFecha());
 		for ( TareaReparacionView trv : orv.getItemsReparacion()){
-			//or.getItemsReparacion().add(AdministradorItemsReparacion.getInstancia().fromDTOtoClassTransformer(trv));
-			//TODO: implementar el fromDTO para los items de reparacionView
+			or.agregarItemReparacion(AdministradorTareaReparacion.getInstancia().fromDTOtoClassTransformer(trv));
 		}
 		or.setNroOrden(orv.getNroOrden());
 		or.setPrioridad(orv.getPrioridad());
