@@ -9,14 +9,14 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
 import com.uade.seminario.tpo.controller.SistemadeReparaciones;
-import com.uade.seminario.tpo.model.ItemReporte;
 import com.uade.seminario.tpo.model.OrdenReparacion;
 import com.uade.seminario.tpo.model.Remito;
-import com.uade.seminario.tpo.model.Reporte;
 import com.uade.seminario.tpo.persistence.dao.generic.GenericDAO;
 import com.uade.seminario.tpo.persistence.hbt.HibernateUtil;
+import com.uade.seminario.tpo.view.objectView.ItemReporteView;
+import com.uade.seminario.tpo.view.objectView.ReporteView;
 
-public class ReporteDAOImpl implements GenericDAO<Reporte> {
+public class ReporteDAOImpl implements GenericDAO<ReporteView> {
 	private static ReporteDAOImpl instancia = null;
 	private static SessionFactory sf = null;
 	private ReporteDAOImpl() {}
@@ -29,29 +29,29 @@ public class ReporteDAOImpl implements GenericDAO<Reporte> {
 		return instancia;
 	}
 	
-	public Reporte findByDate(Date FechaDesde, Date FechaHasta) {
-		Reporte reporte=new Reporte(FechaDesde,FechaDesde);
+	public ReporteView findByDate(Date FechaDesde, Date FechaHasta) {
+		ReporteView reporte=new ReporteView(FechaDesde,FechaDesde);
 //		List<ItemReporte> itemsReporte=new ArrayList<ItemReporte>();
 		/* List<OrdenReparacion> ordenes=buscarOrdenesReporte(FechaDesde,FechaHasta);
 		 * itemsReporte=generarListaPiezas(ordenes);		
 		*
 		*Reemplazar por reporte 
 		*/
-		List<ItemReporte> itemsReporte=generarListaPiezas(FechaDesde,FechaDesde);
+		List<ItemReporteView> itemsReporte=generarListaPiezas(FechaDesde,FechaDesde);
 		reporte.setItemsReporte(itemsReporte);
 		return reporte;	
 	}
 
-	private List<ItemReporte> generarListaPiezas (Date desde, Date hasta) {
-		List<ItemReporte> itemsReporte=new ArrayList<ItemReporte>();
+	private List<ItemReporteView> generarListaPiezas (Date desde, Date hasta) {
+		List<ItemReporteView> itemsReporte=new ArrayList<ItemReporteView>();
 		Session session =sf.openSession();
-		String hql = "pieza.nombre, count(*) from OrdenReparacion OrRep inner join ListaPiezas LiPie where OrRep.fecha between :desde and :hasta group by pieza.nombre order by 1 ";
+		String hql = "select Pie.descripcion, count(*) from OrdenReparacion as OrRep inner join OrRep.itemsReparacion as itRep inner join itRep.piezas as Pie where OrRep.fecha between :desde and :hasta group by Pie.descripcion order by 1 ";
 		Query query = session.createQuery(hql);
-		query.setParameter(":desde", desde);
-		query.setParameter(":hasta", hasta);
+		query.setParameter("desde", desde);
+		query.setParameter("hasta", hasta);
 		List<Object[]> resultados= query.list();
 		for (Object[] o : resultados){
-			itemsReporte.add(new ItemReporte( (String)o[1], (int)o[2]));
+			itemsReporte.add(new ItemReporteView( (String)o[1], (int)o[2]));
 		}
 		session.close();
 		return itemsReporte;
@@ -98,32 +98,32 @@ public class ReporteDAOImpl implements GenericDAO<Reporte> {
 //	}
 
 	@Override
-	public void save(Reporte entidad) {
+	public void save(ReporteView entidad) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void delete(Reporte entity) {
+	public void delete(ReporteView entity) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void update(Reporte entidad) {
+	public void update(ReporteView entidad) {
 		// TODO Auto-generated method stub
 		
 	}
 
 
 	@Override
-	public void merge(Reporte entidad) {
+	public void merge(ReporteView entidad) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public List<Reporte> findAll(Class clazz) {
+	public List<ReporteView> findAll(Class clazz) {
 		// TODO Auto-generated method stub
 		return null;
 	}

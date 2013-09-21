@@ -4,9 +4,9 @@ import javax.swing.WindowConstants;
 import javax.swing.SwingUtilities;
 
 import com.uade.seminario.tpo.controller.SistemadeReparaciones;
-import com.uade.seminario.tpo.model.ItemReporte;
-import com.uade.seminario.tpo.model.Reporte;
+import com.uade.seminario.tpo.view.objectView.ItemReporteView;
 import com.uade.seminario.tpo.view.objectView.PiezaView;
+import com.uade.seminario.tpo.view.objectView.ReporteView;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
@@ -49,12 +49,12 @@ public class ReporteDePiezasView extends javax.swing.JFrame {
 		});
 	}
 	
-	public ReporteDePiezasView(Reporte reporte) {
+	public ReporteDePiezasView(ReporteView reporte) {
 		super();
 		initGUI(reporte);
 	}
 	
-	private void initGUI(Reporte reporte) {
+	private void initGUI(ReporteView reporte) {
 		try {
 			setTitle("Reporte piezas/tareas");
 			setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
@@ -65,7 +65,7 @@ public class ReporteDePiezasView extends javax.swing.JFrame {
 				jScrollPane1.setBounds(21, 30, 112, 193);
 				{	if(reporte!=null){
 					DefaultListModel piezasModelo=new DefaultListModel();
-					for (ItemReporte item : reporte.getItemsReporte()) {
+					for (ItemReporteView item : reporte.getItemsReporte()) {
 						piezasModelo.addElement(item.getNombrePieza());
 					}			
 					piezas = new JList();
@@ -82,7 +82,7 @@ public class ReporteDePiezasView extends javax.swing.JFrame {
 				{	
 					if(reporte!=null){
 					DefaultListModel piezasModelo1=new DefaultListModel();
-					for (ItemReporte item : reporte.getItemsReporte()) {
+					for (ItemReporteView item : reporte.getItemsReporte()) {
 						piezasModelo1.addElement(item.getCantidadPieza());
 					}			
 					cantidades = new JList();

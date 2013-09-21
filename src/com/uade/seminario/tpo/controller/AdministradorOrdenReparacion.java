@@ -5,15 +5,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 
+
 import com.uade.seminario.tpo.exceptions.NoHayOrdenesException;
 import com.uade.seminario.tpo.model.Empleado;
 import com.uade.seminario.tpo.model.Equipo;
-import com.uade.seminario.tpo.model.ItemReporte;
 import com.uade.seminario.tpo.model.OrdenReparacion;
 import com.uade.seminario.tpo.model.Pieza;
 import com.uade.seminario.tpo.model.TareaReparacion;
 import com.uade.seminario.tpo.service.OrdenDeReparacionDataService;
-
+import com.uade.seminario.tpo.view.objectView.ItemReporteView;
 import com.uade.seminario.tpo.view.objectView.OrdenReparacionView;
 import com.uade.seminario.tpo.view.objectView.PiezaView;
 import com.uade.seminario.tpo.view.objectView.TareaReparacionView;
@@ -29,9 +29,22 @@ public class AdministradorOrdenReparacion {
 			instancia=new AdministradorOrdenReparacion();
 		return instancia;
 	}
-	private OrdenReparacion fromDTOtoClassTransformer(OrdenReparacionView ordenDeReparacionView){		
-		OrdenReparacion ordenReparacion = new OrdenReparacion();
-		return ordenReparacion ;		
+	private OrdenReparacion fromDTOtoClassTransformer(OrdenReparacionView orv){		
+		OrdenReparacion or = new OrdenReparacion();
+		or.setEquipo(AdministradorEquipo.getInstancia().fromDTOtoClassTransformer(orv.getEquipo()));
+		or.setDescripcionFallas(orv.getDescripcionFallas());
+		or.setEstado(orv.getEstado());
+		or.setEstaEnGarantiaFisica(orv.isEstaEnGarantiaFisica());
+		or.setFecha(orv.getFecha());
+		for ( TareaReparacionView trv : orv.getItemsReparacion()){
+			//or.getItemsReparacion().add(AdministradorItemsReparacion.getInstancia().fromDTOtoClassTransformer(trv));
+			//TODO: implementar el fromDTO para los items de reparacionView
+		}
+		or.setNroOrden(orv.getNroOrden());
+		or.setPrioridad(orv.getPrioridad());
+		or.setRepararDeTodosModos(orv.isRepararDeTodosModos());
+		return or ;		
+
 	}
 	protected void modificarOrdenReparacion(OrdenReparacionView orden ){
 		ordenReparacionDataService.merge(fromDTOtoClassTransformer(orden));
@@ -99,8 +112,7 @@ public class AdministradorOrdenReparacion {
 	}
 	protected List<OrdenReparacionView> ordenesPorFecha(Date desde, Date hasta) {
 		List<OrdenReparacionView> listaOrdenes = new ArrayList<OrdenReparacionView>();
-		List <OrdenReparacion> ordenes = ordenReparacionDataService.getInstance().
-				ordenesPorFecha(desde, hasta);
+		List <OrdenReparacion> ordenes = ordenReparacionDataService.ordenesPorFecha(desde, hasta);
 		for (OrdenReparacion ordenReparacion : ordenes) {
 			listaOrdenes.add(ordenReparacion.getView());
 		}

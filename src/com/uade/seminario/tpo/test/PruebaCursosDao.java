@@ -36,12 +36,14 @@ public class PruebaCursosDao {
 		
 		Pieza pieza= new Pieza();
 //		pieza.setNombrePieza("tornillo");
+		pieza.setNroPieza(0);
 		pieza.setDescripcion("es un tornillo");
 		pieza.setEstado("activo");
 		
 
 		Pieza pieza2= new Pieza();
 //		pieza2.setNombrePieza("tuerca");
+		pieza.setNroPieza(1);
 		pieza2.setDescripcion("es una turca");		
 		pieza2.setEstado("activo");
 		
