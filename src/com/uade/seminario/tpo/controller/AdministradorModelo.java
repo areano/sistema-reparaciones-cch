@@ -19,7 +19,7 @@ public class AdministradorModelo {
 			instancia=new AdministradorModelo();
 		return instancia;
 	}
-	private Modelo fromDTOtoClassTransformer(ModeloView modeloView){
+	public Modelo fromDTOtoClassTransformer(ModeloView modeloView){
 		List<Pieza> piezas = AdministradorPieza.getInstancia().
 				getListFromDTOToClass(modeloView.getPiezas());
 		Modelo modelo = new Modelo();

@@ -23,7 +23,11 @@ public class AdministradorEquipo {
 	public Equipo fromDTOtoClassTransformer(EquipoView equipoView){
 
 		Equipo equipo = new Equipo();
-
+		equipo.setCliente(AdministradorCliente.getInstancia().fromDTOtoClassTransformer(equipoView.getCliente()));
+		equipo.setEstado(equipoView.getEstado());
+		equipo.setGarantia(AdministradorGarantia.getInstancia().fromDTOtoClassTransformer(equipoView.getGarantia()));
+		equipo.setModelo(AdministradorModelo.getInstancia().fromDTOtoClassTransformer(equipoView.getModelo()));
+		equipo.setNroSerie(equipoView.getNroSerie());
 		return equipo ;
 	}
 
