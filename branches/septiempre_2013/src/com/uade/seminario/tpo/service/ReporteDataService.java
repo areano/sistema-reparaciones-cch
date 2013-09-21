@@ -3,9 +3,9 @@ package com.uade.seminario.tpo.service;
 import java.sql.Date;
 import java.util.List;
 
-import com.uade.seminario.tpo.model.ItemReporte;
-import com.uade.seminario.tpo.model.Reporte;
 import com.uade.seminario.tpo.persistence.dao.generic.impl.ReporteDAOImpl;
+import com.uade.seminario.tpo.view.objectView.ItemReporteView;
+import com.uade.seminario.tpo.view.objectView.ReporteView;
 
 public class ReporteDataService {
 	private static ReporteDAOImpl dao;
@@ -24,7 +24,7 @@ public class ReporteDataService {
 		return cs;
 	}
 	
-	public Reporte findByDate(Date FechaDesde, Date FechaHasta) {
+	public ReporteView findByDate(Date FechaDesde, Date FechaHasta) {
 		return dao.findByDate(FechaDesde, FechaHasta);
 	}
 	

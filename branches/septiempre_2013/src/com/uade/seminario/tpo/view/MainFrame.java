@@ -69,7 +69,7 @@ public class MainFrame extends javax.swing.JFrame {
 
 				MainFrame inst = new MainFrame();
 
-				inst.setExtendedState(JFrame.MAXIMIZED_BOTH);
+				//inst.setExtendedState(JFrame.MAXIMIZED_BOTH);
 				inst.setVisible(true);
 				inst.setResizable(true);
 				inst.setLocationRelativeTo(null);
@@ -264,7 +264,7 @@ public class MainFrame extends javax.swing.JFrame {
 				}
 			}
 			pack();
-			this.setSize(465, 252);
+			//this.setSize(465, 252);
 		} catch (Exception e) {
 			// add your error handling code here
 			e.printStackTrace();

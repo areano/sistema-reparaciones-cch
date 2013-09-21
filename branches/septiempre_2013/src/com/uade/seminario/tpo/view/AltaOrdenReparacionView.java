@@ -299,6 +299,7 @@ public class AltaOrdenReparacionView extends javax.swing.JFrame {
 							EquipoView equipo = sistema.buscarEquipoView(Integer.parseInt(nroSerie.getText()));
 							OrdenReparacionView ordenView= SistemadeReparaciones.getInstancia().
 									buscarOrdenConEquipoARepararView(equipo);
+							
 							if(equipo!=null && ordenView==null){
 								orden.setEquipo(equipo);
 								orden.setEstado("A Confirmar");

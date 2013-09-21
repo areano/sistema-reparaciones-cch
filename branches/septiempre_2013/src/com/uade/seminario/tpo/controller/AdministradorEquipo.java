@@ -20,7 +20,7 @@ public class AdministradorEquipo {
 			instancia=new AdministradorEquipo();
 		return instancia;
 	}
-	private Equipo fromDTOtoClassTransformer(EquipoView equipoView){
+	public Equipo fromDTOtoClassTransformer(EquipoView equipoView){
 
 		Equipo equipo = new Equipo();
 

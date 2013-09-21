@@ -25,7 +25,7 @@ public class OrdenDeReparacionDAOImpl extends GenericDAOImpl<OrdenReparacion>{
 
 	public OrdenReparacion findByNroOrden(int nroOrden) {
 		Session session = sf.openSession();
-		String hql = "from OrdenReparacion o where o.nroOrden := nroOrden";
+		String hql = "from OrdenReparacion o where o.nroOrden = :nroOrden";
 		Query query = session.createQuery(hql);
 		query.setParameter("nroOrden", nroOrden);
 		OrdenReparacion retorno =  (OrdenReparacion)query.uniqueResult();
@@ -50,7 +50,7 @@ public class OrdenDeReparacionDAOImpl extends GenericDAOImpl<OrdenReparacion>{
 
 	public OrdenReparacion buscarOrdenConEquipoARepararView(Equipo equipo) {
 		Session session = sf.openSession();
-		String hql = "from OrdenReparacion o inner join o.equipo e where e =: equipo";
+		String hql = "select o from OrdenReparacion o inner join o.equipo e where e =:equipo and e.estado!='Entregado'";
 		Query query = session.createQuery(hql);
 		query.setParameter("equipo", equipo);
 		OrdenReparacion retorno =  (OrdenReparacion)query.uniqueResult();

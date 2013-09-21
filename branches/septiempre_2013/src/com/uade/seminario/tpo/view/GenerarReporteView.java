@@ -6,12 +6,10 @@ import java.sql.Date;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
-
 import javax.swing.WindowConstants;
-import javax.swing.SwingUtilities;
 
 import com.uade.seminario.tpo.controller.SistemadeReparaciones;
-import com.uade.seminario.tpo.model.Reporte;
+import com.uade.seminario.tpo.view.objectView.ReporteView;
 
 
 /**
@@ -36,15 +34,15 @@ public class GenerarReporteView extends javax.swing.JFrame {
 	/**
 	* Auto-generated main method to display this JFrame
 	*/
-	public static void main(String[] args) {
-		SwingUtilities.invokeLater(new Runnable() {
-			public void run() {
-				GenerarReporteView inst = new GenerarReporteView();
-				inst.setLocationRelativeTo(null);
-				inst.setVisible(true);
-			}
-		});
-	}
+//	public static void main(String[] args) {
+//		SwingUtilities.invokeLater(new Runnable() {
+//			public void run() {
+//				GenerarReporteView inst = new GenerarReporteView();
+//				inst.setLocationRelativeTo(null);
+//				inst.setVisible(true);
+//			}
+//		});
+//	}
 	
 	public GenerarReporteView() {
 		super();
@@ -70,11 +68,13 @@ public class GenerarReporteView extends javax.swing.JFrame {
 			}
 			{
 				desde = new JTextField();
+				desde.setToolTipText("dd/mm/aaaa");
 				getContentPane().add(desde);
 				desde.setBounds(98, 16, 176, 23);
 			}
 			{
 				hasta = new JTextField();
+				hasta.setToolTipText("dd/mm/aaaa");
 				getContentPane().add(hasta);
 				hasta.setBounds(98, 55, 176, 23);
 			}
@@ -89,8 +89,9 @@ public class GenerarReporteView extends javax.swing.JFrame {
 						if(!desde.getText().equals("") && !hasta.getText().equals("")){
 							Date fechaDesde=new Date(Date.parse(desde.getText()));
 							Date fechaHasta=new Date(Date.parse(hasta.getText()));
-							Reporte reporte=SistemadeReparaciones.getInstancia().emitirReportePiezas(fechaDesde, fechaHasta);
+							ReporteView reporte=SistemadeReparaciones.getInstancia().emitirReportePiezas(fechaDesde, fechaHasta);
 							ReporteDePiezasView view = new ReporteDePiezasView(reporte);
+							
 							view.setVisible(true);
 						}
 						
@@ -99,7 +100,9 @@ public class GenerarReporteView extends javax.swing.JFrame {
 				});
 			}
 			pack();
-			this.setSize(400, 189);
+			this.setSize(400, 200);
+			this.setPreferredSize(new java.awt.Dimension(400, 200));
+			this.setBounds(0, 0, 400, 200);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

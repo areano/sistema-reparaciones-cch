@@ -7,6 +7,8 @@ import java.util.Comparator;
 import java.util.List;
 
 
+
+
 import com.uade.seminario.tpo.service.ClienteDataService;
 import com.uade.seminario.tpo.service.EmpleadoDataService;
 import com.uade.seminario.tpo.service.EquipoService;
@@ -14,9 +16,11 @@ import com.uade.seminario.tpo.service.ModeloDataService;
 import com.uade.seminario.tpo.service.ReporteDataService;
 import com.uade.seminario.tpo.view.objectView.ClienteView;
 import com.uade.seminario.tpo.view.objectView.EquipoView;
+import com.uade.seminario.tpo.view.objectView.ItemReporteView;
 import com.uade.seminario.tpo.view.objectView.ModeloView;
 import com.uade.seminario.tpo.view.objectView.OrdenReparacionView;
 import com.uade.seminario.tpo.view.objectView.PiezaView;
+import com.uade.seminario.tpo.view.objectView.ReporteView;
 import com.uade.seminario.tpo.view.objectView.TareaReparacionView;
 import com.uade.seminario.tpo.exceptions.ClienteNoExisteException;
 import com.uade.seminario.tpo.exceptions.EmpleadoNoExisteException;
@@ -35,12 +39,10 @@ import com.uade.seminario.tpo.model.ClienteId;
 import com.uade.seminario.tpo.model.Empleado;
 import com.uade.seminario.tpo.model.Equipo;
 import com.uade.seminario.tpo.model.Garantia;
-import com.uade.seminario.tpo.model.ItemReporte;
 import com.uade.seminario.tpo.model.Modelo;
 import com.uade.seminario.tpo.model.OrdenReparacion;
 import com.uade.seminario.tpo.model.Pieza;
 import com.uade.seminario.tpo.model.Remito;
-import com.uade.seminario.tpo.model.Reporte;
 import com.uade.seminario.tpo.model.TareaReparacion;
 
 //
@@ -67,7 +69,7 @@ public class SistemadeReparaciones {
 	private List<Equipo> equipos;
 	private ArrayList<Cliente> clientes;
 	private ArrayList<Empleado> empleados;
-	private List<Reporte> reportes;
+	private List<ReporteView> reportes;
 	
 	private SistemadeReparaciones(){
 		this.remitos=new ArrayList<Remito>();
@@ -78,7 +80,7 @@ public class SistemadeReparaciones {
 		this.empleados=new ArrayList<Empleado>();
 		this.equipos=new ArrayList<Equipo>();
 		this.clientes= new ArrayList<Cliente>();
-		this.reportes=new ArrayList<Reporte>();
+		this.reportes=new ArrayList<ReporteView>();
 		
 		/* CLASES PARA TEST */
 		Pieza pieza= new Pieza(1,  "es un tornillo");
@@ -256,8 +258,10 @@ public class SistemadeReparaciones {
 		
 	}
 	
-	public Reporte emitirReportePiezas(Date desde,Date hasta){
+	public ReporteView emitirReportePiezas(Date desde,Date hasta){
+		AdministradorReporte.getInstancia().GenerarDynamicReporte();
 		return AdministradorReporte.getInstancia().generarReportePiezas(desde,hasta);
+		
 	}
 
 //	public Reporte emitirReportePiezas(Date desde,Date hasta){
@@ -442,6 +446,7 @@ public class SistemadeReparaciones {
 	public OrdenReparacionView buscarOrdenConEquipoARepararView(EquipoView equipoView) {
 		Equipo equipo=AdministradorEquipo.getInstancia().buscarEquipo(equipoView.getNroSerie());
 		return AdministradorOrdenReparacion.getInstancia().buscarOrdenConEquipoARepararView(equipo);
+		//TODO: aca debe traer SOLO ordenes que no estén "entregado"
 		
 	}
 

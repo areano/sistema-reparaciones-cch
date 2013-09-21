@@ -286,8 +286,8 @@ public class ModificarOrdenReparacionView extends javax.swing.JFrame {
 			{
 				modificarOrden = new JButton();
 				getContentPane().add(modificarOrden);
-				modificarOrden.setText("Modificar Orden");
-				modificarOrden.setBounds(375, 339, 135, 23);
+				modificarOrden.setText("Confirmar Cambios");
+				modificarOrden.setBounds(375, 331, 139, 23);
 				modificarOrden.addActionListener(new ModificarOrdenListener(this));
 			}
 			{			
