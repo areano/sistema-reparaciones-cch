@@ -1,5 +1,9 @@
 package com.uade.seminario.tpo.controller;
 
+import java.sql.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+
 import com.uade.seminario.tpo.model.Empleado;
 import com.uade.seminario.tpo.service.EmpleadoDataService;
 import com.uade.seminario.tpo.view.objectView.EmpleadoView;
@@ -38,7 +42,20 @@ public class AdministradorEmpleado {
 	private Empleado fromDTOtoClassTransformer(EmpleadoView ev){
 		Empleado e = new Empleado();
 		e.setApellido(ev.getApellido());
-		e.setFechaNac(ev.getFechaNac()); //COMO ES ESTO DE LA FECHA DE NACIMIENTO? EL VIEW ME DA STRING Y EL MODEL ME PIDE DATE
+		
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/mm/yyyy");
+        java.util.Date date;
+        java.sql.Date sqlDate;
+		try {
+			date = sdf.parse(ev.getFechaNac());
+			sqlDate = new Date(date.getTime());	
+			e.setFechaNac(sqlDate);
+		} catch (ParseException e1) {
+			e1.printStackTrace();
+		}
+		
+		
+		
 		e.setIdSector(ev.getIdSector());
 		e.setLegajo(ev.getLegajo());
 		e.setNombre(ev.getNombre());
