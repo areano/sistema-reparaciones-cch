@@ -71,5 +71,13 @@ public class ModeloView {
 	public void setDescripcion(String descripcion) {
 		this.descripcion = descripcion;
 	}
+	public void eliminarPieza(PiezaView piezaView){
+		for (PiezaView pieza : piezas) {
+			if (pieza.getNroPieza() == piezaView.getNroPieza()){
+				piezas.remove(pieza);
+				return ;
+			}			
+		}
+	}
 	
 }

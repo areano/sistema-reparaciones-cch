@@ -55,18 +55,27 @@ public class AltaPiezaView extends javax.swing.JInternalFrame {
 					piezaV.setDescripcion(descripcion.getText());
 					piezaV.setEstado("activo");
 					SistemadeReparaciones.getInstancia().modificarPieza(piezaV);
+				}else {
+					MensajeErrorFrame mensaje = new MensajeErrorFrame("Pieza con nro Serie ["+piezaV.getNroPieza()
+							+"] ya existe");
+					mensaje.setVisible(true);
 				}
-				List<PiezaView> piezas = modelo.getPiezas();
-				piezas.add(piezaV);
-				modelo.setPiezas(piezas);					
+				if (modelo!=null){
+					List<PiezaView> piezas = modelo.getPiezas();
+					piezas.add(piezaV);
+					modelo.setPiezas(piezas);
+					
+				}
 				frame.dispose();
 			}catch(PiezaNoExisteException e1){
 				if(!codigo.getText().isEmpty()){
-					pieza.setDescripcion(descripcion.getText());
+					pieza = new PiezaView(Integer.parseInt(codigo.getText()),descripcion.getText());
 					pieza.setEstado("activo");
-					List<PiezaView> piezas = modelo.getPiezas();
-					piezas.add(pieza);
-					modelo.setPiezas(piezas);
+					if (modelo!=null){
+						List<PiezaView> piezas = modelo.getPiezas();
+						piezas.add(pieza);
+						modelo.setPiezas(piezas);
+					}
 					SistemadeReparaciones.getInstancia().altaPieza(pieza);
 					frame.dispose();
 				}else{
@@ -86,6 +95,7 @@ public class AltaPiezaView extends javax.swing.JInternalFrame {
 		pieza = null;		
 		initGUI();
 		codModelo.setEditable(false);
+		modelo =  null;
 	}
 	public AltaPiezaView(ModeloView modelo) {
 		super();
@@ -165,7 +175,7 @@ public class AltaPiezaView extends javax.swing.JInternalFrame {
 							MensajeFrame mensaje = new MensajeFrame("No existe la pieza ["+codigo.getText()
 									+"] por lo que sera creada s continua");
 							mensaje.setVisible(true);
-							pieza = new PiezaView(Integer.parseInt(codigo.getText()),descripcion.getText());
+							
 						}	
 					}
 				});

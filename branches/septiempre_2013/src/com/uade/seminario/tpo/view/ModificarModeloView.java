@@ -213,7 +213,11 @@ public class ModificarModeloView extends javax.swing.JInternalFrame {
 				quitarPieza.addActionListener(new ActionListener() {
 					
 					public void actionPerformed(ActionEvent e) {
-						PiezaView pieza=(PiezaView)piezas.getSelectedValue();
+						
+						PiezaView pieza=(PiezaView)SistemadeReparaciones.
+								getInstancia().buscarPiezaView((Integer)piezas.getSelectedValue());
+						modelo.eliminarPieza(pieza);
+						
 						
 					}
 				});
