@@ -39,7 +39,7 @@ public class AdministradorEmpleado {
 		Empleado empleado = fromDTOtoClassTransformer(empleadoView);
 		empleadoDataService.merge(empleado);
 	}
-	private Empleado fromDTOtoClassTransformer(EmpleadoView ev){
+	protected Empleado fromDTOtoClassTransformer(EmpleadoView ev){
 		Empleado e = new Empleado();
 		e.setApellido(ev.getApellido());
 		

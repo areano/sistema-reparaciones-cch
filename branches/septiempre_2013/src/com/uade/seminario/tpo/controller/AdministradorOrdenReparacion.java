@@ -29,7 +29,7 @@ public class AdministradorOrdenReparacion {
 			instancia=new AdministradorOrdenReparacion();
 		return instancia;
 	}
-	public OrdenReparacion fromDTOtoClassTransformer(OrdenReparacionView orv){		
+	protected OrdenReparacion fromDTOtoClassTransformer(OrdenReparacionView orv){		
 		OrdenReparacion or = new OrdenReparacion();
 		or.setEquipo(AdministradorEquipo.getInstancia().fromDTOtoClassTransformer(orv.getEquipo()));
 		or.setDescripcionFallas(orv.getDescripcionFallas());

@@ -19,10 +19,10 @@ public class AdministradorGarantia {
 			instancia=new AdministradorGarantia();
 		return instancia;
 	}
-	public Garantia buscarGarantia(int nroGarantia) {
+	protected Garantia buscarGarantia(int nroGarantia) {
 		return garantiaDataService.findByNroGarantia(nroGarantia);
 	}
-	public Garantia fromDTOtoClassTransformer(GarantiaView gv) { // DIFIEREN EN TODO LA GARANTIA VIEW Y LA MODEL
+	protected Garantia fromDTOtoClassTransformer(GarantiaView gv) { // DIFIEREN EN TODO LA GARANTIA VIEW Y LA MODEL
 		Garantia g= new Garantia();
 		
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/mm/yyyy");

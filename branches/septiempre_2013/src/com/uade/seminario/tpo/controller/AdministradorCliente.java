@@ -36,7 +36,7 @@ class AdministradorCliente {
 		Cliente cliente = fromDTOtoClassTransformer(clienteView);
 		clienteDataService.merge(cliente);
 	}
-	public Cliente fromDTOtoClassTransformer(ClienteView clienteView){
+	protected Cliente fromDTOtoClassTransformer(ClienteView clienteView){
 		
 		Cliente cliente = new Cliente();
 		cliente.setApellido(clienteView.getApellido());

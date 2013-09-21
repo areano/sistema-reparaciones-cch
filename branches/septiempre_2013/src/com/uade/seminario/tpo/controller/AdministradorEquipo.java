@@ -20,7 +20,7 @@ public class AdministradorEquipo {
 			instancia=new AdministradorEquipo();
 		return instancia;
 	}
-	public Equipo fromDTOtoClassTransformer(EquipoView equipoView){
+	protected Equipo fromDTOtoClassTransformer(EquipoView equipoView){
 
 		Equipo equipo = new Equipo();
 		equipo.setCliente(AdministradorCliente.getInstancia().fromDTOtoClassTransformer(equipoView.getCliente()));
@@ -45,13 +45,13 @@ public class AdministradorEquipo {
 		return equipoDataService.findByNroSerie(codEquipo);
 	}
 
-	public boolean existeElModeloEnUnEquipo(Modelo modelo) {
+	protected boolean existeElModeloEnUnEquipo(Modelo modelo) {
 		if (equipoDataService.existeElModeloEnUnEquipo(modelo).size()>0)
 			return true;
 		return false;
 	}
 
-	public void modificarEquipo(EquipoView equipo) {
+	protected void modificarEquipo(EquipoView equipo) {
 		equipoDataService.merge( fromDTOtoClassTransformer(equipo));
 		
 	}
