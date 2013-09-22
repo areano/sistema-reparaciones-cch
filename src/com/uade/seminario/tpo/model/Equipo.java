@@ -18,7 +18,7 @@ public class Equipo {
 	@JoinColumns({@JoinColumn(name="nro_doc", nullable=false), @JoinColumn(name="tipo_doc", nullable=false)})
 	private Cliente cliente;
 	@OneToOne(cascade=CascadeType.ALL,fetch=FetchType.EAGER)
-	@JoinColumn(name="nro_garantia", nullable=false)
+	@JoinColumn(name="nro_garantia")
 	private Garantia garantia;
 	@Column(name="e_estado", columnDefinition="varchar(20)", nullable=false)
 	private String estado;
@@ -70,7 +70,8 @@ public class Equipo {
 		EquipoView equipoV= new EquipoView();
 		equipoV.setCliente(cliente.getView());
 		equipoV.setEstado(estado);
-		equipoV.setGarantia(garantia.getView());
+		if (garantia != null) equipoV.setGarantia(garantia.getView());
+		else equipoV.setGarantia(null);
 		equipoV.setModelo(modelo.getView());
 		equipoV.setNroSerie(nroSerie);
 		return equipoV;

@@ -1,9 +1,13 @@
 package com.uade.seminario.tpo.model;
 
 import java.sql.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 import javax.persistence.*;
+
+import net.sf.jasperreports.engine.util.Java14BigDecimalHandler;
 
 import com.uade.seminario.tpo.view.objectView.GarantiaView;
 
@@ -39,15 +43,23 @@ public class Garantia {
 		this.fechaVencimiento = fechaVencimiento;
 	}
 	public boolean estasEnGarantia() {
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        java.util.Date date;
+        java.sql.Date sqlDate;
+        date = new java.util.Date();
+		try {
+			date = sdf.parse(date.toString());
+			sqlDate = new Date(date.getTime());	
+			if(fechaVencimiento.compareTo(sqlDate)>=0) return true;
+			else return false;
+		} catch (ParseException e1) {
+			e1.printStackTrace();
+		}
+		
 		return false;
-//		long date = Calendar.getInstance()).getTime();
-//		If (fechaVencimiento >= (new Date())) {
-//			
-//		}
-
 	}
 	public GarantiaView getView(){
-		return new GarantiaView(new Integer(nroGarantia).toString(),
+		return new GarantiaView(String.valueOf(nroGarantia),
 								fechaVencimiento.toString(), estasEnGarantia());
 	}
 	

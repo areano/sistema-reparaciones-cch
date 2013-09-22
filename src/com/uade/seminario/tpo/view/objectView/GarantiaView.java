@@ -12,6 +12,9 @@ public class GarantiaView {
 		this.fechaVencimiento = fechaVencimiento;
 		this.estasEnGarantia = estasEnGarantia;
 	}
+	public GarantiaView() {
+
+	}
 	public String getNroGarantia() {
 		return nroGarantia;
 	}

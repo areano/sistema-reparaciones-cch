@@ -1,6 +1,7 @@
 package com.uade.seminario.tpo.view;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.nio.channels.GatheringByteChannel;
 import java.sql.Date;
 
 import javax.swing.JButton;
@@ -11,6 +12,7 @@ import javax.swing.WindowConstants;
 import javax.swing.SwingUtilities;
 
 import com.uade.seminario.tpo.controller.SistemadeReparaciones;
+import com.uade.seminario.tpo.view.objectView.GarantiaView;
 
 
 /**
@@ -31,25 +33,39 @@ public class AltaGarantiaView extends javax.swing.JInternalFrame {
 	private JTextField fecha;
 	private JButton ok;
 	private JTextField nroGarantia;
+	private GarantiaView garantiaView;
+	private JTextField nrogarantia2;
 
 	/**
 	* Auto-generated main method to display this JFrame
 	*/
-//	public static void main(String[] args) {
-//		SwingUtilities.invokeLater(new Runnable() {
-//			public void run() {
-//				AltaGarantiaView inst = new AltaGarantiaView();
-//				inst.setLocationRelativeTo(null);
-//				inst.setVisible(true);
-//			}
-//		});
-//	}
-	
+	private class AltaGrantia implements ActionListener{
+		@Override
+		public void actionPerformed(ActionEvent e) {
+
+			if(!nroGarantia.getText().equals(""))
+			garantiaView.setNroGarantia(nroGarantia.getText());
+			garantiaView.setFechaVencimiento(fecha.getText());
+			nrogarantia2.setText(nroGarantia.getText());
+			nrogarantia2.updateUI();
+			//SistemadeReparaciones.getInstancia().altaGarantia(garantiaView);
+			dispose();
+		}
+		
+	}
 	public AltaGarantiaView() {
 		super();
+		this.garantiaView = new GarantiaView();
 		initGUI();
 	}
 	
+	public AltaGarantiaView(GarantiaView garantiaView, JTextField nrogarantia2) {
+		super();
+		this.garantiaView = garantiaView;
+		this.nrogarantia2 = nrogarantia2;
+		initGUI();
+	}
+
 	private void initGUI() {
 		try {
 			setTitle("Alta Garantia");
@@ -82,15 +98,7 @@ public class AltaGarantiaView extends javax.swing.JInternalFrame {
 				getContentPane().add(ok);
 				ok.setText("Alta Garantia");
 				ok.setBounds(122, 109, 124, 23);
-				ok.addActionListener(new ActionListener() {
-					
-					public void actionPerformed(ActionEvent e) {
-						Date fecha1=new Date(Date.parse(fecha.getText()));
-						if(!nroGarantia.getText().equals(""))
-						SistemadeReparaciones.getInstancia().altaGarantia(Integer.parseInt(nroGarantia.getText()),fecha1);
-						dispose();
-					}
-				});
+				ok.addActionListener(new AltaGrantia());
 			}
 			pack();
 			this.setSize(400, 193);

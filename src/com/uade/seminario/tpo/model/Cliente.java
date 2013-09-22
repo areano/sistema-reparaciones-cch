@@ -37,7 +37,7 @@ public class Cliente {
 		this.apellido=apellido2;
 		this.direccion=direccion;
 		
-		SimpleDateFormat sdf = new SimpleDateFormat("dd/mm/yyyy");
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
         java.util.Date date;
         java.sql.Date sqlDate;
 		try {
@@ -87,7 +87,7 @@ public class Cliente {
 		return fechaNac;
 	}
 	public void setFechaNac(String fechaNac) {
-		SimpleDateFormat sdf = new SimpleDateFormat("dd/mm/yyyy");
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
         java.util.Date date;
         java.sql.Date sqlDate;
 		try {
@@ -106,7 +106,7 @@ public class Cliente {
 		c.setDireccion(direccion);
 		c.setEmail(email);
 		
-		SimpleDateFormat sdf = new SimpleDateFormat("dd/mm/yyyy");
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 		
 		c.setFechaNac(sdf.format(fechaNac));
 		c.setNombre(nombre);
