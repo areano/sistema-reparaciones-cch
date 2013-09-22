@@ -22,7 +22,7 @@ public class Empleado {
 	private String apellido;
 
 	@EmbeddedId
-	private EmpleadoId id;
+	private EmpleadoId id = new EmpleadoId();
 
 	@Column(name = "fecha_nacimiento")
 	@Temporal(TemporalType.DATE)
@@ -41,9 +41,7 @@ public class Empleado {
 	private List<OrdenReparacion> aReparar;
 	
 	public Empleado(){
-		
 		this.aReparar=new Vector<OrdenReparacion>();
-		
 	}
 	
 	public String getNombre() {
