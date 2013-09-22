@@ -265,8 +265,9 @@ public class SistemadeReparaciones {
 	}
 	
 	public ReporteView emitirReportePiezas(Date desde,Date hasta){
-		AdministradorReporte.getInstancia().GenerarDynamicReporte();
-		return AdministradorReporte.getInstancia().generarReportePiezas(desde,hasta);
+		ReporteView rv = AdministradorReporte.getInstancia().generarReportePiezas(desde,hasta);
+		AdministradorReporte.getInstancia().GenerarDynamicReporte(rv, desde, hasta);
+		return  rv; 
 		
 	}
 

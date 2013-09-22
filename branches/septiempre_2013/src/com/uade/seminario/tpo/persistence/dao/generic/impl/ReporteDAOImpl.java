@@ -30,14 +30,14 @@ public class ReporteDAOImpl implements GenericDAO<ReporteView> {
 	}
 	
 	public ReporteView findByDate(Date FechaDesde, Date FechaHasta) {
-		ReporteView reporte=new ReporteView(FechaDesde,FechaDesde);
+		ReporteView reporte=new ReporteView(FechaDesde,FechaHasta);
 //		List<ItemReporte> itemsReporte=new ArrayList<ItemReporte>();
 		/* List<OrdenReparacion> ordenes=buscarOrdenesReporte(FechaDesde,FechaHasta);
 		 * itemsReporte=generarListaPiezas(ordenes);		
 		*
 		*Reemplazar por reporte 
 		*/
-		List<ItemReporteView> itemsReporte=generarListaPiezas(FechaDesde,FechaDesde);
+		List<ItemReporteView> itemsReporte=generarListaPiezas(FechaDesde,FechaHasta);
 		reporte.setItemsReporte(itemsReporte);
 		return reporte;	
 	}
@@ -45,13 +45,14 @@ public class ReporteDAOImpl implements GenericDAO<ReporteView> {
 	private List<ItemReporteView> generarListaPiezas (Date desde, Date hasta) {
 		List<ItemReporteView> itemsReporte=new ArrayList<ItemReporteView>();
 		Session session =sf.openSession();
-		String hql = "select Pie.descripcion, count(*) from OrdenReparacion as OrRep inner join OrRep.itemsReparacion as itRep inner join itRep.piezas as Pie where OrRep.fecha between :desde and :hasta group by Pie.descripcion order by 1 ";
+		String hql = "select Pie.nroPieza, Pie.descripcion, count(*) from OrdenReparacion as OrRep inner join OrRep.itemsReparacion as itRep inner join itRep.piezas as Pie where OrRep.fecha between :desde and :hasta group by Pie.descripcion order by 1 ";
 		Query query = session.createQuery(hql);
 		query.setParameter("desde", desde);
 		query.setParameter("hasta", hasta);
+		@SuppressWarnings("unchecked")
 		List<Object[]> resultados= query.list();
 		for (Object[] o : resultados){
-			itemsReporte.add(new ItemReporteView( (String)o[1], (int)o[2]));
+			itemsReporte.add(new ItemReporteView((int)o[0], (String)o[1], (int)(long)o[2]));
 		}
 		session.close();
 		return itemsReporte;

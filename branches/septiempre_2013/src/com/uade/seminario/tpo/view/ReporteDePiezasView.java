@@ -66,7 +66,7 @@ public class ReporteDePiezasView extends javax.swing.JFrame {
 				{	if(reporte!=null){
 					DefaultListModel piezasModelo=new DefaultListModel();
 					for (ItemReporteView item : reporte.getItemsReporte()) {
-						piezasModelo.addElement(item.getNombrePieza());
+						piezasModelo.addElement(item.getDescripcionPieza());
 					}			
 					piezas = new JList();
 					jScrollPane1.setViewportView(piezas);
