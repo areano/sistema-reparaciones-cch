@@ -58,9 +58,18 @@ public class MainFrame extends javax.swing.JFrame {
 	private JMenuItem jmiObtenerReparacion;
 	private JMenuItem jmiObtenerReporte;
 
-	/**
-	 * Auto-generated main method to display this JFrame
-	 */
+	private class AltaEquipo implements ActionListener{
+		JDesktopPane mainFrame; 
+		public AltaEquipo(JDesktopPane mainFrame){
+			this.mainFrame = mainFrame;
+		}
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			cargarInternalFrame(new AltaEquipoView(mainFrame));
+			
+		}
+		
+	}
 	public static void main(String[] args) {
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
@@ -121,26 +130,22 @@ public class MainFrame extends javax.swing.JFrame {
 						{
 							jmiAltaEquipo = new JMenuItem("Alta");
 							jmEquipo.add(jmiAltaEquipo);
-							jmiAltaEquipo.addActionListener(new ActionListener() {
-								public void actionPerformed(ActionEvent arg0) {
-									cargarInternalFrame(new AltaEquipoView());
-								}
-							});
+							jmiAltaEquipo.addActionListener(new AltaEquipo(jdEscritorio));
 						}
 					}
-					{
-						jmGarantia = new JMenu("Garantia");
-						jMenu.add(jmGarantia);
-						{
-							jmiAltaGarantia = new JMenuItem("Alta");
-							jmGarantia.add(jmiAltaGarantia);
-							jmiAltaGarantia.addActionListener(new ActionListener() {
-								public void actionPerformed(ActionEvent arg0) {
-									cargarInternalFrame(new AltaGarantiaView());
-								}
-							});
-						}
-					}
+//					{
+//						jmGarantia = new JMenu("Garantia");
+//						jMenu.add(jmGarantia);
+//						{
+//							jmiAltaGarantia = new JMenuItem("Alta");
+//							jmGarantia.add(jmiAltaGarantia);
+//							jmiAltaGarantia.addActionListener(new ActionListener() {
+//								public void actionPerformed(ActionEvent arg0) {
+//									cargarInternalFrame(new AltaGarantiaView());
+//								}
+//							});
+//						}
+//					}
 					{
 						jmModelo = new JMenu("Modelo");
 						jMenu.add(jmModelo);

@@ -52,8 +52,8 @@ public class OrdenReparacion implements Comparable<OrdenReparacion>{
 		this.itemsReparacion=new ArrayList<TareaReparacion>();
 		java.util.Date date;
 		java.sql.Date sqlDate;
-		SimpleDateFormat sdf = new SimpleDateFormat("dd/mm/yyyy");
-		String timeStamp = new SimpleDateFormat("dd/mm/yyyy").format(Calendar.getInstance().getTime());
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+		String timeStamp = new SimpleDateFormat("dd/MM/yyyy").format(Calendar.getInstance().getTime());
 		try {
 			date = sdf.parse(timeStamp);
 			sqlDate = new Date(date.getTime());	

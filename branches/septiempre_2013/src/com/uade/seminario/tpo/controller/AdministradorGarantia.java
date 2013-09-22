@@ -25,7 +25,7 @@ public class AdministradorGarantia {
 	protected Garantia fromDTOtoClassTransformer(GarantiaView gv) { // DIFIEREN EN TODO LA GARANTIA VIEW Y LA MODEL
 		Garantia g= new Garantia();
 		
-		SimpleDateFormat sdf = new SimpleDateFormat("dd/mm/yyyy");
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
         java.util.Date date;
         java.sql.Date sqlDate;
 		try {
@@ -38,6 +38,10 @@ public class AdministradorGarantia {
 		
 		g.setNroGarantia(Integer.parseInt(gv.getNroGarantia()));
 		return g;
+	}
+	public void altaGarantia(GarantiaView garantiaView) {
+		garantiaDataService.save(fromDTOtoClassTransformer(garantiaView));
+		
 	}
 	
 }

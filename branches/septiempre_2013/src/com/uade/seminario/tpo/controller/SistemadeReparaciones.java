@@ -6,6 +6,9 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+import org.apache.velocity.util.introspection.MethodMap.AmbiguousException;
+import org.hsqldb.Grantee;
+
 
 
 
@@ -16,6 +19,7 @@ import com.uade.seminario.tpo.service.ModeloDataService;
 import com.uade.seminario.tpo.service.ReporteDataService;
 import com.uade.seminario.tpo.view.objectView.ClienteView;
 import com.uade.seminario.tpo.view.objectView.EquipoView;
+import com.uade.seminario.tpo.view.objectView.GarantiaView;
 import com.uade.seminario.tpo.view.objectView.ItemReporteView;
 import com.uade.seminario.tpo.view.objectView.ModeloView;
 import com.uade.seminario.tpo.view.objectView.OrdenReparacionView;
@@ -24,12 +28,14 @@ import com.uade.seminario.tpo.view.objectView.ReporteView;
 import com.uade.seminario.tpo.view.objectView.TareaReparacionView;
 import com.uade.seminario.tpo.exceptions.ClienteNoExisteException;
 import com.uade.seminario.tpo.exceptions.EmpleadoNoExisteException;
+import com.uade.seminario.tpo.exceptions.EquipoExisteException;
 import com.uade.seminario.tpo.exceptions.EquipoNoExisteException;
 import com.uade.seminario.tpo.exceptions.ExceptionExisteCliente;
 import com.uade.seminario.tpo.exceptions.ExceptionExisteModelo;
 import com.uade.seminario.tpo.exceptions.ExceptionModeloInactivo;
 import com.uade.seminario.tpo.exceptions.ExceptionModeloPerteneceEquipo;
 import com.uade.seminario.tpo.exceptions.ExceptionNoExisteModelo;
+import com.uade.seminario.tpo.exceptions.GarantiaExisteException;
 import com.uade.seminario.tpo.exceptions.GarantiaNoExisteException;
 import com.uade.seminario.tpo.exceptions.ModeloExisteException;
 import com.uade.seminario.tpo.exceptions.OrdenNoExisteException;
@@ -284,7 +290,7 @@ public class SistemadeReparaciones {
 		}
 	}
 	
-	private Cliente buscarCliente(String nroDoc, String tipoDoc) throws ClienteNoExisteException{
+	protected Cliente buscarCliente(String nroDoc, String tipoDoc) throws ClienteNoExisteException{
 		Cliente cliente = AdministradorCliente.getInstancia().buscarCliente(nroDoc, tipoDoc); 
 		if (cliente != null) return cliente;
 		throw new ClienteNoExisteException(nroDoc, tipoDoc);
@@ -299,7 +305,7 @@ public class SistemadeReparaciones {
 		if (equipo!=null) return equipo;
 		throw new EquipoNoExisteException(String.valueOf(nroSerieEquipo));
 	}
-	private  Modelo buscarModelo(int codigo) throws ExceptionNoExisteModelo {
+	protected  Modelo buscarModelo(int codigo) throws ExceptionNoExisteModelo {
 		Modelo modelo =  AdministradorModelo.getInstancia().buscarModelo(codigo);
 		if (modelo!=null) return modelo;
 		throw new ExceptionNoExisteModelo(codigo);		
@@ -312,10 +318,13 @@ public class SistemadeReparaciones {
 		
 	}
 
-	private Garantia buscarGarantia(int nroGarantia) throws GarantiaNoExisteException{
+	protected Garantia buscarGarantia(int nroGarantia) throws GarantiaNoExisteException{
 		Garantia garantia = AdministradorGarantia.getInstancia().buscarGarantia(nroGarantia);
 		if (garantia!=null) return garantia;
 		throw new GarantiaNoExisteException(nroGarantia);
+	}
+	public GarantiaView buscarGarantiaView(int nroGarantia) throws GarantiaNoExisteException{
+		return buscarGarantia(nroGarantia).getView();
 	}
 	private  OrdenReparacion buscarOrdenReparacion(int nroReparacion) {
 		OrdenReparacion ordenReparacion = AdministradorOrdenReparacion.getInstancia().
@@ -374,8 +383,10 @@ public class SistemadeReparaciones {
 		return AdministradorModelo.getInstancia().hayModelosConPieza(pieza);
 	}
 
-	public ModeloView buscarModeloView(int codModelo) {
-		return AdministradorModelo.getInstancia().buscarModeloView(codModelo);
+	public ModeloView buscarModeloView(int codModelo) throws ExceptionNoExisteModelo {
+		ModeloView modeloView =  AdministradorModelo.getInstancia().buscarModeloView(codModelo);
+		if (modeloView != null )	return modeloView;
+		else throw new ExceptionNoExisteModelo(codModelo);
 	}
 
 	public List<PiezaView> buscarPiezaXModeloView(int codModelo) {
@@ -393,25 +404,22 @@ public class SistemadeReparaciones {
 			AdministradorModelo.getInstancia().altaModelo(modeloView);
 		}
 	}
-	public void altaEquipo(int nroEquipo,int nroModelo,String tipoDoc,String nroDoc,Date fecha,String nroGarantia,boolean repararDeTodosModos){
-		Equipo equipo=buscarEquipo(nroEquipo);
-		Modelo modelo=buscarModelo(nroModelo);
-		Cliente cliente=buscarCliente(nroDoc, tipoDoc);
-		Garantia garantia1=null;
-		if(!nroGarantia.equals(""))
-			garantia1=buscarGarantia(Integer.parseInt(nroGarantia));
-		if(equipo==null && modelo!=null && cliente!=null){
-			equipo=new Equipo(nroEquipo,modelo,cliente,garantia1);
-		}
-		
+	public void altaEquipo(EquipoView equipoView)throws ExceptionNoExisteModelo, 
+	EquipoExisteException, ClienteNoExisteException, GarantiaNoExisteException {
+			try{
+				buscarEquipo(equipoView.getNroSerie());
+			}catch(EquipoNoExisteException e){
+				AdministradorEquipo.getInstancia().altaEquipo(equipoView);
+			}
 	}
 
 
-	public void altaGarantia(int nroGarantia, Date fecha1) {
-		Garantia garantia=buscarGarantia(nroGarantia);
-		if(garantia==null){
-			garantia=new Garantia(nroGarantia,fecha1);
-			garantias.add(garantia);
+	public void altaGarantia(GarantiaView garantiaView) throws GarantiaExisteException {
+		try{
+			Garantia garantia = buscarGarantia(Integer.parseInt(garantiaView.getNroGarantia()));
+			throw new GarantiaExisteException("Garantia ["+garantiaView.getNroGarantia()+"] ya existe");
+		}catch (GarantiaNoExisteException e){
+			AdministradorGarantia.getInstancia().altaGarantia(garantiaView);
 		}
 	}
 
@@ -545,5 +553,7 @@ public class SistemadeReparaciones {
 	public void confirmarOrdenReparacion(OrdenReparacionView orden ){
 		AdministradorOrdenReparacion.getInstancia().confirmarOrdenReparacion(orden);
 	}
+
+
 	
 }
