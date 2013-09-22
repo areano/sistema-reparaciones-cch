@@ -454,8 +454,6 @@ public class SistemadeReparaciones {
 	public OrdenReparacionView buscarOrdenConEquipoARepararView(EquipoView equipoView) {
 		Equipo equipo=AdministradorEquipo.getInstancia().buscarEquipo(equipoView.getNroSerie());
 		return AdministradorOrdenReparacion.getInstancia().buscarOrdenConEquipoARepararView(equipo);
-		//TODO: aca debe traer SOLO ordenes que no estén "entregado"
-		
 	}
 
 	public int obtenerNroOrdenReparacion() {
