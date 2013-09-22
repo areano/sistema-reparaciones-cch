@@ -14,20 +14,29 @@ package com.uade.seminario.tpo.view.objectView;
 
 
 public class ItemReporteView {
-	private String nombrePieza;
+	private String descripcionPieza;
 	private int cantidadPieza;
+	private int nroPieza;
+	
+	public int getNroPieza() {
+		return nroPieza;
+	}
+	public void setNroPieza(int nroPieza) {
+		this.nroPieza = nroPieza;
+	}
 	public ItemReporteView(){//No tiene vectores a inicializar
 		
 	}
-	public ItemReporteView(String nombre, Integer cantidad) {
+	public ItemReporteView(Integer nroPieza, String descripcion, Integer cantidad) {
 		this.cantidadPieza=cantidad;
-		this.nombrePieza=nombre;
+		this.descripcionPieza=descripcion;
+		this.nroPieza=nroPieza;
 	}
-	public String getNombrePieza() {
-		return nombrePieza;
+	public String getDescripcionPieza() {
+		return descripcionPieza;
 	}
-	public void setNombrePieza(String nombrePieza) {
-		this.nombrePieza = nombrePieza;
+	public void setDescripcionPieza(String descripcion) {
+		this.descripcionPieza = descripcion;
 	}
 	public int getCantidadPieza() {
 		return cantidadPieza;

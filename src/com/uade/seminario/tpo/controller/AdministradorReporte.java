@@ -32,70 +32,69 @@ class AdministradorReporte {
 		}
 		return instancia;
 	}
-	protected List<ItemReporteView> generarListaPiezas(List<OrdenReparacionView> ordenes) {
-		List<String> piezas=new ArrayList<String>();
-		List<String> nombrePiezas=new ArrayList<String>();
-		List<Integer> cantidad=new ArrayList<Integer>();
-		List<ItemReporteView> itemsReporte=new ArrayList<ItemReporteView>();
-		for (OrdenReparacionView ordenReparacion : ordenes) {
-			nombrePiezas=ordenReparacion.listaPiezas();			
-			for (String nombre : nombrePiezas) {
-				if(piezas.contains(nombre)){
-					int posicion=piezas.indexOf(nombre);
-					cantidad.set(posicion, cantidad.get(posicion).intValue()+1);
-				}
-				else{
-					piezas.add(nombre);
-					cantidad.add(1);
-				}
-			}
-		}
-		int i=0;
-		while(cantidad.size()>i){
-			ItemReporteView item= new ItemReporteView(piezas.get(i),cantidad.get(i));
-			itemsReporte.add(item);
-			i++;
-		}
-		return itemsReporte;
-	}
-	protected ReporteView generarReportePiezas(Date desde, Date hasta,
-			List<OrdenReparacionView> ordenes) {
-		ReporteView reporte=new ReporteView(desde,hasta);
-		List<ItemReporteView> itemsReporte=new ArrayList<ItemReporteView>();
-		itemsReporte=AdministradorReporte.getInstancia().generarListaPiezas(ordenes);		
-		reporte.setItemsReporte(itemsReporte);
-		return reporte;
-		
-	}
+
 	protected ReporteView generarReportePiezas(Date desde, Date hasta){
-		return  reporteDataService.findByDate(desde, desde);
+		return  reporteDataService.findByDate(desde, hasta);
 	}
 	
-	protected void GenerarDynamicReporte(){
+	protected void GenerarDynamicReporte(ReporteView rv, Date desde, Date hasta){
 		try {
 			JasperReportBuilder report = DynamicReports.report();
-			report.addColumn(Columns.column("Item", "item", DataTypes.stringType()));
-			report.addColumn(Columns.column("Quantity", "quantity", DataTypes.integerType()));
-			report.addColumn(Columns.column("Unit price", "unitprice", DataTypes.bigDecimalType()));
-			report.addTitle(Components.text("Getting started"));
+			report.addColumn(Columns.column("Modelo", "modelo", DataTypes.integerType()));
+			report.addColumn(Columns.column("Descripción", "descripción", DataTypes.stringType()));
+			report.addColumn(Columns.column("Cantidad", "cantidad", DataTypes.integerType()));
+			report.addTitle(Components.text("Reporte de Utilización de Piezas"));
 			report.addPageFooter(Components.pageXofY());
-			report.setDataSource(createDataSource());
+			report.setDataSource(createDataSource(rv));
 			report.show();
 		} catch (DRException e) {
 			e.printStackTrace(); 
 	    }
 	}
-	private JRDataSource createDataSource() {
-		DRDataSource dataSource = new DRDataSource("item", "quantity", "unitprice");
-		dataSource.add("Notebook", 1, new BigDecimal(500));
-		dataSource.add("DVD", 5, new BigDecimal(30));
-		dataSource.add("DVD", 1, new BigDecimal(28));
-		dataSource.add("DVD", 5, new BigDecimal(32));
-		dataSource.add("Book", 3, new BigDecimal(11));
-		dataSource.add("Book", 1, new BigDecimal(15));
-		dataSource.add("Book", 5, new BigDecimal(10));
-		dataSource.add("Book", 8, new BigDecimal(9));
+	private JRDataSource createDataSource(ReporteView rv) {
+		DRDataSource dataSource = new DRDataSource("modelo", "descripción", "cantidad");
+		
+		for (ItemReporteView irv: rv.getItemsReporte())
+		dataSource.add(irv.getNroPieza(), irv.getDescripcionPieza(), irv.getCantidadPieza());
 		return dataSource;
 	}
 	
+	
+	/*protected List<ItemReporteView> generarListaPiezas(List<OrdenReparacionView> ordenes) {
+	List<String> piezas=new ArrayList<String>();
+	List<String> nombrePiezas=new ArrayList<String>();
+	List<Integer> cantidad=new ArrayList<Integer>();
+	List<ItemReporteView> itemsReporte=new ArrayList<ItemReporteView>();
+	for (OrdenReparacionView ordenReparacion : ordenes) {
+		nombrePiezas=ordenReparacion.listaPiezas();			
+		for (String nombre : nombrePiezas) {
+			if(piezas.contains(nombre)){
+				int posicion=piezas.indexOf(nombre);
+				cantidad.set(posicion, cantidad.get(posicion).intValue()+1);
+			}
+			else{
+				piezas.add(nombre);
+				cantidad.add(1);
+			}
+		}
+	}
+	int i=0;
+	while(cantidad.size()>i){
+		ItemReporteView item= new ItemReporteView(piezas.get(i),cantidad.get(i));
+		itemsReporte.add(item);
+		i++;
+	}
+	return itemsReporte;
+}
+
+protected ReporteView generarReportePiezas(Date desde, Date hasta,
+		List<OrdenReparacionView> ordenes) {
+	ReporteView reporte=new ReporteView(desde,hasta);
+	List<ItemReporteView> itemsReporte=new ArrayList<ItemReporteView>();
+	itemsReporte=AdministradorReporte.getInstancia().generarListaPiezas(ordenes);		
+	reporte.setItemsReporte(itemsReporte);
+	return reporte;
+	
+}
+*/
 }
