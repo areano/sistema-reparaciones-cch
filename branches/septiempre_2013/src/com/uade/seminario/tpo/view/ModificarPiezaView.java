@@ -59,11 +59,16 @@ public class ModificarPiezaView extends javax.swing.JInternalFrame {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			pieza = SistemadeReparaciones.getInstancia().buscarPiezaView(Integer.parseInt(codigo.getText()));
-			
-
+			if(pieza != null){
+				cargarPieza(pieza);
+			}
 		}
-		
 	}
+	
+	private void cargarPieza(PiezaView pieza) {
+		descripcion.setText(pieza.getDescripcion());
+	}
+
 	private void initGUI() {
 		try {
 			setTitle("Modificar Pieza");
