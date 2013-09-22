@@ -85,7 +85,11 @@ public class AdministradorOrdenReparacion {
 		return ordenReparacionDataService.buscarEquipoxOrdenRepAConfirmar(equipo);
 	}
 	protected OrdenReparacionView buscarOrdenConEquipoARepararView(Equipo equipo) {
-		return ordenReparacionDataService.buscarOrdenConEquipoARepararView(equipo).getView();
+		OrdenReparacion orden = ordenReparacionDataService.buscarOrdenConEquipoARepararView(equipo);
+		if (orden!=null) return orden.getView();
+		
+		return null;
+		
 	}
 	protected OrdenReparacion buscarOrdenReparacion(int nroReparacion) {
 		return ordenReparacionDataService.buscarOrdenReparacion(nroReparacion);

@@ -47,16 +47,16 @@ public class Garantia {
         java.util.Date date;
         java.sql.Date sqlDate;
         date = new java.util.Date();
-		try {
-			date = sdf.parse(date.toString());
+//		try {
+			//date = sdf.parse(date.toString());
 			sqlDate = new Date(date.getTime());	
 			if(fechaVencimiento.compareTo(sqlDate)>=0) return true;
 			else return false;
-		} catch (ParseException e1) {
-			e1.printStackTrace();
-		}
+//		} catch (ParseException e1) {
+//			e1.printStackTrace();
+//		}
 		
-		return false;
+		//return false;
 	}
 	public GarantiaView getView(){
 		return new GarantiaView(String.valueOf(nroGarantia),
