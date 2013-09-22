@@ -264,6 +264,9 @@ public class AltaOrdenReparacionView extends javax.swing.JFrame {
 						if(repararTodas.isSelected())
 							repararDeTodosModos=true;
 						int prioridad1=Integer.parseInt(prioridad.getSelectedItem().toString()); 
+						orden.setRepararDeTodosModos(repararDeTodosModos);
+						orden.setEstaEnGarantiaFisica(estaEnGarantiaFisica);
+						orden.setPrioridad(prioridad1);
 						SistemadeReparaciones.getInstancia().confirmarOrdenReparacion(orden);
 
 					}
