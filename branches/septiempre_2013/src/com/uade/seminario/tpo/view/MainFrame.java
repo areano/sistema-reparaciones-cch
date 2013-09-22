@@ -10,9 +10,11 @@ import javax.swing.JInternalFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
-
 import javax.swing.WindowConstants;
 import javax.swing.SwingUtilities;
+
+import com.uade.seminario.tpo.controller.SistemadeReparaciones;
+import com.uade.seminario.tpo.model.helper.DatabaseLoader;
 
 
 /**
@@ -89,6 +91,7 @@ public class MainFrame extends javax.swing.JFrame {
 	public MainFrame() {
 		super("Sistema de Reparaciones - Chh srl");
 		initGUI();
+		DatabaseLoader.init();
 	}
 
 	private void initGUI() {
