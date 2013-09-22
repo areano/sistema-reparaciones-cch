@@ -1,6 +1,8 @@
 package com.uade.seminario.tpo.view.objectView;
 
 import java.sql.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
@@ -22,6 +24,19 @@ public class OrdenReparacionView {
 
 	public OrdenReparacionView(){
 		this.itemsReparacion =  new ArrayList<TareaReparacionView>();
+		String patron = "dd/MM/yyyy";
+	    SimpleDateFormat formato = new SimpleDateFormat(patron);
+	    formato.format(new java.util.Date());
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        java.util.Date date;
+        java.sql.Date sqlDate;
+		try {
+			date = sdf.parse(formato.format(new java.util.Date()));
+			sqlDate = new Date(date.getTime());	
+			this.fecha=sqlDate;//new Date());
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}	
 	}
 	public OrdenReparacionView(int nroOrden2, String descripcionFallas2,
 			EquipoView equipo2, String estado2, Date fecha2,
