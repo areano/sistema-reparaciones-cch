@@ -79,6 +79,7 @@ public class AdministradorOrdenReparacion {
 		ordenReparacion.setRepararDeTodosModos(orden.isRepararDeTodosModos());
 		ordenReparacion.setEquipo(equipo);
 		ordenReparacion.setItemsReparacion(tareasReparacion);
+		ordenReparacionDataService.save(ordenReparacion);
 		
 	}
 	protected  OrdenReparacion buscarEquipoxOrdenRepAConfirmar(Equipo equipo){

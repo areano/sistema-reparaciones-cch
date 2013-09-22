@@ -49,18 +49,32 @@ public class OrdenReparacion implements Comparable<OrdenReparacion>{
 	
 	public OrdenReparacion(){
 		
-		this.itemsReparacion=new ArrayList<TareaReparacion>();
-		java.util.Date date;
-		java.sql.Date sqlDate;
+		String patron = "dd/MM/yyyy";
+	    SimpleDateFormat formato = new SimpleDateFormat(patron);
+	    formato.format(new java.util.Date());
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-		String timeStamp = new SimpleDateFormat("dd/MM/yyyy").format(Calendar.getInstance().getTime());
+        java.util.Date date;
+        java.sql.Date sqlDate;
 		try {
-			date = sdf.parse(timeStamp);
+			date = sdf.parse(formato.format(new java.util.Date()));
 			sqlDate = new Date(date.getTime());	
 			this.fecha=sqlDate;//new Date());
 		} catch (ParseException e) {
 			e.printStackTrace();
-		}
+		}	    
+		this.itemsReparacion=new ArrayList<TareaReparacion>();
+//		java.util.Date date;
+//		java.sql.Date sqlDate;
+//
+//		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+//		String timeStamp = new SimpleDateFormat("dd/MM/yyyy").format(Calendar.getInstance().getTime());
+//		try {
+//			date = sdf.parse(timeStamp);
+//			sqlDate = new Date(date.getTime());	
+//			this.fecha=sqlDate;//new Date());
+//		} catch (ParseException e) {
+//			e.printStackTrace();
+//		}
 		
 	}
 	

@@ -1,6 +1,8 @@
 package com.uade.seminario.tpo.view;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
@@ -45,10 +47,11 @@ public class AltaTareaReparacionView extends javax.swing.JFrame {
 	private JTextField nroOrden;
 	private JLabel jLabel3;
 	private JScrollPane jScrollPane1;
-	private JList piezas;
+	private JList<String> piezas;
 	private TareaReparacionView  tarea;
 	private SistemadeReparaciones sistema;
 	private OrdenReparacionView orden;
+	private Map<String, PiezaView> piezasTarea;
 	/**
 	* Auto-generated main method to display this JFrame
 	*/
@@ -79,9 +82,11 @@ public class AltaTareaReparacionView extends javax.swing.JFrame {
 		}
 		@Override
 		public void actionPerformed(ActionEvent e) {
+			
 			tarea.setEstado("activo");
 			orden.addTareaReparacion(tarea);
 			frame.dispose();
+			
 		}
 
 	}	
@@ -91,6 +96,7 @@ public class AltaTareaReparacionView extends javax.swing.JFrame {
 		tarea = null;
 		sistema = SistemadeReparaciones.getInstancia();
 		this.orden = orden;
+		piezasTarea = new HashMap<String, PiezaView>();
 		initGUI(orden);
 		//nroOrden.setText(orden);
 		nroOrden.setEditable(false);
@@ -172,20 +178,19 @@ public class AltaTareaReparacionView extends javax.swing.JFrame {
 				crearTarea.addActionListener(new ActionListener() {
 					
 					public void actionPerformed(ActionEvent arg0) {
-						//int numeroOrden=Integer.parseInt(nroOrden.getText());
-						//int numeroTarea=SistemadeReparaciones.getInstancia().crearTareaReparacion(detalle.getText(), numeroOrden);
-						tarea = new TareaReparacionView(); 
-						tarea.setDetalle(detalle.getText());
-						
-						//if(numeroTarea!=0){
-							//nroTarea.setText(String.valueOf(numeroTarea));
+						if(!detalle.getText().isEmpty()){
+							tarea = new TareaReparacionView(); 
+							tarea.setDetalle(detalle.getText());
 							jScrollPane1.setVisible(true);
 							agregarPieza.setVisible(true);
 							quitarPieza.setVisible(true);
 							jLabel3.setVisible(true);
 							actualizar.setVisible(true);
-						//}
-												
+							detalle.setEnabled(false);
+						}else{
+							MensajeErrorFrame mensaje = new MensajeErrorFrame("Agregue un detalle Primero");
+							mensaje.setVisible(true);
+						}
 					}
 				});
 			}
@@ -197,14 +202,6 @@ public class AltaTareaReparacionView extends javax.swing.JFrame {
 				agregarPieza.setBounds(254, 211, 132, 23);
 				
 				agregarPieza.addActionListener(new AgregarPiezaListener2());
-//				agregarPieza.addActionListener(new ActionListener() {
-//					
-//					public void actionPerformed(ActionEvent e) {
-//						AgregarPiezaTareaView view =new AgregarPiezaTareaView(orden,tarea);
-//						view.setVisible(true);
-//						
-//					}
-//				});
 			}
 			{
 				quitarPieza = new JButton();
@@ -215,12 +212,8 @@ public class AltaTareaReparacionView extends javax.swing.JFrame {
 				quitarPieza.addActionListener(new ActionListener() {
 					
 					public void actionPerformed(ActionEvent e) {
-						PiezaView pieza=(PiezaView) piezas.getSelectedValue();
-						if(pieza!=null){
-							SistemadeReparaciones.getInstancia().quitarPiezaTarea(Integer.parseInt(nroOrden.getText()),Integer.parseInt(nroTarea.getText()),pieza.getNroPieza());
-						}
-						
-						
+						PiezaView piezaRemover= piezasTarea.get((String)piezas.getSelectedValue());
+						tarea.getPiezas().remove(piezaRemover);					
 					}
 				});
 			}
@@ -250,13 +243,14 @@ public class AltaTareaReparacionView extends javax.swing.JFrame {
 					private void actualizarLista() {
 						SistemadeReparaciones sist=SistemadeReparaciones.getInstancia();
 						
-						DefaultListModel piezasModelo=new DefaultListModel();
-						if(!nroOrden.getText().equals("") && !nroTarea.getText().equals("")){
-							for(PiezaView p: sist.buscarPiezasXTareaView(Integer.parseInt(nroOrden.getText()),Integer.parseInt(nroTarea.getText()))){
-								piezasModelo.addElement(p);
-							}
-						}				
-						piezas = new JList();
+						DefaultListModel<String> piezasModelo=new DefaultListModel<String>();
+						for(PiezaView p: tarea.getPiezas())
+						{
+								piezasModelo.addElement(p.getDescripcion());
+								piezasTarea.put(p.getDescripcion(), p);
+						}
+				
+						piezas = new JList<String>();
 						jScrollPane1.setViewportView(piezas);
 						piezas.setModel(piezasModelo);
 						piezas.setBounds(12, 160, 225, 119);

@@ -61,9 +61,8 @@ public class AltaOrdenReparacionView extends javax.swing.JFrame {
 	private JTextField nroSerie;
 	private OrdenReparacionView orden;
 	private SistemadeReparaciones sistema;
-	/**
-	* Auto-generated main method to display this JFrame
-	*/
+	
+	
 	public static void main(String[] args) {
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
@@ -231,14 +230,9 @@ public class AltaOrdenReparacionView extends javax.swing.JFrame {
 						
 						DefaultListModel reparacionesModelo=new DefaultListModel();
 						
-//						if(!nroOrdenReparacion.getText().equals("")){
-//							for(TareaReparacionView p: sist.buscarTareasXOrdenReparacionView(Integer.parseInt(nroOrdenReparacion.getText()))){
-//								reparacionesModelo.addElement(p);
-//							}
-//						}
 						if(orden.getItemsReparacion().size()>0){
 							for(TareaReparacionView p: orden.getItemsReparacion()){
-								reparacionesModelo.addElement(p);
+								reparacionesModelo.addElement(p.getDetalle());
 							}
 						}
 						tareas = new JList();
@@ -299,29 +293,36 @@ public class AltaOrdenReparacionView extends javax.swing.JFrame {
 				crearOrden.addActionListener(new ActionListener() {
 					
 					public void actionPerformed(ActionEvent arg0) {
-						if(!nroSerie.getText().equals("")){
-							EquipoView equipo = sistema.buscarEquipoView(Integer.parseInt(nroSerie.getText()));
-							OrdenReparacionView ordenView= SistemadeReparaciones.getInstancia().
-									buscarOrdenConEquipoARepararView(equipo);
-							
-							if(equipo!=null && ordenView==null){
-								orden.setEquipo(equipo);
-								orden.setEstado("A Confirmar");
-								agregar.setEnabled(true);
-								quitarTarea.setEnabled(true);
-								actualizar.setEnabled(true);
-							}else{
-								if(equipo==null){
-									MensajeErrorFrame mensaje = new MensajeErrorFrame("Equipo con numero de serie "+nroSerie.getText()+" no existe");
-									mensaje.setVisible(true);
-								}
-								else{
-									MensajeErrorFrame mensaje = new MensajeErrorFrame("Equipo con numero de serie "+nroSerie.getText()+" ya se encuentra en una orden");
-									mensaje.setVisible(true);
+						if (!fallas.getText().isEmpty()){
+							if(!nroSerie.getText().equals("")){
+								EquipoView equipo = sistema.buscarEquipoView(Integer.parseInt(nroSerie.getText()));
+								OrdenReparacionView ordenView= SistemadeReparaciones.getInstancia().
+										buscarOrdenConEquipoARepararView(equipo);
+								
+								if(equipo!=null && ordenView==null){
+									orden.setEquipo(equipo);
+									orden.setEstado("A Confirmar");
+									orden.setDescripcionFallas(fallas.getText());
+									agregar.setEnabled(true);
+									quitarTarea.setEnabled(true);
+									actualizar.setEnabled(true);
+									fallas.setEnabled(false);
+								}else{
+									if(equipo==null){
+										MensajeErrorFrame mensaje = new MensajeErrorFrame("Equipo con numero de serie "+nroSerie.getText()+" no existe");
+										mensaje.setVisible(true);
+									}
+									else{
+										MensajeErrorFrame mensaje = new MensajeErrorFrame("Equipo con numero de serie "+nroSerie.getText()+" ya se encuentra en una orden");
+										mensaje.setVisible(true);
+									}
+									
 								}
 								
 							}
-							
+						}else{
+							MensajeErrorFrame mensaje  = new MensajeErrorFrame("Ingrese la descripcion de las fallas");
+							mensaje.setVisible(true);
 						}
 						
 					}
