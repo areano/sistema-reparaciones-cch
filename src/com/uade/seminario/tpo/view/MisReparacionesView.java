@@ -10,6 +10,7 @@ import javax.swing.WindowConstants;
 import javax.swing.SwingUtilities;
 
 import com.uade.seminario.tpo.controller.SistemadeReparaciones;
+import com.uade.seminario.tpo.exceptions.EmpleadoNoExisteException;
 import com.uade.seminario.tpo.model.OrdenReparacion;
 import com.uade.seminario.tpo.view.objectView.OrdenReparacionView;
 
@@ -33,6 +34,7 @@ public class MisReparacionesView extends javax.swing.JFrame {
 	private JButton mostrarOrden;
 	private JTextField nroOrden;
 	private JButton obtenerReparacion;
+	private OrdenReparacionView orden;
 
 	/**
 	* Auto-generated main method to display this JFrame
@@ -77,9 +79,16 @@ public class MisReparacionesView extends javax.swing.JFrame {
 					
 					public void actionPerformed(ActionEvent arg0) {
 						if(!legajo.getText().equals("")){
-							OrdenReparacionView orden=SistemadeReparaciones.getInstancia().misReparaciones(Integer.parseInt(legajo.getText()));
-							nroOrden.setText(String.valueOf(orden.getNroOrden()));
-							mostrarOrden.setVisible(true);
+							try
+							{
+								orden=SistemadeReparaciones.getInstancia().misReparaciones(Integer.parseInt(legajo.getText()));
+								nroOrden.setText(String.valueOf(orden.getNroOrden()));
+								mostrarOrden.setVisible(true);
+							}catch (EmpleadoNoExisteException e){
+								MensajeErrorFrame mensaje = new MensajeErrorFrame(e.getMessage());
+								mensaje.setVisible(true);
+							}
+							
 						}
 						else{
 							MensajeErrorFrame mensaje = new MensajeErrorFrame("No ingreso un numero de legajo");
@@ -110,7 +119,7 @@ public class MisReparacionesView extends javax.swing.JFrame {
 				mostrarOrden.addActionListener(new ActionListener() {
 					
 					public void actionPerformed(ActionEvent e) {
-						MostrarOrdenReparacionView view = new MostrarOrdenReparacionView(nroOrden.getText());
+						MostrarOrdenReparacionView view = new MostrarOrdenReparacionView(orden);
 						view.setVisible(true);
 					}
 				});
