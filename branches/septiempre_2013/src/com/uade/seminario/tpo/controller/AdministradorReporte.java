@@ -74,7 +74,7 @@ class AdministradorReporte {
 			  	   	   .setLabel("")))
 			  .pageFooter(Templates.footerComponent)
 			  .setDataSource(createDataSource(rv))
-			  .show();
+			  .show(false);
 		} catch (DRException e) {
 			e.printStackTrace();
 		}
