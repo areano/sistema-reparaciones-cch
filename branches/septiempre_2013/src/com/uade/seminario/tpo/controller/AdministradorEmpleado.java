@@ -5,6 +5,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
 import com.uade.seminario.tpo.model.Empleado;
+import com.uade.seminario.tpo.model.OrdenReparacion;
 import com.uade.seminario.tpo.service.EmpleadoDataService;
 import com.uade.seminario.tpo.view.objectView.EmpleadoView;
 import com.uade.seminario.tpo.view.objectView.OrdenReparacionView;
@@ -23,6 +24,10 @@ public class AdministradorEmpleado {
 	protected void AltaEmpleado(EmpleadoView empleadoView){
 		Empleado empleado = fromDTOtoClassTransformer(empleadoView);
 		empleadoDataService.save(empleado);
+	}
+	protected void asignarOrdenEmpleado(OrdenReparacion orden, Empleado empleado){
+		empleado.addAReparar(orden);
+		empleadoDataService.merge(empleado);
 	}
 	protected Empleado buscarEmpleado(int legajo) {
 		EmpleadoDataService empleadoDataService = EmpleadoDataService.getInstance();

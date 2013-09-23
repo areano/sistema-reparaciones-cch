@@ -7,6 +7,8 @@ import java.util.List;
 
 
 import com.uade.seminario.tpo.exceptions.NoHayOrdenesException;
+import com.uade.seminario.tpo.exceptions.OrdenNoDisponibleException;
+import com.uade.seminario.tpo.exceptions.OrdenNoExisteException;
 import com.uade.seminario.tpo.model.Empleado;
 import com.uade.seminario.tpo.model.Equipo;
 import com.uade.seminario.tpo.model.OrdenReparacion;
@@ -99,13 +101,13 @@ public class AdministradorOrdenReparacion {
 		return ordenReparacionDataService.buscarOrdenReparacionPrioridad();
 	}
 	protected OrdenReparacionView asignarSiguienteOrdenReparacion(Empleado empleado) 
-			throws NoHayOrdenesException{
+			throws NoHayOrdenesException,OrdenNoDisponibleException{
 		OrdenReparacion orden;
 		orden =  empleado.siguienteTarea();
 		if(orden==null)
 		{
 			orden = buscarOrdenReparacionPrioridad();
-			empleado.addAReparar(orden);
+			AdministradorEmpleado.getInstancia().asignarOrdenEmpleado(orden, empleado);
 		}
 		
 		return orden.getView();
