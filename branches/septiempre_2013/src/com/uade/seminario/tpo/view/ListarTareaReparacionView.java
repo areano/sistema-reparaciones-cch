@@ -1,10 +1,13 @@
 package com.uade.seminario.tpo.view;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Vector;
 import javax.swing.DefaultComboBoxModel;
 
+import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JList;
@@ -15,6 +18,7 @@ import javax.swing.WindowConstants;
 import javax.swing.SwingUtilities;
 
 import com.uade.seminario.tpo.controller.SistemadeReparaciones;
+import com.uade.seminario.tpo.view.objectView.OrdenReparacionView;
 import com.uade.seminario.tpo.view.objectView.TareaReparacionView;
 
 
@@ -34,24 +38,17 @@ public class ListarTareaReparacionView extends javax.swing.JFrame {
 	private JLabel jLabel1;
 	private JTextField nroOrden;
 	private JButton buscarTareas;
-	private JList lista;
+	private JList<String> lista;
 	private JButton mostrarTarea;
+	private OrdenReparacionView orden;
+	private Map<String,TareaReparacionView> tareas;
 
 	/**
 	* Auto-generated main method to display this JFrame
 	*/
-	public static void main(String[] args) {
-		SwingUtilities.invokeLater(new Runnable() {
-			public void run() {
-				ListarTareaReparacionView inst = new ListarTareaReparacionView();
-				inst.setLocationRelativeTo(null);
-				inst.setVisible(true);
-			}
-		});
-	}
-	
 	public ListarTareaReparacionView() {
 		super();
+		tareas = new HashMap<String,TareaReparacionView>() ;
 		initGUI();
 	}
 	
@@ -80,12 +77,15 @@ public class ListarTareaReparacionView extends javax.swing.JFrame {
 					
 					public void actionPerformed(ActionEvent arg0) {
 						if(!nroOrden.getText().equals("")){
-							Vector<Integer> numeros=new Vector<Integer>();
-							List<TareaReparacionView> tareas=SistemadeReparaciones.getInstancia().listarTareasReparacion(Integer.parseInt(nroOrden.getText()));
-							for (TareaReparacionView tareaReparacionView : tareas) {
-								numeros.add(tareaReparacionView.getNroItemReparacion());
+							orden = SistemadeReparaciones.getInstancia().
+									buscarOrdenReparacionView(Integer.parseInt(nroOrden.getText()));
+							DefaultListModel<String> tareaOrdenList=new DefaultListModel<String>();
+							List<TareaReparacionView> tareasOrden=orden.getItemsReparacion();
+							for (TareaReparacionView tareaReparacionView : tareasOrden) {
+								tareaOrdenList.addElement(tareaReparacionView.getDetalle());
+								tareas.put(tareaReparacionView.getDetalle(), tareaReparacionView);
 							}
-							lista.setListData(numeros);
+							lista.setModel(tareaOrdenList);
 						}						
 						
 					}
@@ -108,7 +108,8 @@ public class ListarTareaReparacionView extends javax.swing.JFrame {
 				mostrarTarea.addActionListener(new ActionListener() {
 					
 					public void actionPerformed(ActionEvent e) {
-						MostrarTareaReparacionView view = new MostrarTareaReparacionView(nroOrden.getText(),lista.getSelectedValue().toString());
+						TareaReparacionView tarea = tareas.get(lista.getSelectedValue());
+						MostrarTareaReparacionView view = new MostrarTareaReparacionView(orden, tarea);
 						view.setVisible(true);
 					}
 				});

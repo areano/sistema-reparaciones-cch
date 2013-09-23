@@ -91,7 +91,7 @@ public class MainFrame extends javax.swing.JFrame {
 	public MainFrame() {
 		super("Sistema de Reparaciones - Chh srl");
 		initGUI();
-		DatabaseLoader.init();
+		//DatabaseLoader.init();
 	}
 
 	private void initGUI() {

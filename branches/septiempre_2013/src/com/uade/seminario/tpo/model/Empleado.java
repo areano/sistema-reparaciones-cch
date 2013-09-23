@@ -138,4 +138,17 @@ public class Empleado {
 			}
 			return null;
 	}
+
+	public EmpleadoId getId() {
+		return id;
+	}
+
+	public void setId(EmpleadoId id) {
+		this.id = id;
+	}
+
+	public void setaReparar(List<OrdenReparacion> aReparar) {
+		this.aReparar = aReparar;
+	}
+	
 }

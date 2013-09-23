@@ -11,11 +11,6 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.WindowConstants;
-import javax.swing.SwingUtilities;
-
-import com.uade.seminario.tpo.controller.SistemadeReparaciones;
-import com.uade.seminario.tpo.model.OrdenReparacion;
-import com.uade.seminario.tpo.model.TareaReparacion;
 import com.uade.seminario.tpo.view.objectView.OrdenReparacionView;
 import com.uade.seminario.tpo.view.objectView.PiezaView;
 import com.uade.seminario.tpo.view.objectView.TareaReparacionView;
@@ -35,6 +30,7 @@ import com.uade.seminario.tpo.view.objectView.TareaReparacionView;
 */
 public class MostrarTareaReparacionView extends javax.swing.JFrame {
 
+	private static final long serialVersionUID = 1L;
 	private JLabel jLabel1;
 	private JLabel jLabel2;
 	private JLabel jLabel4;
@@ -45,29 +41,46 @@ public class MostrarTareaReparacionView extends javax.swing.JFrame {
 	private JTextField nroOrden;
 	private JLabel jLabel3;
 	private JScrollPane jScrollPane1;
-	private JList piezas;
+	private JList<String> piezas;
 
-	/**
-	* Auto-generated main method to display this JFrame
-	*/
-	public static void main(String[] args) {
-		SwingUtilities.invokeLater(new Runnable() {
-			public void run() {
-				MostrarTareaReparacionView inst = new MostrarTareaReparacionView("","");
-				inst.setLocationRelativeTo(null);
-				inst.setVisible(true);
-			}
-		});
+	private class ActualizarListaListener implements  ActionListener {
+		private TareaReparacionView tarea;
+		
+		public ActualizarListaListener(TareaReparacionView tarea){
+			this.tarea = tarea;
+		}
+		public void actionPerformed(ActionEvent arg0) {
+			if(!nroOrden.getText().equals("") && !nroTarea.getText().equals("")){
+
+			detalle.setText(tarea.getDetalle());
+			
+			actualizarLista();	
+			}					
+		}
+		private void actualizarLista() {
+		
+			DefaultListModel<String> piezasModelo=new DefaultListModel<String>();
+			if(!nroOrden.getText().equals("") && !nroTarea.getText().equals("")){
+				for(PiezaView p: tarea.getPiezas()){
+					piezasModelo.addElement(p.getDescripcion());
+				}
+			}				
+			piezas = new JList<String>();
+			jScrollPane1.setViewportView(piezas);
+			piezas.setModel(piezasModelo);
+			piezas.setBounds(12, 160, 225, 119);
+			
+		}
 	}
 	
-	public MostrarTareaReparacionView(String nroOrdenReparacion,String nroTareaReparacion) {
+	public MostrarTareaReparacionView(OrdenReparacionView orden, TareaReparacionView tarea) {
 		super();
-		initGUI(nroOrdenReparacion,nroTareaReparacion);
+		initGUI(orden,tarea);
 		actualizar.doClick();		
 
 	}
 	
-	private void initGUI(String nroOrdenReparacion, String nroTareaReparacion) {
+	private void initGUI(OrdenReparacionView orden,  TareaReparacionView tarea) {
 		try {
 			setTitle("Mostrar Tarea de Reparacion");
 			setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
@@ -98,7 +111,7 @@ public class MostrarTareaReparacionView extends javax.swing.JFrame {
 				nroOrden = new JTextField();
 				getContentPane().add(nroOrden);
 				nroOrden.setBounds(146, 9, 240, 23);
-				nroOrden.setText(nroOrdenReparacion);
+				nroOrden.setText(String.valueOf(orden.getNroOrden()));
 				nroOrden.setEditable(false);
 			}
 			{
@@ -118,29 +131,23 @@ public class MostrarTareaReparacionView extends javax.swing.JFrame {
 				nroTarea.setEditable(false);
 				getContentPane().add(nroTarea);
 				nroTarea.setBounds(144, 129, 141, 23);
-				nroTarea.setText(nroTareaReparacion);
+				nroTarea.setText(String.valueOf(tarea.getNroItemReparacion()));
 			}
 			{
 				jScrollPane1 = new JScrollPane();
 				getContentPane().add(jScrollPane1);
 				jScrollPane1.setBounds(12, 197, 225, 119);
 				{
-					
-					SistemadeReparaciones sist=SistemadeReparaciones.getInstancia();
-					
-					DefaultListModel piezasModelo=new DefaultListModel();
+					DefaultListModel<String> piezasModelo=new DefaultListModel<String> ();
 					if(!nroOrden.getText().equals("") && !nroTarea.getText().equals("")){
-						for(PiezaView p: sist.buscarPiezasXTareaView(Integer.parseInt(nroOrden.getText()),Integer.parseInt(nroTarea.getText()))){
-							piezasModelo.addElement(p);
+						for(PiezaView p: tarea.getPiezas()){
+							piezasModelo.addElement(p.getDescripcion());
 						}
 					}				
-					piezas = new JList();
+					piezas = new JList<String> ();
 					jScrollPane1.setViewportView(piezas);
 					piezas.setModel(piezasModelo);
 					piezas.setBounds(12, 160, 225, 119);
-					
-					
-					
 				}
 			}
 			
@@ -150,33 +157,7 @@ public class MostrarTareaReparacionView extends javax.swing.JFrame {
 				actualizar.setText("Actualizar Tabla");
 				actualizar.setBounds(254, 281, 132, 23);
 				actualizar.setVisible(false);
-				actualizar.addActionListener(new ActionListener() {
-					
-					public void actionPerformed(ActionEvent arg0) {
-						if(!nroOrden.getText().equals("") && !nroTarea.getText().equals("")){
-						OrdenReparacionView orden=SistemadeReparaciones.getInstancia().buscarOrdenReparacionView(Integer.parseInt(nroOrden.getText()));
-						TareaReparacionView tarea=orden.obtenerTareaView(Integer.parseInt(nroTarea.getText()));
-						detalle.setText(tarea.getDetalle());
-						
-						actualizarLista();	
-						}					
-					}
-					private void actualizarLista() {
-						SistemadeReparaciones sist=SistemadeReparaciones.getInstancia();
-						
-						DefaultListModel piezasModelo=new DefaultListModel();
-						if(!nroOrden.getText().equals("") && !nroTarea.getText().equals("")){
-							for(PiezaView p: sist.buscarPiezasXTareaView(Integer.parseInt(nroOrden.getText()),Integer.parseInt(nroTarea.getText()))){
-								piezasModelo.addElement(p);
-							}
-						}				
-						piezas = new JList();
-						jScrollPane1.setViewportView(piezas);
-						piezas.setModel(piezasModelo);
-						piezas.setBounds(12, 160, 225, 119);
-						
-					}
-				});
+				actualizar.addActionListener(new ActualizarListaListener(tarea));
 			}
 			{
 				salir = new JButton();

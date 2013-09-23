@@ -15,10 +15,8 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.WindowConstants;
-import javax.swing.SwingUtilities;
 
 import com.uade.seminario.tpo.controller.SistemadeReparaciones;
-import com.uade.seminario.tpo.model.Equipo;
 import com.uade.seminario.tpo.view.objectView.EquipoView;
 import com.uade.seminario.tpo.view.objectView.OrdenReparacionView;
 import com.uade.seminario.tpo.view.objectView.TareaReparacionView;
@@ -38,18 +36,22 @@ import com.uade.seminario.tpo.view.objectView.TareaReparacionView;
 */
 public class MostrarOrdenReparacionView extends javax.swing.JFrame {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JLabel jLabel1;
 	private JLabel jLabel2;
 	private JCheckBox repararTodas;
 	private JLabel jLabel4;
 	private JLabel jLabel8;
-	private JComboBox prioridad;
+	private JComboBox<String> prioridad;
 	private JTextField estado;
 	private JLabel jLabel3;
 	private JCheckBox garantiaPapel;
 	private JButton buscarOrden;
 	private JButton confirmar;
-	private JList tareas;
+	private JList<String> tareas;
 	private JScrollPane jScrollPane1;
 	private JButton actualizar;
 	private JTextField nroOrdenReparacion;
@@ -60,23 +62,44 @@ public class MostrarOrdenReparacionView extends javax.swing.JFrame {
 	private JCheckBox jCheckBox1;
 	private JTextField nombreEquipo;
 	private JTextField nroSerie;
+	private OrdenReparacionView ordenview; 
 	
-	public static void main(String[] args) {
-		SwingUtilities.invokeLater(new Runnable() {
-			public void run() {
-				MostrarOrdenReparacionView inst = new MostrarOrdenReparacionView("");
-				inst.setLocationRelativeTo(null);
-				inst.setVisible(true);
+	private class BuscarOrdenListener implements ActionListener{
+			public BuscarOrdenListener(){
+				
 			}
-		});
+			public void actionPerformed(ActionEvent arg0) {
+				if(!nroOrdenReparacion.getText().equals("")){
+					ordenview=SistemadeReparaciones.getInstancia().buscarOrdenReparacionView(Integer.parseInt(nroOrdenReparacion.getText()));
+					EquipoView equipo=ordenview.getEquipo();
+					if(equipo!=null && ordenview!=null){
+						nombreEquipo.setText(equipo.getCliente().getNombre());
+						if(equipo.getGarantia().isEstasEnGarantia())
+							garantiaPapel.setSelected(true);
+						nroSerie.setText(String.valueOf(equipo.getNroSerie()));
+						if(ordenview.isEstaEnGarantiaFisica())
+							jCheckBox1.setSelected(true);
+						if(ordenview.isRepararDeTodosModos())
+							repararTodas.setSelected(true);
+						fallas.setText(ordenview.getDescripcionFallas());
+						estado.setText(ordenview.getEstado());
+						prioridad.setSelectedIndex(ordenview.getPrioridad()-1);
+						prioridad.setEnabled(false);
+						buscarOrden.setEnabled(false);
+						actualizar.doClick();					
+						
+					}
+				}
+				
+			}
 	}
-	
-	public MostrarOrdenReparacionView(String nroOrden) {
+	public MostrarOrdenReparacionView(OrdenReparacionView orden) {
 		super();
-		initGUI(nroOrden);
+		this.ordenview = orden;
+		initGUI();
 	}
 	
-	private void initGUI(String nroOrden) {
+	private void initGUI() {
 		try {
 			setTitle("Mostrar Orden de Reparacion");
 			setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
@@ -154,7 +177,7 @@ public class MostrarOrdenReparacionView extends javax.swing.JFrame {
 				nroOrdenReparacion = new JTextField();
 				getContentPane().add(nroOrdenReparacion);
 				nroOrdenReparacion.setBounds(179, 22, 183, 23);
-				nroOrdenReparacion.setText(nroOrden);
+				nroOrdenReparacion.setText(String.valueOf(ordenview.getNroOrden()));
 				nroOrdenReparacion.setEditable(false);
 			}
 			{
@@ -169,15 +192,14 @@ public class MostrarOrdenReparacionView extends javax.swing.JFrame {
 					}
 
 					private void actualizarLista() {
-						SistemadeReparaciones sist=SistemadeReparaciones.getInstancia();
 						
-						DefaultListModel reparacionesModelo=new DefaultListModel();
+						DefaultListModel<String> reparacionesModelo=new DefaultListModel<String>();
 						if(!nroOrdenReparacion.getText().equals("")){
-							for(TareaReparacionView p: sist.buscarTareasXOrdenReparacionView(Integer.parseInt(nroOrdenReparacion.getText()))){
-								reparacionesModelo.addElement(p);
+							for(TareaReparacionView p: ordenview.getItemsReparacion()){
+								reparacionesModelo.addElement(p.getDetalle());
 							}
 						}				
-						tareas = new JList();
+						tareas = new JList<String>();
 						jScrollPane1.setViewportView(tareas);
 						tareas.setModel(reparacionesModelo);
 						tareas.setVisible(true);
@@ -204,15 +226,14 @@ public class MostrarOrdenReparacionView extends javax.swing.JFrame {
 				});
 			}
 			{			
-				SistemadeReparaciones sist=SistemadeReparaciones.getInstancia();
-				
-				DefaultListModel reparacionesModelo=new DefaultListModel();
+			
+				DefaultListModel<String> reparacionesModelo=new DefaultListModel<String> ();
 				if(!nroOrdenReparacion.getText().equals("")){
-					for(TareaReparacionView p: sist.buscarTareasXOrdenReparacionView(Integer.parseInt(nroOrdenReparacion.getText()))){
-						reparacionesModelo.addElement(p);
+					for(TareaReparacionView p: ordenview.getItemsReparacion()){
+						reparacionesModelo.addElement(p.getDetalle());
 					}
 				}				
-				tareas = new JList();
+				tareas = new JList<String>();
 				getContentPane().add(tareas);
 				tareas.setModel(reparacionesModelo);
 				tareas.setVisible(true);
@@ -245,10 +266,10 @@ public class MostrarOrdenReparacionView extends javax.swing.JFrame {
 				jLabel8.setBounds(202, 132, 76, 16);
 			}
 			{
-				ComboBoxModel prioridadModel = 
-						new DefaultComboBoxModel(
+				ComboBoxModel<String> prioridadModel = 
+						new DefaultComboBoxModel<String>(
 								new String[] { "1","2","3","4","5","6","7","8","9","10" });
-				prioridad = new JComboBox();
+				prioridad = new JComboBox<String>();
 				getContentPane().add(prioridad);
 				prioridad.setModel(prioridadModel);
 				prioridad.setBounds(290, 129, 42, 23);
@@ -259,34 +280,7 @@ public class MostrarOrdenReparacionView extends javax.swing.JFrame {
 				getContentPane().add(buscarOrden);
 				buscarOrden.setText("Buscar Orden");
 				buscarOrden.setBounds(375, 22, 139, 23);
-				buscarOrden.addActionListener(new ActionListener() {
-					
-					public void actionPerformed(ActionEvent arg0) {
-						if(!nroOrdenReparacion.getText().equals("")){
-							OrdenReparacionView ordenview=SistemadeReparaciones.getInstancia().buscarOrdenReparacionView(Integer.parseInt(nroOrdenReparacion.getText()));
-							EquipoView equipo=ordenview.getEquipo();
-							if(equipo!=null && ordenview!=null){
-								nombreEquipo.setText(equipo.getCliente().getNombre());
-								if(equipo.getGarantia().isEstasEnGarantia())
-									garantiaPapel.setSelected(true);
-								nroSerie.setText(String.valueOf(equipo.getNroSerie()));
-								if(ordenview.isEstaEnGarantiaFisica())
-									jCheckBox1.setSelected(true);
-								if(ordenview.isRepararDeTodosModos())
-									repararTodas.setSelected(true);
-								fallas.setText(ordenview.getDescripcionFallas());
-								estado.setText(ordenview.getEstado());
-								prioridad.setSelectedIndex(ordenview.getPrioridad()-1);
-								prioridad.setEnabled(false);
-								buscarOrden.setEnabled(false);
-								actualizar.doClick();
-								
-								
-							}
-						}
-						
-					}
-				});
+				buscarOrden.addActionListener(new BuscarOrdenListener());
 				buscarOrden.doClick();
 			}
 			
