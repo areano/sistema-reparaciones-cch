@@ -17,6 +17,8 @@ import javax.swing.JTextField;
 import javax.swing.WindowConstants;
 import javax.swing.SwingUtilities;
 
+import org.eclipse.jdt.core.dom.SwitchCase;
+
 import com.uade.seminario.tpo.controller.SistemadeReparaciones;
 import com.uade.seminario.tpo.model.Equipo;
 import com.uade.seminario.tpo.model.OrdenReparacion;
@@ -99,42 +101,47 @@ public class ModificarOrdenReparacionView extends javax.swing.JFrame {
 
 	}
 	private String avanzarEtapaOrden() {
-		if(ordenview.getEstado().equals("A reparar")){
-			ordenview.setEstado("Reparado");
-			return ordenview.getEstado();
+		String nuevoEstado = ordenview.getEstado();
+		switch (ordenview.getEstado().toUpperCase()) {
+		case "A CONFIRMAR":
+			nuevoEstado = "A reparar";
+			retroceder.setVisible(true);
+			break;
+		case "A REPARAR":
+			nuevoEstado = "Reparado";
+			break;
+		case "REPARADO":
+			nuevoEstado = "Entregado";
+			avanzar.setVisible(false);
+			break;
+		case "PRESUPUESTAR":
+			nuevoEstado = "A confirmar";
+			break;
+		default:
+			break;
 		}
-		else{
-			if(ordenview.getEstado().equals("Reparado")){
-				ordenview.setEstado("Entregado");
-				return ordenview.getEstado();
-			}
-			else{
-				if(ordenview.getEstado().equals("Presupuestar")){
-					ordenview.setEstado("A reparar");
-					return ordenview.getEstado();
-				}
-			}
-		}
-		return "";
+		ordenview.setEstado(nuevoEstado);
+		return nuevoEstado;		
 	}
 	private String retrocederEtapaOrden() {
-		if(ordenview.getEstado().equals("A reparar")){
-			ordenview.setEstado("Presupuestar");
-			return ordenview.getEstado();
+		String nuevoEstado = ordenview.getEstado();
+		switch (ordenview.getEstado().toUpperCase()) {
+		case "A REPARAR":
+			nuevoEstado = "Presupuestar";
+			retroceder.setVisible(false);
+			break;
+		case "REPARADO":
+			nuevoEstado = "A reparar";
+			break;
+		case "ENTREGADO":
+			nuevoEstado = "Reparado";
+			avanzar.setVisible(true);
+			break;
+		default:
+			break;
 		}
-		else{
-			if(ordenview.getEstado().equals("Reparado")){
-				ordenview.setEstado("A reparar");
-				return ordenview.getEstado();
-			}
-			else{
-				if(ordenview.getEstado().equals("Entregado")){
-					ordenview.setEstado("Reparado");
-					return ordenview.getEstado();
-				}
-			}
-		}
-		return "";
+		ordenview.setEstado(nuevoEstado);
+		return nuevoEstado;
 		
 	}
 	
@@ -392,7 +399,9 @@ public class ModificarOrdenReparacionView extends javax.swing.JFrame {
 						if(!nroOrdenReparacion.equals("")){
 						String etapa= retrocederEtapaOrden();
 						if (!etapa.equals(""))
-						estado.setText(etapa);}
+						estado.setText(etapa);
+						estado.updateUI();
+						}
 						
 					}
 				});
@@ -409,7 +418,9 @@ public class ModificarOrdenReparacionView extends javax.swing.JFrame {
 						if(!nroOrdenReparacion.equals("")){
 						String etapa=avanzarEtapaOrden();
 						if (!etapa.equals(""))
-						estado.setText(etapa);}
+						estado.setText(etapa);
+						estado.updateUI();
+						}
 					}
 				});
 			}
