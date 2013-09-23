@@ -45,7 +45,7 @@ public class ReporteDAOImpl implements GenericDAO<ReporteView> {
 	private List<ItemReporteView> generarListaPiezas (Date desde, Date hasta) {
 		List<ItemReporteView> itemsReporte=new ArrayList<ItemReporteView>();
 		Session session =sf.openSession();
-		String hql = "select Pie.nroPieza, Pie.descripcion, count(*) from OrdenReparacion as OrRep inner join OrRep.itemsReparacion as itRep inner join itRep.piezas as Pie where OrRep.fecha between :desde and :hasta group by Pie.descripcion order by 1 ";
+		String hql = "select Pie.nroPieza, Pie.descripcion, count(*) from OrdenReparacion as OrRep inner join OrRep.itemsReparacion as itRep inner join itRep.piezas as Pie where OrRep.fecha between :desde and :hasta group by Pie.nroPieza, Pie.descripcion order by 1 ";
 		Query query = session.createQuery(hql);
 		query.setParameter("desde", desde);
 		query.setParameter("hasta", hasta);
