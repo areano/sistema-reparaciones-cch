@@ -51,10 +51,11 @@ class AdministradorReporte {
 	protected void GenerarDynamicReporte(ReporteView rv, Date desde, Date hasta){
 		FontBuilder  boldFont = stl.fontArialBold().setFontSize(12);
 		
-		TextColumnBuilder<Integer>     modelColumn = col.column("Modelo",       "modelo",      type.integerType());
+		TextColumnBuilder<Integer>     modelColumn = col.column("N° de Serie",       "nroSerie",      type.integerType());
 		TextColumnBuilder<String>    descColumn  = col.column("Descripción",   "descripcion",  type.stringType());
 		TextColumnBuilder<Integer> quantityColumn = col.column("Cantidad", "cantidad", type.integerType());
 		
+		modelColumn.setPattern("000");
 		
 		try {
 			report()
@@ -63,14 +64,14 @@ class AdministradorReporte {
 			  .title(Templates.createTitleComponent(desde.toString() + " a " + hasta.toString(),"Reporte de Utilización de Piezas")) 
 			  .summary(
 			  	cht.bar3DChart()
-			  	   .setTitle("Bar 3D chart")
+			  	   .setTitle("Gráfico")
 			  	   .setTitleFont(boldFont)
 			  	   .setCategory(descColumn)
 			  	   .series(
 			  	  		 cht.serie(quantityColumn))
 			  	   .setCategoryAxisFormat(
 			  	   	cht.axisFormat()
-			  	   	   .setLabel("Item")))
+			  	   	   .setLabel("")))
 			  .pageFooter(Templates.footerComponent)
 			  .setDataSource(createDataSource(rv))
 			  .show();
@@ -81,7 +82,7 @@ class AdministradorReporte {
 
 	
 	private JRDataSource createDataSource(ReporteView rv) {
-		DRDataSource dataSource = new DRDataSource("modelo", "descripcion", "cantidad");
+		DRDataSource dataSource = new DRDataSource("nroSerie", "descripcion", "cantidad");
 		
 		for (ItemReporteView irv: rv.getItemsReporte())
 			dataSource.add(irv.getNroPieza(), irv.getDescripcionPieza(), irv.getCantidadPieza());

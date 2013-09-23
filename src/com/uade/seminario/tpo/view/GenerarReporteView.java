@@ -2,6 +2,8 @@ package com.uade.seminario.tpo.view;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -87,8 +89,16 @@ public class GenerarReporteView extends javax.swing.JFrame {
 					
 					public void actionPerformed(ActionEvent arg0) {
 						if(!desde.getText().equals("") && !hasta.getText().equals("")){
-							Date fechaDesde=new Date(Date.parse(desde.getText()));
-							Date fechaHasta=new Date(Date.parse(hasta.getText()));
+							SimpleDateFormat formatoDeFecha = new SimpleDateFormat("dd/MM/yyyy");
+							Date fechaDesde=null, fechaHasta=null;
+							try {
+								fechaDesde = new Date(formatoDeFecha.parse(desde.getText()).getTime());
+								fechaHasta = new Date(formatoDeFecha.parse(hasta.getText()).getTime());								
+							} catch (ParseException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+
 							generar.setEnabled(false);
 							ReporteView reporte=SistemadeReparaciones.getInstancia().emitirReportePiezas(fechaDesde, fechaHasta);
 							generar.setEnabled(true);
