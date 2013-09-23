@@ -3,6 +3,7 @@ package com.uade.seminario.tpo.service;
 import com.uade.seminario.tpo.persistence.dao.generic.impl.OrdenDeReparacionDAOImpl;
 import com.uade.seminario.tpo.view.objectView.OrdenReparacionView;
 import com.uade.seminario.tpo.exceptions.NoHayOrdenesException;
+import com.uade.seminario.tpo.exceptions.OrdenNoDisponibleException;
 import com.uade.seminario.tpo.model.Equipo;
 import com.uade.seminario.tpo.model.OrdenReparacion;
 
@@ -48,10 +49,10 @@ public class OrdenDeReparacionDataService {
 	public OrdenReparacion buscarOrdenReparacion(int nroReparacion) {
 		return dao.findByNroOrden(nroReparacion);
 	}
-	public OrdenReparacion buscarOrdenReparacionPrioridad() throws NoHayOrdenesException{
+	public OrdenReparacion buscarOrdenReparacionPrioridad() throws OrdenNoDisponibleException{
 		OrdenReparacion orden = dao.buscarOrdenReparacionPrioridad();
 		if (orden == null){
-			throw new NoHayOrdenesException("No existen ordenes disponible");
+			throw new OrdenNoDisponibleException();
 		}
 		return orden;
 	}

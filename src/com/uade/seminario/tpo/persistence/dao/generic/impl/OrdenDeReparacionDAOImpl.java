@@ -60,7 +60,7 @@ public class OrdenDeReparacionDAOImpl extends GenericDAOImpl<OrdenReparacion>{
 
 	public OrdenReparacion buscarOrdenReparacionPrioridad() {
 		Session session = sf.openSession();
-		String hql = "from OrdenReparacion o order by o.prioridad desc";
+		String hql = "from OrdenReparacion o  where o.estado not in ('A confirmar', 'A presupuestar') order by o.prioridad desc";
 		Query query = session.createQuery(hql).setMaxResults(1);
 		
 		OrdenReparacion retorno =  (OrdenReparacion)query.uniqueResult();

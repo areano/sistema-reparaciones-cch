@@ -11,6 +11,7 @@ import javax.swing.SwingUtilities;
 
 import com.uade.seminario.tpo.controller.SistemadeReparaciones;
 import com.uade.seminario.tpo.exceptions.EmpleadoNoExisteException;
+import com.uade.seminario.tpo.exceptions.OrdenNoDisponibleException;
 import com.uade.seminario.tpo.model.OrdenReparacion;
 import com.uade.seminario.tpo.view.objectView.OrdenReparacionView;
 
@@ -85,6 +86,9 @@ public class MisReparacionesView extends javax.swing.JFrame {
 								nroOrden.setText(String.valueOf(orden.getNroOrden()));
 								mostrarOrden.setVisible(true);
 							}catch (EmpleadoNoExisteException e){
+								MensajeErrorFrame mensaje = new MensajeErrorFrame(e.getMessage());
+								mensaje.setVisible(true);
+							}catch (OrdenNoDisponibleException e) {
 								MensajeErrorFrame mensaje = new MensajeErrorFrame(e.getMessage());
 								mensaje.setVisible(true);
 							}
