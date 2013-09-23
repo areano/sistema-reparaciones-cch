@@ -89,10 +89,12 @@ public class GenerarReporteView extends javax.swing.JFrame {
 						if(!desde.getText().equals("") && !hasta.getText().equals("")){
 							Date fechaDesde=new Date(Date.parse(desde.getText()));
 							Date fechaHasta=new Date(Date.parse(hasta.getText()));
+							generar.setEnabled(false);
 							ReporteView reporte=SistemadeReparaciones.getInstancia().emitirReportePiezas(fechaDesde, fechaHasta);
-							ReporteDePiezasView view = new ReporteDePiezasView(reporte);
+							generar.setEnabled(true);
+							//ReporteDePiezasView view = new ReporteDePiezasView(reporte);
 							
-							view.setVisible(true);
+							//view.setVisible(true);
 						}
 						
 						
