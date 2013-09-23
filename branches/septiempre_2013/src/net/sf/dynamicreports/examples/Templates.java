@@ -56,7 +56,7 @@ public class Templates {
 
 	public static final ReportTemplateBuilder reportTemplate;
 	public static final CurrencyType currencyType;
-	public static final ComponentBuilder<?, ?> dynamicReportsComponent;
+	//public static final ComponentBuilder<?, ?> dynamicReportsComponent;
 	public static final ComponentBuilder<?, ?> footerComponent;
 
 	static {
@@ -111,13 +111,13 @@ public class Templates {
 		currencyType = new CurrencyType();
 
 		HyperLinkBuilder link = hyperLink("http://www.dynamicreports.org");
-		dynamicReportsComponent =
+		/*dynamicReportsComponent =
 		  cmp.horizontalList(
 		  	cmp.image(Templates.class.getResource("images/dynamicreports.png")).setFixedDimension(60, 60),
 		  	cmp.verticalList(
 		  		cmp.text("DynamicReports").setStyle(bold22CenteredStyle).setHorizontalAlignment(HorizontalAlignment.LEFT),
 		  		cmp.text("http://www.dynamicreports.org").setStyle(italicStyle).setHyperLink(link))).setFixedWidth(300);
-
+		 */
 		footerComponent = cmp.pageXofY()
 		                     .setStyle(
 		                     	stl.style(boldCenteredStyle)
@@ -127,11 +127,11 @@ public class Templates {
 	/**
 	 * Creates custom component which is possible to add to any report band component
 	 */
-	public static ComponentBuilder<?, ?> createTitleComponent(String label) {
+	public static ComponentBuilder<?, ?> createTitleComponent(String label, String title) {
 		return cmp.horizontalList()
 		        .add(
-		        	dynamicReportsComponent,
-		        	cmp.text(label).setStyle(bold18CenteredStyle).setHorizontalAlignment(HorizontalAlignment.RIGHT))
+		        	cmp.text(label).setStyle(bold12CenteredStyle).setHorizontalAlignment(HorizontalAlignment.LEFT),
+		        	cmp.text(title).setStyle(bold18CenteredStyle).setHorizontalAlignment(HorizontalAlignment.RIGHT))
 		        .newRow()
 		        .add(cmp.line())
 		        .newRow()
