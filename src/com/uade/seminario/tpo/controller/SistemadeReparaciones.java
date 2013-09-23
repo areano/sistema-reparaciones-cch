@@ -38,6 +38,7 @@ import com.uade.seminario.tpo.exceptions.ExceptionNoExisteModelo;
 import com.uade.seminario.tpo.exceptions.GarantiaExisteException;
 import com.uade.seminario.tpo.exceptions.GarantiaNoExisteException;
 import com.uade.seminario.tpo.exceptions.ModeloExisteException;
+import com.uade.seminario.tpo.exceptions.OrdenNoDisponibleException;
 import com.uade.seminario.tpo.exceptions.OrdenNoExisteException;
 import com.uade.seminario.tpo.exceptions.PiezaNoExisteException;
 import com.uade.seminario.tpo.model.Cliente;
@@ -240,7 +241,7 @@ public class SistemadeReparaciones {
 
 
 
-	public OrdenReparacionView misReparaciones(int legajo) throws EmpleadoNoExisteException {
+	public OrdenReparacionView misReparaciones(int legajo) throws EmpleadoNoExisteException,OrdenNoDisponibleException {
 		Empleado empleado=AdministradorEmpleado.getInstancia().buscarEmpleado(legajo);
 		if(empleado!=null){
 			return AdministradorOrdenReparacion.getInstancia().asignarSiguienteOrdenReparacion(empleado);
