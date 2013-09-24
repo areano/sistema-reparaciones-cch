@@ -46,7 +46,7 @@ public class ReporteDAOImpl implements GenericDAO<ReporteView> {
 		List<ItemReporteView> itemsReporte=new ArrayList<ItemReporteView>();
 		Session session =sf.openSession();
 		//String hql = "select Pie.nroPieza, Pie.descripcion, count(*) from OrdenReparacion as OrRep inner join OrRep.itemsReparacion as itRep inner join itRep.piezas as Pie where OrRep.fecha between :desde and :hasta group by Pie.nroPieza, Pie.descripcion order by 1 ";
-		String hql ="select IT.pieza.nroPieza, IT.pieza.descripcion, sum(IT.cantidad)  from OrdenReparacion as OrRep inner join OrRep.itemsReparacion as itRep inner join itRep.itemsReparacion as IT  between :desde and :hastagroup by IT.pieza.nroPieza,IT.pieza.descripcion order by 1" ;
+		String hql ="select IT.pieza.nroPieza, IT.pieza.descripcion, sum(IT.cantidad)  from OrdenReparacion as OrRep inner join OrRep.itemsReparacion as itRep inner join itRep.itemsReparacion as IT  where OrRep.fecha between :desde and :hasta group by IT.pieza.nroPieza,IT.pieza.descripcion order by 1" ;
 		Query query = session.createQuery(hql);
 		query.setParameter("desde", desde);
 		query.setParameter("hasta", hasta);
@@ -58,7 +58,16 @@ public class ReporteDAOImpl implements GenericDAO<ReporteView> {
 		session.close();
 		return itemsReporte;
 	}
-	
+	public List<Object> test () {
+		List<ItemReporteView> itemsReporte=new ArrayList<ItemReporteView>();
+		Session session =sf.openSession();
+		String hql ="select IT.pieza.nroPieza, IT.pieza.descripcion, sum(IT.cantidad)  from OrdenReparacion as OrRep inner join OrRep.itemsReparacion as itRep inner join itRep.itemsReparacion as IT  group by IT.pieza.nroPieza,IT.pieza.descripcion order by 1" ;
+		Query query = session.createQuery(hql);
+		@SuppressWarnings("unchecked")
+		List<Object> resultados= query.list();
+		session.close();
+		return resultados;
+	}
 //	private List<OrdenReparacion> buscarOrdenesReporte(Date desde, Date hasta) {
 //		List<OrdenReparacion> ordenes=new ArrayList<OrdenReparacion>();
 //
