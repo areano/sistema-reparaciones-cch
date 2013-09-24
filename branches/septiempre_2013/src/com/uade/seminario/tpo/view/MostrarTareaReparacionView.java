@@ -11,6 +11,8 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.WindowConstants;
+
+import com.uade.seminario.tpo.view.objectView.ItemReparacionView;
 import com.uade.seminario.tpo.view.objectView.OrdenReparacionView;
 import com.uade.seminario.tpo.view.objectView.PiezaView;
 import com.uade.seminario.tpo.view.objectView.TareaReparacionView;
@@ -61,8 +63,8 @@ public class MostrarTareaReparacionView extends javax.swing.JFrame {
 		
 			DefaultListModel<String> piezasModelo=new DefaultListModel<String>();
 			if(!nroOrden.getText().equals("") && !nroTarea.getText().equals("")){
-				for(PiezaView p: tarea.getPiezas()){
-					piezasModelo.addElement(p.getDescripcion());
+				for(ItemReparacionView p: tarea.getItemReparacion()){
+					piezasModelo.addElement(p.getPieza().getDescripcion());
 				}
 			}				
 			piezas = new JList<String>();
@@ -140,8 +142,8 @@ public class MostrarTareaReparacionView extends javax.swing.JFrame {
 				{
 					DefaultListModel<String> piezasModelo=new DefaultListModel<String> ();
 					if(!nroOrden.getText().equals("") && !nroTarea.getText().equals("")){
-						for(PiezaView p: tarea.getPiezas()){
-							piezasModelo.addElement(p.getDescripcion());
+						for(ItemReparacionView p: tarea.getItemReparacion()){
+							piezasModelo.addElement(p.getPieza().getDescripcion());
 						}
 					}				
 					piezas = new JList<String> ();

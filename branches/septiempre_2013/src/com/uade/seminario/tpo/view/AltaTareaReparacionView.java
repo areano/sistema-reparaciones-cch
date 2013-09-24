@@ -16,6 +16,7 @@ import javax.swing.SwingUtilities;
 import javax.swing.WindowConstants;
 
 import com.uade.seminario.tpo.controller.SistemadeReparaciones;
+import com.uade.seminario.tpo.view.objectView.ItemReparacionView;
 import com.uade.seminario.tpo.view.objectView.OrdenReparacionView;
 import com.uade.seminario.tpo.view.objectView.PiezaView;
 import com.uade.seminario.tpo.view.objectView.TareaReparacionView;
@@ -213,7 +214,7 @@ public class AltaTareaReparacionView extends javax.swing.JFrame {
 					
 					public void actionPerformed(ActionEvent e) {
 						PiezaView piezaRemover= piezasTarea.get((String)piezas.getSelectedValue());
-						tarea.getPiezas().remove(piezaRemover);					
+						//tarea.getPiezas().remove(piezaRemover);					
 					}
 				});
 			}
@@ -244,10 +245,10 @@ public class AltaTareaReparacionView extends javax.swing.JFrame {
 						SistemadeReparaciones sist=SistemadeReparaciones.getInstancia();
 						
 						DefaultListModel<String> piezasModelo=new DefaultListModel<String>();
-						for(PiezaView p: tarea.getPiezas())
+						for(ItemReparacionView i: tarea.getItemReparacion())//tarea.getPiezas())
 						{
-								piezasModelo.addElement(p.getDescripcion());
-								piezasTarea.put(p.getDescripcion(), p);
+								piezasModelo.addElement(i.getPieza().getDescripcion());
+								piezasTarea.put(i.getPieza().getDescripcion(), i.getPieza());
 						}
 				
 						piezas = new JList<String>();

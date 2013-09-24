@@ -86,7 +86,8 @@ public class MostrarOrdenReparacionView extends javax.swing.JFrame {
 						prioridad.setSelectedIndex(ordenview.getPrioridad()-1);
 						prioridad.setEnabled(false);
 						buscarOrden.setEnabled(false);
-						actualizar.doClick();					
+						actualizar.doClick();
+						tareas.updateUI();
 						
 					}
 				}

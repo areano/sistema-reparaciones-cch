@@ -145,10 +145,15 @@ public class OrdenReparacion implements Comparable<OrdenReparacion>{
 		List<TareaReparacion> tareas=listarTareas();
 		Vector<String> nombrePiezas= new Vector<String>();
 		for (TareaReparacion tareaReparacion : tareas) {
-			List<String> nombrePiezasTarea=tareaReparacion.listaPiezas();
-			for (String nombre : nombrePiezasTarea) {
-				nombrePiezas.add(nombre);
+			//List<String> nombrePiezasTarea=tareaReparacion.listaPiezas();
+			List<String> nombrePiezasTarea =  new ArrayList<String>();
+			for(ItemReparacion item:tareaReparacion.getItemsReparacion()){
+				nombrePiezas.add(item.getPieza().getDescripcion());
 			}
+			
+//			for (String nombre : nombrePiezasTarea) {
+//				nombrePiezas.add(nombre);
+//			}
 		}
 		return nombrePiezas;
 	}

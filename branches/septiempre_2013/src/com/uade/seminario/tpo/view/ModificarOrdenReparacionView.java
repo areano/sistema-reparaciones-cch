@@ -2,6 +2,9 @@ package com.uade.seminario.tpo.view;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
 
@@ -43,18 +46,22 @@ import com.uade.seminario.tpo.view.objectView.TareaReparacionView;
 */
 public class ModificarOrdenReparacionView extends javax.swing.JFrame {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JLabel jLabel1;
 	private JLabel jLabel2;
 	private JCheckBox repararTodas;
 	private JLabel jLabel4;
 	private JLabel jLabel8;
-	private JComboBox prioridad;
+	private JComboBox<String> prioridad;
 	private JTextField estado;
 	private JLabel jLabel3;
 	private JCheckBox garantiaPapel;
 	private JButton buscarOrden;
 	private JButton modificarOrden;
-	private JList tareas;
+	private JList<String> tareas;
 	private JScrollPane jScrollPane1;
 	private JButton actualizar;
 	private JButton quitarTarea;
@@ -67,9 +74,11 @@ public class ModificarOrdenReparacionView extends javax.swing.JFrame {
 	private JButton avanzar;
 	private JButton retroceder;
 	private JCheckBox jCheckBox1;
+	private JButton verTarea;
 	private JTextField nombreEquipo;
 	private JTextField nroSerie;
 	private OrdenReparacionView ordenview;
+	private Map<String, TareaReparacionView> tareasOrden;
 
 	public static void main(String[] args) {
 		SwingUtilities.invokeLater(new Runnable() {
@@ -83,6 +92,7 @@ public class ModificarOrdenReparacionView extends javax.swing.JFrame {
 	
 	public ModificarOrdenReparacionView() {
 		super();
+		tareasOrden = new HashMap<String, TareaReparacionView>();
 		initGUI();
 	}
 	
@@ -99,6 +109,17 @@ public class ModificarOrdenReparacionView extends javax.swing.JFrame {
 			frame.dispose();
 		}
 
+	}
+	private class VerTareaListener implements ActionListener{
+
+		@Override
+		public void actionPerformed(ActionEvent arg0) {
+			TareaReparacionView tarea= tareasOrden.get(tareas.getSelectedValue());
+			MostrarTareaReparacionView view = new MostrarTareaReparacionView(ordenview, tarea);
+			view.setVisible(true);
+			
+		}
+		
 	}
 	private String avanzarEtapaOrden() {
 		String nuevoEstado = ordenview.getEstado();
@@ -248,10 +269,11 @@ public class ModificarOrdenReparacionView extends javax.swing.JFrame {
 				quitarTarea.addActionListener(new ActionListener() {
 					
 					public void actionPerformed(ActionEvent arg0) {
-						TareaReparacionView tarea= ((TareaReparacionView) tareas.getSelectedValue());
+						
+						TareaReparacionView tarea= tareasOrden.get(tareas.getSelectedValue());
 						if(tarea!=null)
-							SistemadeReparaciones.getInstancia().quitarTareaOrdenReparacion(Integer.parseInt(nroOrdenReparacion.getText()),tarea.getNroItemReparacion());
-						actualizar.doClick();
+							ordenview.getItemsReparacion().remove(tarea);
+							actualizar.doClick();
 					}
 				});
 			}
@@ -268,15 +290,15 @@ public class ModificarOrdenReparacionView extends javax.swing.JFrame {
 					}
 
 					private void actualizarLista() {
-						SistemadeReparaciones sist=SistemadeReparaciones.getInstancia();
-						
-						DefaultListModel reparacionesModelo=new DefaultListModel();
+					
+						DefaultListModel<String> reparacionesModelo=new DefaultListModel<String>();
 						if(!nroOrdenReparacion.getText().equals("")){
-							for(TareaReparacionView p: sist.buscarTareasXOrdenReparacionView(Integer.parseInt(nroOrdenReparacion.getText()))){
-								reparacionesModelo.addElement(p);
+							for(TareaReparacionView p: ordenview.getItemsReparacion()){
+								reparacionesModelo.addElement(p.getDetalle());
+								tareasOrden.put(p.getDetalle(), p);
 							}
 						}				
-						tareas = new JList();
+						tareas = new JList<String>();
 						jScrollPane1.setViewportView(tareas);
 						tareas.setModel(reparacionesModelo);
 						tareas.setVisible(true);
@@ -298,15 +320,15 @@ public class ModificarOrdenReparacionView extends javax.swing.JFrame {
 				modificarOrden.addActionListener(new ModificarOrdenListener(this));
 			}
 			{			
-				SistemadeReparaciones sist=SistemadeReparaciones.getInstancia();
-				
-				DefaultListModel reparacionesModelo=new DefaultListModel();
+			
+				DefaultListModel<String> reparacionesModelo=new DefaultListModel<String>();
 				if(!nroOrdenReparacion.getText().equals("")){
-					for(TareaReparacionView p: sist.buscarTareasXOrdenReparacionView(Integer.parseInt(nroOrdenReparacion.getText()))){
-						reparacionesModelo.addElement(p);
+					for(TareaReparacionView p: ordenview.getItemsReparacion()){
+						reparacionesModelo.addElement(p.getDetalle());
+						tareasOrden.put(p.getDetalle(), p);
 					}
 				}				
-				tareas = new JList();
+				tareas = new JList<String>();
 				getContentPane().add(tareas);
 				tareas.setModel(reparacionesModelo);
 				tareas.setVisible(true);
@@ -337,7 +359,7 @@ public class ModificarOrdenReparacionView extends javax.swing.JFrame {
 								estado.setText(ordenview.getEstado());
 								prioridad.setSelectedIndex(ordenview.getPrioridad()-1);
 								actualizar.doClick();
-								
+								tareas.updateUI();
 								if (!ordenview.getEstado().equals("Entregado")) {
 									if (!ordenview.getEstado().equals("A Confirmar")) {
 										retroceder.setVisible(true);
@@ -346,6 +368,7 @@ public class ModificarOrdenReparacionView extends javax.swing.JFrame {
 									quitarTarea.setEnabled(true);
 									avanzar.setVisible(true);						
 									actualizar.setEnabled(true);
+									verTarea.setEnabled(true);
 								}
 							}
 						}
@@ -373,10 +396,10 @@ public class ModificarOrdenReparacionView extends javax.swing.JFrame {
 				estado.setBounds(543, 129, 309, 23);
 			}
 			{
-				ComboBoxModel prioridadModel = 
-						new DefaultComboBoxModel(
+				ComboBoxModel<String> prioridadModel = 
+						new DefaultComboBoxModel<String>(
 								new String[] { "1","2","3","4","5","6","7","8","9","10" });
-				prioridad = new JComboBox();
+				prioridad = new JComboBox<String>();
 				getContentPane().add(prioridad);
 				prioridad.setModel(prioridadModel);
 				prioridad.setBounds(444, 159, 43, 23);
@@ -387,6 +410,7 @@ public class ModificarOrdenReparacionView extends javax.swing.JFrame {
 				jLabel8.setText("Prioridad : ");
 				jLabel8.setBounds(362, 162, 82, 16);
 			}
+			
 			{
 				retroceder = new JButton();
 				getContentPane().add(retroceder);
@@ -407,8 +431,17 @@ public class ModificarOrdenReparacionView extends javax.swing.JFrame {
 				});
 			}
 			{
+				verTarea = new JButton();
+				verTarea.setText("Ver Tarea");
+				getContentPane().add(verTarea);
+				verTarea.setBounds(405, 297, 82, 23);
+				verTarea.setEnabled(false);
+				verTarea.addActionListener(new VerTareaListener());
+			}
+			{
 				avanzar = new JButton();
 				getContentPane().add(avanzar);
+				
 				avanzar.setText("Avanzar Etapa");
 				avanzar.setBounds(718, 178, 134, 23);
 				avanzar.setVisible(false);
@@ -433,5 +466,15 @@ public class ModificarOrdenReparacionView extends javax.swing.JFrame {
 			e.printStackTrace();
 		}
 	}
+	
+//	private JButton getVerTarea() {
+//		if(verTarea == null) {
+//			verTarea = new JButton();
+//			verTarea.setText("Ver Tarea");
+//			verTarea.setBounds(405, 297, 82, 23);
+//			verTarea.setEnabled(false);
+//		}
+//		return verTarea;
+//	}
 
 }

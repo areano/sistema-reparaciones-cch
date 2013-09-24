@@ -1,10 +1,6 @@
 package com.uade.seminario.tpo.controller;
 
-import java.util.List;
-
 import com.uade.seminario.tpo.exceptions.ClienteNoExisteException;
-import com.uade.seminario.tpo.exceptions.EquipoExisteException;
-import com.uade.seminario.tpo.exceptions.EquipoNoExisteException;
 import com.uade.seminario.tpo.exceptions.ExceptionNoExisteModelo;
 import com.uade.seminario.tpo.exceptions.GarantiaExisteException;
 import com.uade.seminario.tpo.exceptions.GarantiaNoExisteException;
@@ -12,7 +8,6 @@ import com.uade.seminario.tpo.model.Cliente;
 import com.uade.seminario.tpo.model.Equipo;
 import com.uade.seminario.tpo.model.Garantia;
 import com.uade.seminario.tpo.model.Modelo;
-import com.uade.seminario.tpo.model.Pieza;
 import com.uade.seminario.tpo.service.EquipoService;
 import com.uade.seminario.tpo.view.objectView.EquipoView;
 

@@ -4,18 +4,16 @@ import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
-
-
 import com.uade.seminario.tpo.exceptions.NoHayOrdenesException;
 import com.uade.seminario.tpo.exceptions.OrdenNoDisponibleException;
-import com.uade.seminario.tpo.exceptions.OrdenNoExisteException;
 import com.uade.seminario.tpo.model.Empleado;
 import com.uade.seminario.tpo.model.Equipo;
+import com.uade.seminario.tpo.model.ItemReparacion;
 import com.uade.seminario.tpo.model.OrdenReparacion;
 import com.uade.seminario.tpo.model.Pieza;
 import com.uade.seminario.tpo.model.TareaReparacion;
 import com.uade.seminario.tpo.service.OrdenDeReparacionDataService;
-import com.uade.seminario.tpo.view.objectView.ItemReporteView;
+import com.uade.seminario.tpo.view.objectView.ItemReparacionView;
 import com.uade.seminario.tpo.view.objectView.OrdenReparacionView;
 import com.uade.seminario.tpo.view.objectView.PiezaView;
 import com.uade.seminario.tpo.view.objectView.TareaReparacionView;
@@ -57,19 +55,27 @@ public class AdministradorOrdenReparacion {
 				buscarEquipo(orden.getEquipo().getNroSerie());
 		List<TareaReparacion> tareasReparacion = new ArrayList<TareaReparacion>();
 		List<Pieza> piezasReparacion = new ArrayList<Pieza>();
+		List<ItemReparacion> itemsReparacion = new  ArrayList<ItemReparacion>();
 		Pieza piezaToAdd;
+		ItemReparacion item;
 		TareaReparacion tareaReparacion;
 		for(TareaReparacionView tarea:orden.getItemsReparacion()){
-			tareaReparacion = new TareaReparacion();
-			
+			tareaReparacion = new TareaReparacion();			
 			tareaReparacion.setDetalle(tarea.getDetalle());
 			tareaReparacion.setEstado(tarea.getEstado());
 			
-			for(PiezaView pieza: tarea.getPiezas()){
-				piezaToAdd = AdministradorPieza.getInstancia().buscarPieza(pieza.getNroPieza());
-				piezasReparacion.add(piezaToAdd);
-			}
-			tareaReparacion.setPiezas(piezasReparacion);
+//			for(PiezaView pieza: tarea.getPiezas()){
+//				piezaToAdd = AdministradorPieza.getInstancia().buscarPieza(pieza.getNroPieza());
+//				piezasReparacion.add(piezaToAdd);
+//			}
+			for(ItemReparacionView itemView: tarea.getItemReparacion()){
+				piezaToAdd = AdministradorPieza.getInstancia().
+						buscarPieza(itemView.getPieza().getNroPieza());
+				item = new ItemReparacion(piezaToAdd, itemView.getCantidad());
+				itemsReparacion.add(item);
+			} 
+//			tareaReparacion.setPiezas(piezasReparacion);
+			tareaReparacion.setItemsReparacion(itemsReparacion);
 			tareasReparacion.add(tareaReparacion);			
 		}
 		
