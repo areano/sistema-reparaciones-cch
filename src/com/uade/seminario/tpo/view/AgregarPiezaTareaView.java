@@ -17,6 +17,7 @@ import javax.swing.SwingUtilities;
 import com.uade.seminario.tpo.controller.SistemadeReparaciones;
 import com.uade.seminario.tpo.model.OrdenReparacion;
 import com.uade.seminario.tpo.model.Pieza;
+import com.uade.seminario.tpo.view.objectView.ItemReparacionView;
 import com.uade.seminario.tpo.view.objectView.OrdenReparacionView;
 import com.uade.seminario.tpo.view.objectView.PiezaView;
 import com.uade.seminario.tpo.view.objectView.TareaReparacionView;
@@ -45,6 +46,8 @@ public class AgregarPiezaTareaView extends javax.swing.JFrame {
 	private JList piezas;
 	private TareaReparacionView tarea;
 	private Map< String, PiezaView> piezasTarea;
+	private JLabel jLabel4;
+	private JTextField jCantidad;
 	/**
 	* Auto-generated main method to display this JFrame
 	*/
@@ -66,7 +69,10 @@ public class AgregarPiezaTareaView extends javax.swing.JFrame {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			PiezaView piezaATarea = (PiezaView)piezasTarea.get((String)piezas.getSelectedValue());			
-			tarea.addPieza(piezaATarea);	
+			ItemReparacionView itemToAdd = new ItemReparacionView(piezaATarea, 
+					Integer.parseInt(jCantidad.getText()));
+			//tarea.addPieza(piezaATarea);	
+			tarea.addItem(itemToAdd);
 			frame.dispose();
 		}
 
@@ -138,15 +144,15 @@ public class AgregarPiezaTareaView extends javax.swing.JFrame {
 					piezas.setModel(piezasModelo);
 					piezas.setBounds(12, 109, 346, 132);
 					piezas.setVisible(true);
-					
-					
+					piezas.setPreferredSize(new java.awt.Dimension(343, 72));
+
 				}
 			}
 			{
 				agregar = new JButton();
 				getContentPane().add(agregar);
 				agregar.setText("Agregar Pieza");
-				agregar.setBounds(123, 247, 116, 23);
+				agregar.setBounds(165, 294, 116, 23);
 				agregar.addActionListener(new AgregarPiezaTareaListener2(this));
 
 //				agregar.addActionListener(new ActionListener() {
@@ -165,8 +171,20 @@ public class AgregarPiezaTareaView extends javax.swing.JFrame {
 
 				
 			}
+			{
+				jCantidad = new JTextField();
+				getContentPane().add(jCantidad);
+				jCantidad.setBounds(75, 247, 33, 23);
+				jCantidad.setText("1");
+			}
+			{
+				jLabel4 = new JLabel();
+				getContentPane().add(jLabel4);
+				jLabel4.setText("Cantidad");
+				jLabel4.setBounds(12, 250, 63, 16);
+			}
 			pack();
-			this.setSize(400, 320);
+			this.setSize(454, 366);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

@@ -111,10 +111,13 @@ public class OrdenReparacionView {
 	public List<String> listaPiezas() {
 		List<String> nombrePiezas= new ArrayList<String>();
 		for (TareaReparacionView tareaReparacion : itemsReparacion) {
-			List<String> nombrePiezasTarea=tareaReparacion.listaPiezas();
-			for (String nombre : nombrePiezasTarea) {
-				nombrePiezas.add(nombre);
+			//List<String> nombrePiezasTarea=tareaReparacion.listaPiezas();
+			for(ItemReparacionView item:tareaReparacion.getItemReparacion()){
+				nombrePiezas.add(item.getPieza().getDescripcion());
 			}
+//			for (String nombre : nombrePiezasTarea) {
+//				nombrePiezas.add(nombre);
+//			}
 		}
 		return nombrePiezas;
 	}

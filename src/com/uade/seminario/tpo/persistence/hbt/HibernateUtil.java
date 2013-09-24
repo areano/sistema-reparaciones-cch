@@ -24,6 +24,7 @@ public class HibernateUtil {
 	        	 cfg.addAnnotatedClass(TareaReparacion.class);
 	        	 cfg.addAnnotatedClass(Pieza.class);
 	        	 cfg.addAnnotatedClass(Remito.class);
+	        	 cfg.addAnnotatedClass(ItemReparacion.class);
 //	        	 cfg.addAnnotatedClass(Reporte.class);
 //	        	 cfg.addAnnotatedClass(itemReporte.class);
 
